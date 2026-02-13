@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marché Nourrici - Catalogue local</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#009E60", // Green from Ivorian flag
+                        "accent-orange": "#FF8200", // Orange from Ivorian flag
+                        "background-light": "#fcfdfc",
+                        "background-dark": "#0a120a",
+                        "ivory-white": "#FFFFFF"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            .material-symbols-outlined {
+                font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            }
+            body {
+                font-family: 'Inter', sans-serif;
+            }
+        }
+        .flag-gradient {
+            background: linear-gradient(to right, #FF8200 33%, #FFFFFF 33%, #FFFFFF 66%, #009E60 66%);
+            height: 4px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111811] dark:text-white min-h-screen">
+<div class="flag-gradient"></div>
+<header class="sticky top-0 z-50 bg-white dark:bg-background-dark border-b border-solid border-[#e0e7e0] dark:border-[#2a3a2a] px-4 md:px-10 lg:px-20 py-3 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<div class="text-accent-orange">
+<span class="material-symbols-outlined text-3xl">agriculture</span>
+</div>
+<h2 class="text-[#111811] dark:text-white text-xl font-bold leading-tight tracking-tight">Marché Nourrici</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-[#111811] dark:text-white text-sm font-medium hover:text-primary transition-colors" href="#">Accueil</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary" href="#">Catalogue</a>
+<a class="text-[#111811] dark:text-white text-sm font-medium hover:text-primary transition-colors" href="#">Traçabilité</a>
+<a class="text-[#111811] dark:text-white text-sm font-medium hover:text-primary transition-colors" href="#">Producteurs</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center max-w-2xl">
+<label class="hidden sm:flex flex-col flex-1 max-w-md h-10">
+<div class="flex w-full flex-1 items-stretch rounded-lg bg-[#f0f5f0] dark:bg-[#1a2e1a]">
+<div class="text-[#608a60] flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input w-full border-none bg-transparent focus:ring-0 text-sm placeholder:text-[#608a60] px-4" placeholder="Rechercher des produits frais de Côte d'Ivoire..." value=""/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="relative flex size-10 items-center justify-center rounded-lg bg-[#f0f5f0] dark:bg-[#1a2e1a] text-[#111811] dark:text-white">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent-orange text-[10px] font-bold text-white">3</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-[#e0e7e0]" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC3yZufACIhOwshyyci58r687JV8CSg4dmc6Uxf32hCe9CyxcY9YIazjd-CVgQO5ZC6g22Yy98cpsUp0sqO8bXvPfNFuSDGpIToUIRp4NSHXj9O3WZqk6bCqRxr0ounr7m-aDqMHBKYa1ZbnDlxWvgmhEPpjjHc9d3U2KKywTzrLKw35dyYNqa9IZEOC26oNPcvsKT491xIgEpT7GcjxHEsr1ciTgiDHm7L8x8mwUGcyUUs3TtDG7j1oCGKU9T3n8mhGRIKCb-ixMgM");'></div>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto px-4 md:px-10 lg:px-20 py-8 flex gap-8">
+<aside class="hidden lg:flex flex-col w-64 shrink-0 gap-6">
+<div class="bg-white dark:bg-[#1a2e1a] p-6 rounded-xl border border-[#e0e7e0] dark:border-[#2a3a2a] shadow-sm">
+<h3 class="text-[#111811] dark:text-white text-lg font-bold mb-4">Catégories</h3>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-semibold cursor-pointer">
+<span class="material-symbols-outlined text-xl">grid_view</span>
+<p class="text-sm">Tous les produits</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#f0f5f0] dark:hover:bg-[#2a3a2a] cursor-pointer text-[#111811] dark:text-gray-300">
+<span class="material-symbols-outlined text-xl">grass</span>
+<p class="text-sm">Tubercules (Manioc...)</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#f0f5f0] dark:hover:bg-[#2a3a2a] cursor-pointer text-[#111811] dark:text-gray-300">
+<span class="material-symbols-outlined text-xl">nutrition</span>
+<p class="text-sm">Fruits &amp; Légumes</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#f0f5f0] dark:hover:bg-[#2a3a2a] cursor-pointer text-[#111811] dark:text-gray-300">
+<span class="material-symbols-outlined text-xl">pets</span>
+<p class="text-sm">Bétail &amp; Volaille</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#f0f5f0] dark:hover:bg-[#2a3a2a] cursor-pointer text-[#111811] dark:text-gray-300">
+<span class="material-symbols-outlined text-xl">factory</span>
+<p class="text-sm">Produits Transformés</p>
+</div>
+</div>
+<div class="mt-8">
+<p class="text-[#111811] dark:text-white text-base font-bold mb-6">Tranche de prix (FCFA)</p>
+<div class="px-2">
+<div class="flex h-1 w-full rounded-sm bg-[#dbe6db] relative">
+<div class="absolute inset-y-0 left-[10%] right-[40%] bg-primary"></div>
+<div class="absolute -left-1 -top-1.5 flex flex-col items-center gap-1">
+<div class="size-4 rounded-full bg-white border-2 border-primary"></div>
+<p class="text-[#111811] dark:text-white text-[10px] font-medium mt-1">500</p>
+</div>
+<div class="absolute -right-1 -top-1.5 flex flex-col items-center gap-1">
+<div class="size-4 rounded-full bg-white border-2 border-primary"></div>
+<p class="text-[#111811] dark:text-white text-[10px] font-medium mt-1">25 000</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12">
+<p class="text-[#111811] dark:text-white text-base font-bold mb-4">Certifications</p>
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-2 text-sm cursor-pointer">
+<input checked="" class="rounded border-[#608a60] text-primary focus:ring-primary" type="checkbox"/>
+<span>Bio Certifié</span>
+</label>
+<label class="flex items-center gap-2 text-sm cursor-pointer">
+<input class="rounded border-[#608a60] text-primary focus:ring-primary" type="checkbox"/>
+<span>Élevage en plein air</span>
+</label>
+<label class="flex items-center gap-2 text-sm cursor-pointer">
+<input class="rounded border-[#608a60] text-primary focus:ring-primary" type="checkbox"/>
+<span>Sans OGM</span>
+</label>
+</div>
+</div>
+<button class="w-full mt-8 py-2.5 bg-primary hover:bg-primary/90 text-white font-bold rounded-lg transition-all text-sm shadow-md shadow-primary/20">
+                Appliquer les filtres
+            </button>
+</div>
+</aside>
+<div class="flex-1 flex flex-col">
+<div class="mb-6">
+<h1 class="text-[#111811] dark:text-white text-3xl font-bold mb-4">Catalogue des Récoltes Locales</h1>
+<div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-[#1a2e1a] border border-[#e0e7e0] dark:border-[#2a3a2a] px-4 hover:border-accent-orange transition-colors">
+<p class="text-[#111811] dark:text-white text-sm font-medium">Ventes Flash</p>
+<span class="material-symbols-outlined text-accent-orange text-lg">bolt</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-[#1a2e1a] border border-[#e0e7e0] dark:border-[#2a3a2a] px-4 hover:border-primary transition-colors">
+<p class="text-[#111811] dark:text-white text-sm font-medium">Fermes de Côte d'Ivoire</p>
+<span class="material-symbols-outlined text-primary text-lg">location_on</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-[#1a2e1a] border border-[#e0e7e0] dark:border-[#2a3a2a] px-4 hover:border-primary transition-colors">
+<p class="text-[#111811] dark:text-white text-sm font-medium">Meilleures ventes</p>
+<span class="material-symbols-outlined text-primary text-lg">star</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-[#1a2e1a] border border-[#e0e7e0] dark:border-[#2a3a2a] px-4 hover:border-primary transition-colors">
+<p class="text-[#111811] dark:text-white text-sm font-medium">Traçabilité Vérifiée</p>
+<span class="material-symbols-outlined text-primary text-lg">verified</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+<div class="group bg-white dark:bg-[#1a2e1a] rounded-xl border border-[#e0e7e0] dark:border-[#2a3a2a] overflow-hidden hover:shadow-xl transition-all flex flex-col">
+<div class="relative aspect-[4/3] overflow-hidden">
+<div class="bg-cover bg-center h-full w-full group-hover:scale-105 transition-transform duration-500" data-alt="Fresh yellow plantains" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuArHzI1oQqaqSdMQhFnLrWECjo8XMEpVOaylglpO4xkdbUnW8nB29N-SBe-gRja9eO-ai6cat3NSmZB73xw-0XrtQDbF4Ce4ki7SIypMmDc79o_Bkp60l2_mA5s4jSYQlwBMYRuhWCjtWmNi-P9vxhUUzHmvVOYIHElPrs2ObXNvJiZT5LR_2YEBA5FAOZRj-lvMRHGAoAYlHAuUxzpfW2hmCA94y6vo0jEaOEptB7duzgg-6sRZkLd2u6sKHXYnkXUdL5iiWmhYul4");'></div>
+<div class="absolute top-3 left-3 bg-white/95 backdrop-blur px-2 py-1 rounded text-[10px] font-bold text-accent-orange uppercase tracking-wider border border-accent-orange/20">PROMO -20%</div>
+<button class="absolute top-3 right-3 p-1.5 rounded-full bg-white/95 backdrop-blur text-gray-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="flex items-center gap-1 text-[10px] font-semibold text-primary uppercase mb-1">
+<span class="material-symbols-outlined text-[12px]">verified</span>
+<span>Ferme de Yamoussoukro</span>
+</div>
+<h3 class="text-base font-bold text-[#111811] dark:text-white mb-1">Bananes Plantains Mûres</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-1 mb-3">Plantains bio récoltés à maturité, parfaits pour l'alloco.</p>
+<div class="mt-auto">
+<div class="flex items-end gap-2 mb-4">
+<span class="text-xl font-bold text-[#111811] dark:text-white">1 200 FCFA</span>
+<span class="text-xs text-gray-400 line-through pb-1">1 500 FCFA</span>
+<span class="text-xs text-gray-500 dark:text-gray-400 pb-1">/ régime</span>
+</div>
+<button class="w-full py-2 bg-accent-orange hover:bg-accent-orange/90 text-white font-bold rounded-lg transition-colors flex items-center justify-center gap-2 text-sm">
+<span>Ajouter au panier</span>
+<span class="material-symbols-outlined text-lg">shopping_basket</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group bg-white dark:bg-[#1a2e1a] rounded-xl border border-[#e0e7e0] dark:border-[#2a3a2a] overflow-hidden hover:shadow-xl transition-all flex flex-col">
+<div class="relative aspect-[4/3] overflow-hidden">
+<div class="bg-cover bg-center h-full w-full group-hover:scale-105 transition-transform duration-500" data-alt="Fresh cocoa beans" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD1FfAMPwm1hrSqFfjIIpd_MaM8sakI_6rQc75IY2zWkw4UygSLNW0owl_GXPQL7c3ljnO00ruGGKI8-0e24oCTuBmWtXM8VKT-QjweniJuPG42CbMLzNUXlrkZw-3wnNTSzD913I1KMPczmaiYszDAN4UmeOS6O7pWg_UxQ1yO5NXtHxPl6BUNwO20Q0EXoHx8t2guMYnpBsL-b65UKsOCkmrGqm5Gpo3M8sWKOxDf_5iqer2J5gfwUwzyF3FcJ3gUceJmClKVNPh_");'></div>
+<div class="absolute top-3 left-3 bg-primary px-2 py-1 rounded text-[10px] font-bold text-white uppercase tracking-wider">Nouveauté</div>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="flex items-center gap-1 text-[10px] font-semibold text-primary uppercase mb-1">
+<span class="material-symbols-outlined text-[12px]">verified</span>
+<span>Coopérative San Pedro</span>
+</div>
+<h3 class="text-base font-bold text-[#111811] dark:text-white mb-1">Fèves de Cacao Bio</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-1 mb-3">Fèves fermentées et séchées au soleil naturellement.</p>
+<div class="mt-auto">
+<div class="flex items-end gap-2 mb-4">
+<span class="text-xl font-bold text-[#111811] dark:text-white">5 000 FCFA</span>
+<span class="text-xs text-gray-500 dark:text-gray-400 pb-1">/ 2kg</span>
+</div>
+<button class="w-full py-2 bg-primary hover:bg-primary/90 text-white font-bold rounded-lg transition-colors flex items-center justify-center gap-2 text-sm">
+<span>Acheter</span>
+<span class="material-symbols-outlined text-lg">shopping_basket</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group bg-white dark:bg-[#1a2e1a] rounded-xl border border-[#e0e7e0] dark:border-[#2a3a2a] overflow-hidden hover:shadow-xl transition-all flex flex-col">
+<div class="relative aspect-[4/3] overflow-hidden">
+<div class="bg-cover bg-center h-full w-full group-hover:scale-105 transition-transform duration-500" data-alt="Yellow corn" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDGooKVMA6rZZXqOmrNNJ0tN_PSpQ2BDjOLa2sPYM46BGAEeuHMReQFMmydPxUo1xBVvhieaxypDtpuB1aknnAsp5z3cY9EemrAo-inpFk_yMY80MzOj5vepqN5RlGz2P8u0C_6Dz_0FapTotFbVxwQ9o11oN_kAQRisJL9i13irryaWm1XdR_O_ygWAlF0YOkSpWDVgJlFszbmImrCvew5vm4m-RZBuKZKb1YckSfPT3iv5EqujtdpZ0YcCP-PBoy86uuEYUP9CSCN");'></div>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="flex items-center gap-1 text-[10px] font-semibold text-primary uppercase mb-1">
+<span class="material-symbols-outlined text-[12px]">verified</span>
+<span>Fermes du Nord</span>
+</div>
+<h3 class="text-base font-bold text-[#111811] dark:text-white mb-1">Maïs Doux en Épis</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-1 mb-3">Récolté le matin même, sans pesticides chimiques.</p>
+<div class="mt-auto">
+<div class="flex items-end gap-2 mb-4">
+<span class="text-xl font-bold text-[#111811] dark:text-white">1 500 FCFA</span>
+<span class="text-xs text-gray-500 dark:text-gray-400 pb-1">/ douzaine</span>
+</div>
+<button class="w-full py-2 bg-primary hover:bg-primary/90 text-white font-bold rounded-lg transition-colors flex items-center justify-center gap-2 text-sm">
+<span>Acheter</span>
+<span class="material-symbols-outlined text-lg">shopping_basket</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group bg-white dark:bg-[#1a2e1a] rounded-xl border border-[#e0e7e0] dark:border-[#2a3a2a] overflow-hidden hover:shadow-xl transition-all flex flex-col">
+<div class="relative aspect-[4/3] overflow-hidden">
+<div class="bg-cover bg-center h-full w-full group-hover:scale-105 transition-transform duration-500" data-alt="Mangoes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCBcmsNpskCmCnIjcjXISyZushZulvaW9ei3kwN2HofOu9QqT05NH80dwbZRxf1Nnccgny8dZYzQplug21xA7XPeUEClBHJ9b_kgag3L0BnqN1itCNOdF8HOuEXJ9zIhbW9NpA-zJbJbh4xpy1lbehsTONTXy4IjxPdvF-kn40EsT1p3bkz1h0xNZV-iPcIWNLmdakSkGPZH5RanuZJgHiWAs7lXTCeFrhrkEx1W03CzeFoSpO98t0l2tqu4rNi7ZPw7mY9PFEzFQ7B");'></div>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="flex items-center gap-1 text-[10px] font-semibold text-primary uppercase mb-1">
+<span class="material-symbols-outlined text-[12px]">verified</span>
+<span>Verger de Korhogo</span>
+</div>
+<h3 class="text-base font-bold text-[#111811] dark:text-white mb-1">Mangues Kent de Côte d'Ivoire</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-1 mb-3">Mangues juteuses et sans fils, qualité export.</p>
+<div class="mt-auto">
+<div class="flex items-end gap-2 mb-4">
+<span class="text-xl font-bold text-[#111811] dark:text-white">4 500 FCFA</span>
+<span class="text-xs text-gray-500 dark:text-gray-400 pb-1">/ carton (5kg)</span>
+</div>
+<button class="w-full py-2 bg-primary hover:bg-primary/90 text-white font-bold rounded-lg transition-colors flex items-center justify-center gap-2 text-sm">
+<span>Acheter</span>
+<span class="material-symbols-outlined text-lg">shopping_basket</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group bg-white dark:bg-[#1a2e1a] rounded-xl border border-[#e0e7e0] dark:border-[#2a3a2a] overflow-hidden hover:shadow-xl transition-all flex flex-col">
+<div class="relative aspect-[4/3] overflow-hidden">
+<div class="bg-cover bg-center h-full w-full group-hover:scale-105 transition-transform duration-500" data-alt="Cassava roots" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBor5Lf2SGTI_IHSeq0e_w1_POAX8JLnud1CUuuB5xWUVXaxEFE87CYhteT4rEQ3u6DzxedVKr5eikDe4hjHrOrzK570PNOm4tbkMQS9l3GzcAL1AA0ZJKaQAG6T2iQc4nbOtxpJWMvJ31Lms8Z0Sef7PfZuFwUC7u4BW-RN1n1Ukc4j196kSQAINfo-mkTYRNRcKmZGg1iY51_QE4RGS7sX1EBSKnM48IM1eEH5M0afT9JDMQJHxi5lOZg0hfsoEv5jFmLEGL1J32q");'></div>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="flex items-center gap-1 text-[10px] font-semibold text-primary uppercase mb-1">
+<span class="material-symbols-outlined text-[12px]">verified</span>
+<span>Terroir d'Agboville</span>
+</div>
+<h3 class="text-base font-bold text-[#111811] dark:text-white mb-1">Manioc Frais (Tubercule)</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-1 mb-3">Racines blanches et fermes, idéales pour l'attiéké.</p>
+<div class="mt-auto">
+<div class="flex items-end gap-2 mb-4">
+<span class="text-xl font-bold text-[#111811] dark:text-white">2 500 FCFA</span>
+<span class="text-xs text-gray-500 dark:text-gray-400 pb-1">/ sac de 10kg</span>
+</div>
+<button class="w-full py-2 bg-primary hover:bg-primary/90 text-white font-bold rounded-lg transition-colors flex items-center justify-center gap-2 text-sm">
+<span>Acheter</span>
+<span class="material-symbols-outlined text-lg">shopping_basket</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group bg-white dark:bg-[#1a2e1a] rounded-xl border border-[#e0e7e0] dark:border-[#2a3a2a] overflow-hidden hover:shadow-xl transition-all flex flex-col">
+<div class="relative aspect-[4/3] overflow-hidden">
+<div class="bg-cover bg-center h-full w-full group-hover:scale-105 transition-transform duration-500" data-alt="Chickens" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCr5emakQT8aF_J55zHunz42r4ewLLA1809H88uvI6BDK-rsaoyttNMsuvscdFyecK3RjsqW1kEKiCR66-NyGhkMxkmClGswcCN0eo8rHYBa-PECo9g7xoLjdy2BkM5aZ4LmQke8xuSxvgwc5fesJlKs07HM8Q_R9z7RLGRUCWbpkMMd1Mrrn-au64EXDquzUmhevV4gcgi2n57MnTzx9qhNWkuYQBt0KWaqByQaiPke7uvelOvdhuJwdnAmLm4SumbXcy1-bPsa-c4");'></div>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="flex items-center gap-1 text-[10px] font-semibold text-primary uppercase mb-1">
+<span class="material-symbols-outlined text-[12px]">verified</span>
+<span>Élevage Saint-Michel</span>
+</div>
+<h3 class="text-base font-bold text-[#111811] dark:text-white mb-1">Poulet de Chair (Plein Air)</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-1 mb-3">Élevé naturellement pendant 45 jours, chair ferme.</p>
+<div class="mt-auto">
+<div class="flex items-end gap-2 mb-4">
+<span class="text-xl font-bold text-[#111811] dark:text-white">3 500 FCFA</span>
+<span class="text-xs text-gray-500 dark:text-gray-400 pb-1">/ unité</span>
+</div>
+<button class="w-full py-2 bg-primary hover:bg-primary/90 text-white font-bold rounded-lg transition-colors flex items-center justify-center gap-2 text-sm">
+<span>Acheter</span>
+<span class="material-symbols-outlined text-lg">shopping_basket</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 mb-8 flex items-center justify-center gap-4">
+<button class="flex items-center justify-center size-10 rounded-lg border border-[#e0e7e0] text-gray-400 hover:text-primary hover:border-primary transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="flex items-center gap-2">
+<button class="size-10 rounded-lg bg-primary text-white font-bold">1</button>
+<button class="size-10 rounded-lg border border-[#e0e7e0] hover:border-primary transition-colors">2</button>
+<button class="size-10 rounded-lg border border-[#e0e7e0] hover:border-primary transition-colors">3</button>
+<span class="mx-1 text-gray-400">...</span>
+<button class="size-10 rounded-lg border border-[#e0e7e0] hover:border-primary transition-colors">12</button>
+</div>
+<button class="flex items-center justify-center size-10 rounded-lg border border-[#e0e7e0] text-gray-400 hover:text-primary hover:border-primary transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</main>
+<footer class="bg-white dark:bg-[#102210] border-t border-[#e0e7e0] dark:border-[#2a3a2a] px-4 md:px-10 lg:px-20 py-12">
+<div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+<div class="col-span-1 md:col-span-2">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-accent-orange text-3xl">agriculture</span>
+<h2 class="text-[#111811] dark:text-white text-xl font-bold">Marché Nourrici</h2>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-400 max-w-sm">Connecter les agriculteurs locaux de Côte d'Ivoire directement aux ménages pour des produits frais, bio et traçables. Construisons ensemble un avenir durable.</p>
+</div>
+<div>
+<h4 class="font-bold mb-4">Liens Rapides</h4>
+<ul class="text-sm space-y-2 text-gray-600 dark:text-gray-400">
+<li><a class="hover:text-primary" href="#">À propos</a></li>
+<li><a class="hover:text-primary" href="#">Guide de traçabilité</a></li>
+<li><a class="hover:text-primary" href="#">Portail Agriculteur</a></li>
+<li><a class="hover:text-primary" href="#">Contrôle Qualité</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-4">Support</h4>
+<ul class="text-sm space-y-2 text-gray-600 dark:text-gray-400">
+<li><a class="hover:text-primary" href="#">Livraison</a></li>
+<li><a class="hover:text-primary" href="#">Centre d'aide</a></li>
+<li><a class="hover:text-primary" href="#">Nous contacter</a></li>
+<li><a class="hover:text-primary" href="#">Conditions d'utilisation</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto border-t border-[#e0e7e0] dark:border-[#2a3a2a] mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-xs text-gray-500">© 2024 Marché Nourrici - Catalogue Local. Fièrement Ivoirien.</p>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-gray-400 cursor-pointer hover:text-primary">language</span>
+<span class="material-symbols-outlined text-gray-400 cursor-pointer hover:text-primary">share</span>
+</div>
+</div>
+</footer>
+
+</body></html>

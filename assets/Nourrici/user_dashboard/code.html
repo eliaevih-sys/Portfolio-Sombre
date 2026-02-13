@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mon Espace Nourrici - Tableau de Bord</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#22C55E", // Green for Côte d'Ivoire
+                        "accent-orange": "#F97316", // Orange for Côte d'Ivoire
+                        "ivory-white": "#FFFFFF",
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#0F172A",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.375rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            .material-symbols-outlined {
+                font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            }
+        }
+        .impact-gradient {
+            background: linear-gradient(135deg, #F97316 0%, #22C55E 100%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 transition-colors duration-200">
+<div class="flex flex-col min-h-screen">
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-4 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2 text-accent-orange">
+<div class="size-8 flex items-center justify-center bg-accent-orange text-white rounded-lg">
+<span class="material-symbols-outlined">eco</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-xl font-black tracking-tight">Mon Espace Nourrici</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-600 dark:text-slate-400 text-sm font-semibold hover:text-primary transition-colors" href="#">Marché</a>
+<a class="text-slate-600 dark:text-slate-400 text-sm font-semibold hover:text-primary transition-colors" href="#">Producteurs</a>
+<a class="text-slate-600 dark:text-slate-400 text-sm font-semibold hover:text-primary transition-colors" href="#">Impact Local</a>
+<a class="text-slate-600 dark:text-slate-400 text-sm font-semibold hover:text-primary transition-colors" href="#">Traçabilité</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<label class="hidden lg:flex items-center min-w-[300px] h-10 bg-slate-100 dark:bg-slate-800 rounded-full px-4 border border-transparent focus-within:border-primary/50 transition-all">
+<span class="material-symbols-outlined text-slate-400 text-xl">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-slate-500" placeholder="Rechercher manioc, viande, fruits..." type="text"/>
+</label>
+<div class="flex items-center gap-4">
+<button class="text-slate-500 hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute -top-1 -right-1 block h-2.5 w-2.5 rounded-full bg-accent-orange ring-2 ring-white"></span>
+</button>
+<div class="size-10 rounded-full border-2 border-primary overflow-hidden">
+<img alt="Profil" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCYl_kNsWLMk4QpOdGt2g67vwAhEhlUpTOxpLLlkLlr-snGFu2vhzQ644erhvfS1yN09B7iKknNx_JWfIzz7YhKPvS-gKvRuxWE6s3pXL6jFt9ojQOg9A0uWmDSuR7tAyAQ2L6_rapEda-AP2sa1rHi8-Ifrd5WohKl7OB5J6M07rvd8d7wsTBAmdV1WEYpdtE7LSatU33nfaOod_a6SpaKy7kGNqRLU2fLHe75LypUqIg1zwBajHuc-jG_uJD3acEjWoQOj0uuxiM"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 w-full max-w-[1440px] mx-auto">
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hidden md:flex flex-col justify-between p-6 sticky top-[73px] h-[calc(100vh-73px)]">
+<div class="flex flex-col gap-8">
+<div class="flex flex-col gap-1 px-2">
+<h1 class="text-slate-900 dark:text-white text-lg font-bold">Koffi Kouadio</h1>
+<p class="text-slate-500 text-xs font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">location_on</span> Abidjan, CI
+                    </p>
+</div>
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-bold transition-all" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<p class="text-sm">Tableau de bord</p>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all" href="#">
+<span class="material-symbols-outlined">shopping_basket</span>
+<p class="text-sm">Mes commandes</p>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all" href="#">
+<span class="material-symbols-outlined">agriculture</span>
+<p class="text-sm">Mes producteurs</p>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<p class="text-sm">Paiements</p>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm">Paramètres</p>
+</a>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="p-4 rounded-2xl impact-gradient text-white shadow-lg">
+<p class="text-[10px] font-bold uppercase tracking-widest opacity-80 mb-1">Impact Local</p>
+<p class="text-xs leading-relaxed font-medium">Vous avez soutenu 12 coopératives ivoiriennes ce mois-ci.</p>
+</div>
+<button class="flex w-full items-center justify-center rounded-xl h-12 bg-primary text-white text-sm font-bold shadow-md hover:bg-primary/90 transition-all">
+                    Aller au marché
+                </button>
+</div>
+</aside>
+<main class="flex-1 flex flex-col p-8 lg:p-12 overflow-y-auto">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+<div>
+<h2 class="text-slate-900 dark:text-white text-3xl font-black tracking-tight mb-2">Bienvenue, Koffi</h2>
+<p class="text-slate-500 text-lg">Suivez vos récoltes fraîches et soutenez l'agriculture ivoirienne.</p>
+</div>
+<button class="flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-200 dark:border-slate-800 text-sm font-bold bg-white dark:bg-slate-900 hover:bg-slate-50 transition-all shadow-sm">
+<span class="material-symbols-outlined text-lg">download</span> Exporter l'historique
+                </button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+<div class="group p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all">
+<div class="flex items-center justify-between mb-4">
+<p class="text-slate-500 text-sm font-bold uppercase tracking-wider">Total Commandes</p>
+<div class="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">shopping_cart</span>
+</div>
+</div>
+<p class="text-slate-900 dark:text-white text-4xl font-black">28.450 <span class="text-lg">FCFA</span></p>
+<p class="text-xs text-primary font-bold mt-2">+15% vs mois dernier</p>
+</div>
+<div class="group p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all">
+<div class="flex items-center justify-between mb-4">
+<p class="text-slate-500 text-sm font-bold uppercase tracking-wider">Producteurs Soutenus</p>
+<div class="size-10 rounded-full bg-accent-orange/10 text-accent-orange flex items-center justify-center">
+<span class="material-symbols-outlined">handshake</span>
+</div>
+</div>
+<p class="text-slate-900 dark:text-white text-4xl font-black">12</p>
+<p class="text-xs text-slate-500 mt-2">Exploitations locales</p>
+</div>
+<div class="group p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all">
+<div class="flex items-center justify-between mb-4">
+<p class="text-slate-500 text-sm font-bold uppercase tracking-wider">Livraisons Actives</p>
+<div class="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">local_shipping</span>
+</div>
+</div>
+<p class="text-slate-900 dark:text-white text-4xl font-black">02</p>
+<p class="text-xs text-accent-orange font-bold mt-2">1 prévue aujourd'hui</p>
+</div>
+</div>
+<section class="mb-12">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-slate-900 dark:text-white text-2xl font-black tracking-tight">Historique des commandes</h3>
+<a class="text-primary text-sm font-bold hover:underline underline-offset-4" href="#">Voir tout</a>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+<th class="px-8 py-5 text-xs font-bold text-slate-500 uppercase tracking-widest">Produit / Coopérative</th>
+<th class="px-8 py-5 text-xs font-bold text-slate-500 uppercase tracking-widest">Statut</th>
+<th class="px-8 py-5 text-xs font-bold text-slate-500 uppercase tracking-widest">Date</th>
+<th class="px-8 py-5 text-xs font-bold text-slate-500 uppercase tracking-widest">Traçabilité</th>
+<th class="px-8 py-5 text-xs font-bold text-slate-500 uppercase tracking-widest text-right">Montant</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-xl bg-cover bg-center shadow-inner" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC-ffY0ggTSHScb_O98ajHrbKviOT9JEGH9AQ4EU-dGPUB6Vhle9B7v0m8LcJa-zY3e2EPl9Fd53jYbc22rm_fbzbHylv-YvTSip8g-LWaHC-Ilcvs766M-5NCIbauBbNywFceyw9TobSRMVR4QyBwDKQYnmz0mB8mIf98M5IJ2Wux2LeE5xbfeYOHgKHd6Nyd3VL5frKv4jURwAx6RnX0toI9J36vsbPTon9XArITn3XjjGqHkyFtQrPmMPlm7bLGaFN2LbNiZMkEe');"></div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Manioc Frais (Gros)</p>
+<p class="text-xs text-slate-500">Coopérative de Toumodi</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-accent-orange/10 text-accent-orange">
+                                            En préparation
+                                        </span>
+</td>
+<td class="px-8 py-6 text-sm text-slate-600 dark:text-slate-400">24 Oct. 2023</td>
+<td class="px-8 py-6">
+<button class="flex items-center gap-1 text-xs font-bold text-primary hover:text-primary/80 transition-all">
+<span class="material-symbols-outlined text-sm">verified_user</span> Certifié Bio
+                                        </button>
+</td>
+<td class="px-8 py-6 text-sm font-black text-right text-slate-900 dark:text-white">7.500 FCFA</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-xl bg-cover bg-center shadow-inner" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC3M93bpt4Vb0wzevJpnsiVonrGY5h4TptC-YtPvm_0J6WShXnmF7fWDlJxdjeErTkSzWK2Uv1lKio1z0uW8HYG4bqcSBD5eT4984FZpoapvmUwvEaYsspPNrMchzDVaC6ollOCAN1sYBADqDzIIuDku2tusTt7M-VGR2O_2WFDyBuiOquazLLkgbv5ZrIvjbzuJm6Q2cqfEcoIbThZfAAWIdkzuRYjo04LZyDUzuRDxerPgjObm_MXamNn1fk8ieKxKeLF1czmnr5p');"></div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Panier Mangues Kent</p>
+<p class="text-xs text-slate-500">Vergers de Korhogo</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-primary/10 text-primary">
+                                            Livré
+                                        </span>
+</td>
+<td class="px-8 py-6 text-sm text-slate-600 dark:text-slate-400">21 Oct. 2023</td>
+<td class="px-8 py-6">
+<button class="flex items-center gap-1 text-xs font-bold text-primary hover:text-primary/80 transition-all">
+<span class="material-symbols-outlined text-sm">verified_user</span> Grade A+
+                                        </button>
+</td>
+<td class="px-8 py-6 text-sm font-black text-right text-slate-900 dark:text-white">12.000 FCFA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-slate-900 dark:text-white text-2xl font-black tracking-tight">Producteurs Favoris</h3>
+<a class="text-primary text-sm font-bold hover:underline underline-offset-4" href="#">Découvrir plus</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm hover:border-primary hover:shadow-md transition-all cursor-pointer">
+<div class="relative mb-6">
+<div class="w-full h-32 rounded-xl bg-cover bg-center overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-500" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA7HR85-Pq4BAVjOdlm8QNtpzZmQiG3KEMx7Yc26vAqVcubG4grmnpxtaHNZhyr0ByNF4Sa4CdxyoiKy-eKDcL004ngNGZ9zutiRCRW_zJ5DdoyDQg1g3eyu4vVqBJ1lTe5ugcH61iGX7rypjnVGnU2yPfASYl7_dApcexXp1O7BMblLSJoqBCgCfojeQZ4FO_dQ7bMoET8nt_G7_RxOGzs4B3FpEjkCxL8HT8B4K2w0nDKbn5ug6ToPGkD1D9JOC8g4iG6R8B6rE57');"></div>
+<div class="absolute -bottom-4 left-4 border-4 border-white dark:border-slate-900 rounded-full shadow-md overflow-hidden size-14">
+<img alt="Musa" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGmwE9g89qJwEn7e1hJrjLKZcwCzy3e8qFl6iMfdssK5m7PscuxoMMhzcG7krIOgPNklSvla3YYHy_gk4A_J_ERylTJ6b_xOWYq3SsfR1KoV_DoXNL0V0M7W_6KUvMuhhVhGEczsGMPvoK4sDg46lDScFeYrUVCjZRZ0-Rbf7WkxqSmM9cGabK49XdGoJLE3dV9y9WIyUdtle53zjuRZftJHICPg_uKCDBsm16NdM1wty7HjyrJsc9wXDysnwEp6GJCgDqciCy0qa-"/>
+</div>
+</div>
+<div class="pt-2">
+<h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-primary">Ferme Bio de Moussa</h4>
+<p class="text-xs text-slate-500 mb-4">Manioc, Igname, Épices</p>
+<div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-800 pt-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-yellow-500 fill-current">star</span>
+<span class="text-xs font-bold">4.9</span>
+</div>
+<span class="text-[10px] px-2.5 py-1 rounded-full bg-primary/10 text-primary font-bold">2.4 km</span>
+</div>
+</div>
+</div>
+<div class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm hover:border-primary hover:shadow-md transition-all cursor-pointer">
+<div class="relative mb-6">
+<div class="w-full h-32 rounded-xl bg-cover bg-center overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-500" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBrU-NbzoHT4RaRl1DXD8OyXqp7t9XG6xNeUX4n6Vz9AbD4FsZQkg_luqgFZokoRdfLd6xhh-A-Z2dmGPt2FhFWGgMM6KFSwu6GlVFyJByCYsowyYHavi7XJOkIfFynbxyCl4RsO7UnHKiHb4jDYj6tPbf4uWJn1sYiOfdXREmvWMhdhnpIBvRDZhy2QZWlhyrF1TavduqXBNJFdOTkOT47UKFKnZdxAdi0S5GiBSiQA2L3CTuHEnCgx3A2yi3ttvo48iGzEk1HhqoI');"></div>
+<div class="absolute -bottom-4 left-4 border-4 border-white dark:border-slate-900 rounded-full shadow-md overflow-hidden size-14">
+<img alt="Sarah" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlhfBEBIBcUMTEeDMYuwkgXDdZwKzZNnxdJ2OaSu6SaHbYkM8wilxHvdJ6ClJQl38ZLgjxIIEO04xJIluORvzB7kgdRqNUlfjVSH0n-zKJBsLm2GzNEexwl52UdcSfhUSQVdgjOhr1gR1g5Vln2sYcUAYnFh6bTx-VR8jJx8XP29AoW3jiq501MIfdIgLaxxhObd4xoTXiXZSNPGdKntf0uFvrrLp_DShmV7Y-eYV4M1DnMQNZRMWwrejIjFUO8gXAFmpu7-0VdOgx"/>
+</div>
+</div>
+<div class="pt-2">
+<h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-primary">Élevage de la Comoé</h4>
+<p class="text-xs text-slate-500 mb-4">Viande de Brousse, Volaille</p>
+<div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-800 pt-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-yellow-500 fill-current">star</span>
+<span class="text-xs font-bold">4.8</span>
+</div>
+<span class="text-[10px] px-2.5 py-1 rounded-full bg-primary/10 text-primary font-bold">12 km</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center bg-slate-100/50 dark:bg-slate-800/30 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl p-8 hover:bg-white dark:hover:bg-slate-900 hover:border-primary transition-all cursor-pointer group">
+<div class="size-14 rounded-full bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary">add</span>
+</div>
+<p class="text-sm font-bold text-slate-500 group-hover:text-primary">Ajouter un producteur</p>
+</div>
+</div>
+</section>
+</main>
+</div>
+<nav class="md:hidden flex justify-around items-center bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 p-4 fixed bottom-0 w-full z-50 shadow-lg">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="text-[10px] font-black">Accueil</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">shopping_basket</span>
+<span class="text-[10px] font-black">Marché</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">agriculture</span>
+<span class="text-[10px] font-black">Producteurs</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-black">Profil</span>
+</a>
+</nav>
+</div>
+
+</body></html>

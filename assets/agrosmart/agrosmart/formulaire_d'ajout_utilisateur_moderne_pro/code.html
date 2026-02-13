@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Système de Gestion Agricole - Ajout Utilisateur</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#10B981", // Emerald Green
+              secondary: "#3B82F6", // Blue
+              "background-light": "#F9FAFB",
+              "background-dark": "#111827",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+              sans: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.5rem",
+              'xl': '1rem',
+            },
+          },
+        },
+      };
+    </script>
+<style>
+        .glass-morphism {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="fixed inset-0 z-0 overflow-hidden flex flex-col p-8 filter blur-md">
+<header class="flex justify-between items-center mb-8">
+<div>
+<h1 class="text-3xl font-bold text-slate-800 dark:text-white">Système de Gestion et Supervision Agricole</h1>
+<p class="text-slate-500 dark:text-slate-400">Agriculture Intelligente • Côte d'Ivoire</p>
+</div>
+<button class="bg-primary text-white px-6 py-2.5 rounded-lg font-medium shadow-sm flex items-center gap-2">
+<span class="material-icons-round text-lg">add</span>
+                Ajouter un utilisateur
+            </button>
+</header>
+<div class="grid grid-cols-12 gap-6">
+<div class="col-span-3 bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm border border-slate-200 dark:border-slate-700">
+<nav class="space-y-2">
+<div class="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 p-3 rounded-lg font-semibold">Tableau de Bord</div>
+<div class="p-3 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded-lg">Producteurs</div>
+<div class="p-3 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded-lg">Capteurs</div>
+</nav>
+</div>
+<div class="col-span-9 grid grid-cols-4 gap-4">
+<div class="bg-blue-500 p-6 rounded-xl text-white">
+<p class="text-sm opacity-80">Total Utilisateurs</p>
+<p class="text-4xl font-bold">5</p>
+</div>
+<div class="bg-teal-600 p-6 rounded-xl text-white">
+<p class="text-sm opacity-80">Producteurs</p>
+<p class="text-4xl font-bold">3</p>
+</div>
+<div class="bg-emerald-500 p-6 rounded-xl text-white">
+<p class="text-sm opacity-80">Capteurs En Ligne</p>
+<p class="text-4xl font-bold">2</p>
+</div>
+<div class="bg-amber-500 p-6 rounded-xl text-white">
+<p class="text-sm opacity-80">Avertissements</p>
+<p class="text-4xl font-bold">1</p>
+</div>
+<div class="col-span-4 bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 min-h-[400px]">
+<h3 class="text-lg font-semibold mb-6">Production (tonnes)</h3>
+<div class="w-full h-64 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-center border border-dashed border-slate-300 dark:border-slate-600">
+<span class="text-slate-400">Graphique de production</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 dark:bg-black/60 glass-morphism p-4">
+<div class="bg-white dark:bg-slate-900 w-full max-w-3xl rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in fade-in zoom-in duration-200">
+<div class="px-8 py-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+<div>
+<h2 class="text-xl font-bold text-slate-800 dark:text-white">Ajouter un utilisateur</h2>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Créez un nouveau compte pour la plateforme</p>
+</div>
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+<span class="material-icons-round">close</span>
+</button>
+</div>
+<form class="p-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="nom">Nom</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all dark:text-white" id="nom" placeholder="ex: Kouadio" type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="prenom">Prénom</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all dark:text-white" id="prenom" placeholder="ex: Jean" type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="tel">Téléphone</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all dark:text-white" id="tel" placeholder="+225 00 00 00 00 00" type="tel"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="email">Email</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all dark:text-white" id="email" placeholder="jean.kouadio@email.ci" type="email"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="role">Rôle</label>
+<div class="relative">
+<select class="w-full appearance-none px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all dark:text-white cursor-pointer" id="role">
+<option>Producteur</option>
+<option>Coopérative</option>
+<option>Superviseur</option>
+<option>Administrateur</option>
+</select>
+<span class="material-icons-round absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">expand_more</span>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="statut">Statut</label>
+<div class="relative">
+<select class="w-full appearance-none px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all dark:text-white cursor-pointer" id="statut">
+<option>Actif</option>
+<option>Inactif</option>
+<option>En attente</option>
+</select>
+<span class="material-icons-round absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">expand_more</span>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="region">Région</label>
+<div class="relative">
+<select class="w-full appearance-none px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all dark:text-white cursor-pointer" id="region">
+<option disabled="" selected="" value="">Sélectionner une région</option>
+<option>Abidjan</option>
+<option>Yamoussoukro</option>
+<option>San-Pédro</option>
+<option>Bouaké</option>
+<option>Gagnoa</option>
+</select>
+<span class="material-icons-round absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">expand_more</span>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="coop">Coopérative</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all dark:text-white" id="coop" placeholder="Nom de la coopérative" type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="superficie">Superficie (ha)</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all dark:text-white" id="superficie" placeholder="0.00" type="number"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="langues">Langues</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all dark:text-white" id="langues" placeholder="Ex: Français, Baoulé, Dioula" type="text"/>
+</div>
+</div>
+<div class="flex items-center justify-end gap-3 mt-10">
+<button class="px-6 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors" type="button">
+                        Annuler
+                    </button>
+<button class="bg-primary text-white px-8 py-2.5 rounded-lg font-semibold shadow-lg shadow-emerald-500/20 hover:brightness-105 active:scale-95 transition-all" type="submit">
+                        Ajouter l'utilisateur
+                    </button>
+</div>
+</form>
+</div>
+</div>
+<div class="fixed bottom-4 right-4 z-[100]">
+<button class="p-3 rounded-full bg-white dark:bg-slate-800 shadow-xl border border-slate-200 dark:border-slate-700" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons-round text-slate-600 dark:text-amber-400 block dark:hidden">dark_mode</span>
+<span class="material-icons-round text-slate-600 dark:text-amber-400 hidden dark:block">light_mode</span>
+</button>
+</div>
+
+</body></html>

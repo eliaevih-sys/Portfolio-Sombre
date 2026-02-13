@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tableau de Bord Agent Modernisé</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0F52BA",
+                        secondary: "#6366F1",
+                        accent: "#FFD700",
+                        success: "#10B981",
+                        warning: "#F97316",
+                    },
+                    fontFamily: {
+                        sans: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
+<style type="text/tailwindcss">
+        @layer components {
+            .glass-card {
+                @apply bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl border border-white/20 dark:border-slate-700/50 shadow-xl;
+            }
+            .nav-link {
+                @apply flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary dark:hover:text-white;
+            }
+            .nav-link-active {
+                @apply flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 bg-primary/10 text-primary font-semibold;
+            }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
+<aside class="fixed left-0 top-0 h-full w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 hidden lg:flex flex-col z-50">
+<div class="p-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined">wb_sunny</span>
+</div>
+<h1 class="text-2xl font-bold tracking-tight text-slate-800 dark:text-white">SunGrid</h1>
+</div>
+</div>
+<nav class="flex-1 px-6 space-y-2">
+<p class="px-4 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">Menu Principal</p>
+<a class="nav-link-active" href="#">
+<span class="material-symbols-outlined">dashboard</span> Tableau de bord
+            </a>
+<a class="nav-link" href="#">
+<span class="material-symbols-outlined">analytics</span> Rapports
+            </a>
+<a class="nav-link" href="#">
+<span class="material-symbols-outlined">map</span> Carte
+            </a>
+<a class="nav-link" href="#">
+<span class="material-symbols-outlined">location_city</span> Villages
+            </a>
+<a class="nav-link" href="#">
+<span class="material-symbols-outlined">photo_library</span> Photos
+            </a>
+</nav>
+<div class="p-6 mt-auto border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3 px-4 py-3 mb-2">
+<div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-slate-400">person</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-800 dark:text-white">Evih Elia</span>
+<span class="text-xs text-slate-500">Agent de terrain</span>
+</div>
+</div>
+<button class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-symbols-outlined dark:hidden">dark_mode</span>
+<span class="material-symbols-outlined hidden dark:block">light_mode</span>
+<span>Thème visuel</span>
+</button>
+</div>
+</aside>
+<main class="lg:ml-72 min-h-screen pb-24">
+<header class="sticky top-0 z-40 bg-[#F8FAFC]/80 dark:bg-slate-950/80 backdrop-blur-md px-6 py-6 md:px-12 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h2 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Bienvenue, Evih Elia</h2>
+<div class="flex items-center gap-3 mt-1 text-slate-500">
+<span class="flex items-center gap-1 text-sm">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                        Mercredi 24 Mai 2024
+                    </span>
+<span class="w-1 h-1 rounded-full bg-slate-300"></span>
+<span class="flex items-center gap-1 text-sm">
+<span class="material-symbols-outlined text-sm text-amber-500">wb_sunny</span>
+                        28°C • Région du Nord
+                    </span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 bg-success/10 text-success px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-success animate-pulse"></span>
+                    En ligne
+                </div>
+<button class="p-3 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 relative hover:shadow-lg transition-all">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-3 right-3 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-slate-800"></span>
+</button>
+</div>
+</header>
+<div class="px-6 md:px-12 space-y-12">
+<section>
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold text-slate-800 dark:text-slate-200">Vue d'ensemble</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="relative overflow-hidden group bg-gradient-to-br from-blue-600 to-primary p-8 rounded-[2.5rem] text-white shadow-2xl shadow-primary/20">
+<div class="absolute -right-8 -top-8 w-40 h-40 bg-white/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-700"></div>
+<div class="relative z-10">
+<div class="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-3xl">location_city</span>
+</div>
+<p class="text-blue-100 font-medium tracking-wide">Villages Assignés</p>
+<h4 class="text-6xl font-black mt-2 tracking-tighter">12</h4>
+</div>
+</div>
+<div class="relative overflow-hidden group bg-gradient-to-br from-emerald-500 to-success p-8 rounded-[2.5rem] text-white shadow-2xl shadow-success/20">
+<div class="absolute -right-8 -top-8 w-40 h-40 bg-white/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-700"></div>
+<div class="relative z-10">
+<div class="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-3xl">bolt</span>
+</div>
+<p class="text-emerald-50 font-medium tracking-wide">Installations Actives</p>
+<h4 class="text-6xl font-black mt-2 tracking-tighter">45</h4>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold text-slate-800 dark:text-slate-200">Actions Rapides</h3>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+<button class="glass-card group p-8 rounded-[2rem] hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center">
+<div class="mb-6 w-20 h-20 rounded-3xl bg-amber-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-5xl text-amber-500">add_chart</span>
+</div>
+<span class="text-lg font-bold text-slate-700 dark:text-slate-200">Rapport</span>
+<span class="text-xs text-slate-400 mt-1">Créer un relevé</span>
+</button>
+<button class="glass-card group p-8 rounded-[2rem] hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center">
+<div class="mb-6 w-20 h-20 rounded-3xl bg-blue-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-5xl text-blue-500">explore</span>
+</div>
+<span class="text-lg font-bold text-slate-700 dark:text-slate-200">Carte</span>
+<span class="text-xs text-slate-400 mt-1">Navigation terrain</span>
+</button>
+<button class="glass-card group p-8 rounded-[2rem] hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center">
+<div class="mb-6 w-20 h-20 rounded-3xl bg-indigo-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-5xl text-indigo-500">groups</span>
+</div>
+<span class="text-lg font-bold text-slate-700 dark:text-slate-200">Villages</span>
+<span class="text-xs text-slate-400 mt-1">Liste des zones</span>
+</button>
+<button class="glass-card group p-8 rounded-[2rem] hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center">
+<div class="mb-6 w-20 h-20 rounded-3xl bg-pink-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-5xl text-pink-500">photo_camera</span>
+</div>
+<span class="text-lg font-bold text-slate-700 dark:text-slate-200">Photo</span>
+<span class="text-xs text-slate-400 mt-1">Capturer preuves</span>
+</button>
+</div>
+</section>
+<section class="pb-12">
+<div class="relative overflow-hidden bg-gradient-to-r from-amber-500 via-orange-500 to-warning rounded-[2.5rem] p-8 md:p-10 text-white shadow-2xl shadow-orange-500/30">
+<div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full -ml-20 -mb-20 blur-3xl"></div>
+<div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+<div class="flex items-center gap-6">
+<div class="w-20 h-20 bg-white/20 backdrop-blur-xl rounded-3xl flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-5xl">sync</span>
+</div>
+<div>
+<h4 class="text-2xl md:text-3xl font-black tracking-tight">Centre de Synchronisation</h4>
+<p class="text-white/90 font-medium mt-1">8 rapports sont prêts à être envoyés.</p>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+<button class="px-8 py-5 bg-white text-orange-600 hover:bg-slate-50 rounded-[1.5rem] font-bold text-lg shadow-xl hover:shadow-2xl transition-all active:scale-95 flex items-center justify-center gap-3">
+<span class="material-symbols-outlined font-bold">cloud_upload</span>
+                                Synchroniser maintenant
+                            </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<div class="lg:hidden fixed bottom-6 right-6 z-50">
+<button class="w-16 h-16 bg-primary text-white rounded-2xl shadow-2xl flex items-center justify-center hover:scale-110 transition-transform active:scale-90">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+</div>
+<div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 px-6 py-4 flex justify-between items-center z-40">
+<button class="text-primary flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-bold uppercase">Accueil</span>
+</button>
+<button class="text-slate-400 flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">map</span>
+<span class="text-[10px] font-bold uppercase">Carte</span>
+</button>
+<div class="w-12"></div>
+<button class="text-slate-400 flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">location_city</span>
+<span class="text-[10px] font-bold uppercase">Villages</span>
+</button>
+<button class="text-slate-400 flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold uppercase">Profil</span>
+</button>
+</div>
+
+</body></html>

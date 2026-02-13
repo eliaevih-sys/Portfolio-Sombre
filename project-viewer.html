@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Showcase Pro - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-viewer: #050816;
+            --accent-glow: rgba(99, 102, 241, 0.4);
+        }
+
+        body {
+            background-color: var(--bg-viewer);
+            color: var(--white);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* --- STICKY NAV --- */
+        .showcase-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            background: rgba(5, 8, 22, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            z-index: 2000;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        /* --- HEADER --- */
+        .showcase-header {
+            padding: 12rem 5% 5rem;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .showcase-header h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 30%, #6366f1 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- SECTIONS --- */
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-family: 'Space Grotesk';
+            font-size: 2.5rem;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* MOBILE GRID */
+        .mobile-showcase {
+            padding: 5rem 5%;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .mobile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .mobile-item {
+            aspect-ratio: 9 / 19;
+            width: 100%;
+            border-radius: 30px;
+            overflow: hidden;
+            background: #000;
+            border: 8px solid #1e293b;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            transition: transform 0.5s ease;
+            display: flex;
+        }
+
+        .mobile-item:hover {
+            transform: translateY(-15px);
+        }
+
+        .mobile-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            display: block;
+        }
+
+        /* WEB SHOWCASE */
+        .web-showcase {
+            padding: 8rem 5%;
+        }
+
+        .web-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .web-item {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .web-item::before {
+            content: 'Desktop View';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 12px;
+            z-index: 10;
+        }
+
+        .web-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .mockup-caption {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 500;
+        }
+
+        /* --- FOOTER --- */
+        .showcase-footer {
+            padding: 10rem 5%;
+            text-align: center;
+            background: linear-gradient(to top, rgba(99, 102, 241, 0.05), transparent);
+        }
+
+        @media (max-width: 768px) {
+            .shortcut-btn {
+                display: none;
+            }
+
+            .mobile-grid {
+                grid-template-columns: 1fr;
+                max-width: 320px;
+            }
+
+            .web-list {
+                gap: 4rem;
+            }
+        }
+
+        /* --- SCROLL PROGRESS --- */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: var(--primary);
+            z-index: 10001;
+            box-shadow: 0 0 10px var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grain-overlay"></div>
+    <div class="custom-cursor"></div>
+    <div class="cursor-follower"></div>
+    <div id="scroll-progress"></div>
+    <nav class="showcase-nav">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            <span>Retour</span>
+        </a>
+        <div class="header-status">
+            <span class="modal-badge">Design Portfolio</span>
+        </div>
+    </nav>
+
+    <header class="showcase-header">
+        <p class="highlight" style="letter-spacing: 4px; font-weight: 600; text-transform: uppercase;">Case Study</p>
+        <h1 id="project-title">...</h1>
+        <p id="project-desc" style="font-size: 1.2rem; color: rgba(255,255,255,0.6); line-height: 1.8;"></p>
+    </header>
+
+    <!-- MOBILE SECTION -->
+    <section class="mobile-showcase" id="mobile-section">
+        <div class="section-title">
+            <h2>Expérience Mobile</h2>
+            <p style="color: rgba(255,255,255,0.4);">Interface native & Responsive</p>
+        </div>
+        <div class="mobile-grid" id="mobile-grid">
+            <!-- Mobile images here -->
+        </div>
+    </section>
+
+    <!-- WEB SECTION -->
+    <section class="web-showcase" id="web-section">
+        <div class="section-title">
+            <h2>Interface Web</h2>
+            <p style="color: rgba(255,255,255,0.4);">Dashboard & Plateforme de gestion</p>
+        </div>
+        <div class="web-list" id="web-list">
+            <!-- Web images here -->
+        </div>
+    </section>
+
+    <footer class="showcase-footer">
+        <h2 style="font-family: 'Space Grotesk'; font-size: 2.5rem; margin-bottom: 2rem;">Prêt pour la suite ?</h2>
+        <a href="index.html" class="cta-button primary">Retour à l'accueil</a>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            const params = new URLSearchParams(window.location.search);
+            const projectId = params.get('id') || 'sungrid';
+
+            const projectData = {
+                agrosmart: {
+                    title: "AgroSmart",
+                    description: "Digitalisation de l'agriculture. Une approche modulaire pour surveiller et optimiser les ressources naturelles en temps réel.",
+                    mobile: [],
+                    web: [
+                        { url: "assets/agrosmart/agrosmart/tableau_de_bord_agricole_-_modern_ui/screen.png", caption: "Tableau de Bord Moderne" },
+                        { url: "assets/agrosmart/agrosmart/supervision_des_capteurs_-_grid_view/screen.png", caption: "Supervision des Capteurs" },
+                        { url: "assets/agrosmart/agrosmart/formulaire_d'ajout_utilisateur_moderne_pro/screen.png", caption: "Formulaire d'Ajout Moderne" }
+                    ]
+                },
+                sungrid: {
+                    title: "SunGrid",
+                    description: "L'énergie solaire simplifiée. Un écosystème complet regroupant application mobile grand public et outils professionnels web.",
+                    mobile: [
+                        { url: "assets/sungrid/mobile/sungrid-mobile/sungrid_inscription/screen.png", caption: "Inscription" },
+                        { url: "assets/sungrid/mobile/sungrid-mobile/sungrid_connexion/screen.png", caption: "Connexion" },
+                        { url: "assets/sungrid/mobile/sungrid-mobile/onboarding_-_track_consumption/screen.png", caption: "Onboarding 1" },
+                        { url: "assets/sungrid/mobile/sungrid-mobile/onboarding_-_locate_installations/screen.png", caption: "Onboarding 2" },
+                        { url: "assets/sungrid/mobile/sungrid-mobile/onboarding_-_offline_mode/screen.png", caption: "Onboarding 3" },
+                        { url: "assets/sungrid/mobile/sungrid-mobile/sungrid_tableau_de_bord/screen.png", caption: "Dashboard Client" }
+                    ],
+                    web: [
+                        { url: "assets/sungrid/web/stitch_sungrid_web/sungrid_agent_dashboard_redesign_1/screen.png", caption: "Agent Interface v1" },
+                        { url: "assets/sungrid/web/stitch_sungrid_web/sungrid_agent_dashboard_redesign_2/screen.png", caption: "Agent Interface v2" },
+                        { url: "assets/sungrid/web/stitch_sungrid_web/carte_des_installations_modernisée/screen.png", caption: "Cartographie Interactive" }
+                    ]
+                },
+                nourrici: {
+                    title: "Nourrici",
+                    description: "Plateforme e-commerce dédiée aux produits alimentaires locaux et biologiques avec une expérience utilisateur optimisée.",
+                    mobile: [],
+                    web: [
+                        { url: "assets/Nourrici/user_dashboard/screen.png", caption: "Tableau de Bord Utilisateur" },
+                        { url: "assets/Nourrici/marketplace_catalog/screen.png", caption: "Catalogue Marketplace" },
+                        { url: "assets/Nourrici/nourrici_product_details/screen.png", caption: "Détails Produit" },
+                        { url: "assets/Nourrici/nourrici_shopping_cart/screen.png", caption: "Panier d'achat" }
+                    ]
+                }
+            };
+
+            const data = projectData[projectId];
+            if (!data) { window.location.href = 'index.html'; return; }
+
+            document.getElementById('project-title').innerText = data.title;
+            document.getElementById('project-desc').innerText = data.description;
+
+            // RENDER MOBILE
+            const mobileGrid = document.getElementById('mobile-grid');
+            if (data.mobile.length > 0) {
+                data.mobile.forEach(m => {
+                    const item = document.createElement('div');
+                    item.className = 'mobile-item';
+                    item.innerHTML = `<img src="${m.url}" alt="${m.caption}">`;
+                    mobileGrid.appendChild(item);
+                });
+            } else {
+                document.getElementById('mobile-section').style.display = 'none';
+            }
+
+            // RENDER WEB
+            const webList = document.getElementById('web-list');
+            if (data.web.length > 0) {
+                data.web.forEach(w => {
+                    const wrap = document.createElement('div');
+                    wrap.className = 'web-item-wrapper';
+                    wrap.innerHTML = `
+                        <div class="web-item"><img src="${w.url}" alt="${w.caption}"></div>
+                        <p class="mockup-caption">${w.caption}</p>
+                    `;
+                    webList.appendChild(wrap);
+                });
+            } else {
+                document.getElementById('web-section').style.display = 'none';
+            }
+
+            // --- SCROLL PROGRESS ---
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                gsap.to("#scroll-progress", { width: scrolled + "%", duration: 0.1 });
+            });
+
+            // --- CUSTOM CURSOR ---
+            const cursor = document.querySelector('.custom-cursor');
+            const follower = document.querySelector('.cursor-follower');
+            let mouseX = 0, mouseY = 0;
+            let followerX = 0, followerY = 0;
+
+            if (cursor && follower) {
+                window.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    gsap.to(cursor, { x: mouseX - 5, y: mouseY - 5, duration: 0.1 });
+                });
+
+                const animateFollower = () => {
+                    followerX += (mouseX - followerX) * 0.15;
+                    followerY += (mouseY - followerY) * 0.15;
+                    gsap.set(follower, { x: followerX - 20, y: followerY - 20 });
+                    requestAnimationFrame(animateFollower);
+                };
+                animateFollower();
+
+                document.querySelectorAll('a, button').forEach(el => {
+                    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
+                    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
+                });
+            }
+
+            // --- 3D TILT EFFECT ---
+            gsap.utils.toArray('.mobile-item, .web-item').forEach(el => {
+                el.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = (y - centerY) / 20;
+                    const rotateY = (centerX - x) / 20;
+
+                    gsap.to(el, {
+                        rotateX: rotateX,
+                        rotateY: rotateY,
+                        scale: 1.05,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                });
+
+                el.addEventListener('mouseleave', () => {
+                    gsap.to(el, {
+                        rotateX: 0,
+                        rotateY: 0,
+                        scale: 1,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                });
+
+                // Reveal animation
+                gsap.from(el, {
+                    opacity: 0,
+                    y: 50,
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    }
+                });
+            });
+
+            const grain = document.querySelector('.grain-overlay');
+            if (grain) {
+                gsap.to(grain, {
+                    x: '+=5', y: '+=5', duration: 0.1, repeat: -1, yoyo: true, ease: "none"
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>SunGrid - Trouvez vos installations</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#FFC107",
+              "background-light": "#FFFFFF",
+              "background-dark": "#0F172A",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "12px",
+            },
+          },
+        },
+      };
+    </script>
+<style type="text/tailwindcss">
+        :root {
+            --ios-status-bar: 44px;
+            --ios-home-indicator-height: 34px;
+            --ios-home-indicator-width: 134px;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            height: 100dvh;
+            overflow: hidden;
+        }
+        .status-bar-height {
+            height: var(--ios-status-bar);
+        }
+        .home-indicator-container {
+            height: var(--ios-home-indicator-height);
+        }
+        .home-indicator {
+            width: var(--ios-home-indicator-width);
+            height: 5px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 flex flex-col">
+<div class="status-bar-height flex justify-between items-center px-6 w-full shrink-0">
+<span class="text-[15px] font-semibold">9:41</span>
+<div class="flex items-center gap-1.5">
+<span class="material-icons-round text-[18px]">signal_cellular_alt</span>
+<span class="material-icons-round text-[18px]">wifi</span>
+<span class="material-icons-round text-[22px] rotate-90">battery_full</span>
+</div>
+</div>
+<main class="flex-1 flex flex-col items-center justify-center px-8">
+<div class="w-full flex justify-center mb-12">
+<div class="relative w-64 h-64 flex items-center justify-center bg-primary/10 dark:bg-primary/5 rounded-full">
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-48 h-48 bg-white dark:bg-slate-800 rounded-2xl shadow-xl flex items-center justify-center overflow-hidden border border-slate-100 dark:border-slate-700">
+<div class="w-full h-full relative">
+<div class="absolute inset-0 opacity-20 bg-[radial-gradient(#ccc_1px,transparent_1px)] [background-size:16px_16px]"></div>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="material-icons-round text-6xl text-primary drop-shadow-sm">solar_power</span>
+<div class="mt-2 flex items-center gap-1 bg-primary px-3 py-1 rounded-full text-white text-[10px] font-bold uppercase tracking-wider">
+<span class="material-icons-round text-[12px]">location_on</span>
+                                    En ligne
+                                </div>
+</div>
+<div class="absolute top-4 left-4 w-8 h-1 bg-slate-200 dark:bg-slate-700 rounded"></div>
+<div class="absolute bottom-4 right-4 w-12 h-12 bg-primary/20 rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="absolute -top-4 -right-2 w-12 h-12 bg-primary rounded-xl flex items-center justify-center shadow-lg transform rotate-12">
+<span class="material-icons-round text-white">gps_fixed</span>
+</div>
+</div>
+</div>
+<div class="text-center max-w-sm">
+<h1 class="text-2xl font-bold mb-3 tracking-tight text-slate-900 dark:text-white">
+                Trouvez vos installations
+            </h1>
+<p class="text-slate-500 dark:text-slate-400 leading-relaxed">
+                Localisez facilement vos panneaux solaires et gérez vos sites en un clin d'œil.
+            </p>
+</div>
+</main>
+<footer class="px-8 flex flex-col items-center shrink-0">
+<div class="flex gap-2 mb-8">
+<div class="w-2 h-2 rounded-full bg-slate-200 dark:bg-slate-700"></div>
+<div class="w-6 h-2 rounded-full bg-primary transition-all duration-300"></div>
+<div class="w-2 h-2 rounded-full bg-slate-200 dark:bg-slate-700"></div>
+</div>
+<button class="w-full bg-primary hover:bg-yellow-500 active:scale-[0.98] transition-all py-4 rounded-2xl text-slate-900 font-bold text-lg shadow-lg shadow-primary/20">
+            Suivant
+        </button>
+<div class="home-indicator-container flex items-center justify-center w-full">
+<div class="home-indicator bg-slate-900/20 dark:bg-white/20 rounded-full"></div>
+</div>
+</footer>
+
+</body></html>

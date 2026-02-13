@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Système de Gestion Agricole - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Outfit:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#22c55e", // A vibrant agricultural green
+              "background-light": "#f8fafc",
+              "background-dark": "#0f172a",
+              "card-light": "#ffffff",
+              "card-dark": "#1e293b",
+            },
+            fontFamily: {
+              display: ["Outfit", "sans-serif"],
+              sans: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "12px",
+            },
+          },
+        },
+      };
+    </script>
+<style>
+        .active-tab {
+            border-bottom: 3px solid #3b82f6;
+            color: #3b82f6;
+        }
+        .chart-container {
+            height: 350px;
+            width: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        .line-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 3s linear forwards;
+        }
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 transition-colors duration-300 font-sans">
+<header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h1 class="font-display text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+                    Système de Gestion et Supervision Agricole
+                </h1>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                    Agriculture intelligente - Côte d'Ivoire
+                </p>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary hover:bg-green-600 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 transition-all shadow-lg shadow-green-500/20 active:scale-95">
+<span class="material-icons-round">person_add</span>
+                    Ajouter un utilisateur
+                </button>
+<button class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:ring-2 ring-primary/50 transition-all" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons-round block dark:hidden">dark_mode</span>
+<span class="material-icons-round hidden dark:block">light_mode</span>
+</button>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-6">
+<nav class="flex overflow-x-auto gap-8 pt-4">
+<a class="pb-3 px-1 border-b-4 border-blue-500 text-blue-600 dark:text-blue-400 font-semibold whitespace-nowrap" href="#">Tableau de Bord</a>
+<a class="pb-3 px-1 border-b-4 border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 font-medium whitespace-nowrap transition-all" href="#">Producteurs</a>
+<a class="pb-3 px-1 border-b-4 border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 font-medium whitespace-nowrap transition-all" href="#">Capteurs</a>
+<a class="pb-3 px-1 border-b-4 border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 font-medium whitespace-nowrap transition-all" href="#">Qualité</a>
+<a class="pb-3 px-1 border-b-4 border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 font-medium whitespace-nowrap transition-all" href="#">Mise à jour</a>
+</nav>
+</div>
+</header>
+<main class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4">
+<div class="lg:col-span-3 flex flex-col gap-5">
+<div class="bg-blue-500 text-white p-6 rounded-3xl shadow-xl shadow-blue-500/10 relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-blue-100 font-medium text-sm">Total Utilisateurs</p>
+<h2 class="text-5xl font-bold mt-2">5</h2>
+</div>
+<span class="material-icons-round absolute -right-4 -bottom-4 text-9xl opacity-10 group-hover:scale-110 transition-transform">people</span>
+</div>
+<div class="bg-[#1a434d] text-white p-6 rounded-3xl shadow-xl shadow-slate-900/10 relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-teal-100/70 font-medium text-sm">Producteurs</p>
+<h2 class="text-5xl font-bold mt-2">3</h2>
+</div>
+<span class="material-icons-round absolute -right-4 -bottom-4 text-9xl opacity-10 group-hover:scale-110 transition-transform">agriculture</span>
+</div>
+<div class="bg-emerald-500 text-white p-6 rounded-3xl shadow-xl shadow-emerald-500/10 relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-emerald-100 font-medium text-sm">Capteurs En Ligne</p>
+<h2 class="text-5xl font-bold mt-2">2</h2>
+</div>
+<span class="material-icons-round absolute -right-4 -bottom-4 text-9xl opacity-10 group-hover:scale-110 transition-transform">sensors</span>
+</div>
+<div class="bg-amber-400 text-white p-6 rounded-3xl shadow-xl shadow-amber-500/10 relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-amber-100 font-medium text-sm">Avertissements</p>
+<h2 class="text-5xl font-bold mt-2">1</h2>
+</div>
+<span class="material-icons-round absolute -right-4 -bottom-4 text-9xl opacity-10 group-hover:scale-110 transition-transform">warning</span>
+</div>
+</div>
+<div class="lg:col-span-9">
+<div class="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 h-full">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-display text-xl font-bold text-slate-800 dark:text-white">Rapport Mensuel - Evolution de la Production</h3>
+<div class="flex gap-2">
+<span class="flex items-center gap-2 text-xs font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full">
+<span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                            Production (tonnes)
+                        </span>
+</div>
+</div>
+<div class="relative w-full aspect-[2/1] min-h-[400px]">
+<div class="absolute inset-0 flex flex-col justify-between border-l border-b border-slate-200 dark:border-slate-700 ml-10 mb-10">
+<div class="flex flex-col h-full justify-between">
+<div class="border-t border-slate-100 dark:border-slate-800 w-full relative">
+<span class="absolute -left-12 -top-3 text-xs text-slate-400 font-medium">1000</span>
+</div>
+<div class="border-t border-slate-100 dark:border-slate-800 w-full relative">
+<span class="absolute -left-12 -top-3 text-xs text-slate-400 font-medium">750</span>
+</div>
+<div class="border-t border-slate-100 dark:border-slate-800 w-full relative">
+<span class="absolute -left-12 -top-3 text-xs text-slate-400 font-medium">500</span>
+</div>
+<div class="border-t border-slate-100 dark:border-slate-800 w-full relative">
+<span class="absolute -left-12 -top-3 text-xs text-slate-400 font-medium">250</span>
+</div>
+<div class="relative">
+<span class="absolute -left-12 -top-3 text-xs text-slate-400 font-medium">0</span>
+</div>
+</div>
+</div>
+<svg class="absolute inset-0 ml-10 mb-10 w-[calc(100%-40px)] h-[calc(100%-40px)] overflow-visible" viewBox="0 0 1000 400">
+<defs>
+<linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#3b82f6" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#3b82f6" stop-opacity="0"></stop>
+</linearGradient>
+</defs>
+<path d="M 0 200 Q 150 180 300 120 T 600 80 T 1000 20 L 1000 400 L 0 400 Z" fill="url(#chartGradient)"></path>
+<path class="line-path" d="M 0 200 Q 150 180 300 120 T 600 80 T 1000 20" fill="none" stroke="#3b82f6" stroke-linecap="round" stroke-width="4"></path>
+<circle cx="0" cy="200" fill="white" r="6" stroke="#3b82f6" stroke-width="3"></circle>
+<circle cx="166" cy="185" fill="white" r="6" stroke="#3b82f6" stroke-width="3"></circle>
+<circle cx="333" cy="125" fill="white" r="6" stroke="#3b82f6" stroke-width="3"></circle>
+<circle cx="500" cy="100" fill="white" r="6" stroke="#3b82f6" stroke-width="3"></circle>
+<circle cx="666" cy="85" fill="white" r="6" stroke="#3b82f6" stroke-width="3"></circle>
+<circle cx="833" cy="50" fill="white" r="6" stroke="#3b82f6" stroke-width="3"></circle>
+<circle cx="1000" cy="20" fill="white" r="6" stroke="#3b82f6" stroke-width="3"></circle>
+</svg>
+<div class="absolute bottom-0 left-10 right-0 flex justify-between h-8 items-center text-xs font-semibold text-slate-500 dark:text-slate-400">
+<span>Mar</span>
+<span>Avr</span>
+<span>Mai</span>
+<span>Juin</span>
+<span>Juil</span>
+<span>Août</span>
+<span>Sept</span>
+</div>
+</div>
+<div class="mt-4 text-center">
+<p class="text-blue-500 font-bold text-sm tracking-wide">PRODUCTION (TONNES)</p>
+</div>
+</div>
+</div>
+</main>
+<section class="max-w-7xl mx-auto px-6 py-12">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-white dark:bg-slate-900 border-l-4 border-emerald-500 p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<h4 class="font-bold text-slate-800 dark:text-white">Capteur Sol A1</h4>
+<span class="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold px-2 py-1 rounded-full uppercase">En ligne</span>
+</div>
+<div class="space-y-2 text-sm">
+<div class="flex justify-between">
+<span class="text-slate-400">Type</span>
+<span class="font-medium">Humidité Sol</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-400">Ferme</span>
+<span class="font-medium text-right">Ferme Yamoussoukro</span>
+</div>
+<div class="flex justify-between border-t border-slate-50 dark:border-slate-800 pt-2 mt-2">
+<span class="text-slate-400">Signal</span>
+<span class="font-bold text-emerald-500">2 min</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 border-l-4 border-amber-500 p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<h4 class="font-bold text-slate-800 dark:text-white">Capteur Météo B2</h4>
+<span class="bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 text-[10px] font-bold px-2 py-1 rounded-full uppercase">Alerte</span>
+</div>
+<div class="space-y-2 text-sm">
+<div class="flex justify-between">
+<span class="text-slate-400">Type</span>
+<span class="font-medium">Station Météo</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-400">Ferme</span>
+<span class="font-medium text-right">Ferme Yamoussoukro</span>
+</div>
+<div class="flex justify-between border-t border-slate-50 dark:border-slate-800 pt-2 mt-2">
+<span class="text-slate-400">Signal</span>
+<span class="font-bold text-amber-500">15 min</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-5 rounded-xl shadow-sm col-span-1 md:col-span-2 flex items-center gap-6">
+<div class="flex-1">
+<p class="text-xs text-slate-400 uppercase font-bold tracking-wider mb-1">Qualité Moyenne</p>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-bold">98.4%</span>
+<span class="text-emerald-500 text-xs font-bold mb-1">+0.2%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full mt-3 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 98.4%"></div>
+</div>
+</div>
+<div class="w-px h-full bg-slate-100 dark:bg-slate-800"></div>
+<div class="flex flex-col items-center">
+<span class="material-icons-round text-primary text-4xl">verified</span>
+<span class="text-[10px] font-bold text-slate-400 mt-1 uppercase">Certifié</span>
+</div>
+</div>
+</div>
+</section>
+<section class="max-w-7xl mx-auto px-6 pb-20">
+<div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
+<div class="p-6 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center">
+<h3 class="font-display font-bold text-lg">Producteurs Récents</h3>
+<button class="text-primary font-bold text-sm hover:underline">Voir tout</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-slate-50 dark:bg-slate-800/50">
+<tr>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Utilisateur</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Région</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Statut</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Dernier Accès</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-50 dark:divide-slate-800">
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-300 font-bold">TS</div>
+<div>
+<p class="font-bold text-sm">Touré Soraya</p>
+<p class="text-xs text-slate-400">ID: 1</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium">Bouaké</td>
+<td class="px-6 py-4">
+<span class="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 text-xs px-2.5 py-1 rounded-lg font-bold">Actif</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500">14/12/2024</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg"><span class="material-icons-round text-sm">edit</span></button>
+<button class="p-2 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-lg"><span class="material-icons-round text-sm">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-teal-100 dark:bg-teal-900 flex items-center justify-center text-teal-600 dark:text-teal-300 font-bold">AT</div>
+<div>
+<p class="font-bold text-sm">Amani Thierry</p>
+<p class="text-xs text-slate-400">ID: 2</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium">Yamoussoukro</td>
+<td class="px-6 py-4">
+<span class="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 text-xs px-2.5 py-1 rounded-lg font-bold">Actif</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500">11/02/2025</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg"><span class="material-icons-round text-sm">edit</span></button>
+<button class="p-2 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-lg"><span class="material-icons-round text-sm">delete</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<div class="md:hidden fixed bottom-6 left-6 right-6 bg-slate-900 text-white rounded-2xl p-4 flex justify-around shadow-2xl">
+<span class="material-icons-round text-blue-400">dashboard</span>
+<span class="material-icons-round opacity-50">group</span>
+<span class="material-icons-round opacity-50">sensors</span>
+<span class="material-icons-round opacity-50">settings</span>
+</div>
+
+</body></html>

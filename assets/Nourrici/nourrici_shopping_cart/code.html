@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mon Panier Nourrici - Terroir Ivoirien</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF8200", // Orange Ivoirien
+                        "secondary": "#009E60", // Vert Ivoirien
+                        "background-light": "#FAFAFA",
+                        "background-dark": "#121212",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.375rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .ivorian-gradient {
+                background: linear-gradient(to right, #FF8200 33%, #FFFFFF 33%, #FFFFFF 66%, #009E60 66%);
+                height: 4px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen text-[#1a1a1a] dark:text-white">
+<div class="ivorian-gradient"></div>
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-gray-800 px-6 md:px-10 py-4 bg-white dark:bg-background-dark sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-secondary">
+<div class="flex items-center justify-center bg-secondary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-3xl">agriculture</span>
+</div>
+<div class="flex flex-col">
+<h2 class="text-[#1a1a1a] dark:text-white text-xl font-bold leading-tight tracking-tight">Mon Panier Nourrici</h2>
+<span class="text-[10px] uppercase tracking-widest text-primary font-bold">Produits de Côte d'Ivoire</span>
+</div>
+</div>
+<div class="hidden lg:flex items-center gap-8">
+<a class="text-[#4a4a4a] dark:text-white/80 text-sm font-semibold hover:text-secondary transition-colors" href="#">Le Marché</a>
+<a class="text-[#4a4a4a] dark:text-white/80 text-sm font-semibold hover:text-secondary transition-colors" href="#">Nos Agriculteurs</a>
+<a class="text-[#4a4a4a] dark:text-white/80 text-sm font-semibold hover:text-secondary transition-colors" href="#">Traçabilité</a>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-4">
+<label class="hidden md:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-white/5">
+<div class="text-gray-400 flex items-center justify-center pl-3">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent text-sm focus:outline-0 focus:ring-0 h-full placeholder:text-gray-500 px-3" placeholder="Chercher un produit..." value=""/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-white relative">
+<span class="material-symbols-outlined">shopping_basket</span>
+<span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">3</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-white">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex flex-1 justify-center py-8">
+<div class="layout-content-container flex flex-col max-w-[1200px] w-full px-4 md:px-10">
+<div class="flex flex-wrap gap-2 py-2 text-gray-500">
+<a class="text-sm font-medium hover:text-secondary" href="#">Accueil</a>
+<span class="text-sm">/</span>
+<a class="text-sm font-medium hover:text-secondary" href="#">Marché Local</a>
+<span class="text-sm">/</span>
+<span class="text-secondary font-bold text-sm">Mon Panier</span>
+</div>
+<div class="flex flex-wrap justify-between items-center gap-3 py-8">
+<div class="flex flex-col gap-2">
+<h1 class="text-[#1a1a1a] dark:text-white text-3xl md:text-4xl font-black leading-tight">Votre Panier</h1>
+<p class="text-gray-600 dark:text-gray-400 text-base font-medium flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary font-bold">verified_user</span>
+                            3 produits bio en direct des plantations
+                        </p>
+</div>
+<a class="bg-secondary/10 text-secondary px-4 py-2 rounded-lg font-bold text-sm hover:bg-secondary hover:text-white transition-all" href="#">Continuer mes achats</a>
+</div>
+<div class="flex flex-col lg:flex-row gap-8">
+<div class="flex-1">
+<div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-white/5 shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-gray-50 dark:bg-white/5 border-b border-gray-200 dark:border-gray-800">
+<th class="px-6 py-4 text-gray-600 dark:text-gray-300 text-xs font-bold uppercase tracking-wider">Produit</th>
+<th class="px-6 py-4 text-gray-600 dark:text-gray-300 text-xs font-bold uppercase tracking-wider hidden md:table-cell">Producteur / Localité</th>
+<th class="px-6 py-4 text-gray-600 dark:text-gray-300 text-xs font-bold uppercase tracking-wider">Prix Unit.</th>
+<th class="px-6 py-4 text-gray-600 dark:text-gray-300 text-xs font-bold uppercase tracking-wider">Quantité</th>
+<th class="px-6 py-4 text-gray-600 dark:text-gray-300 text-xs font-bold uppercase tracking-wider">Sous-total</th>
+<th class="px-6 py-4 text-right"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+<tr class="hover:bg-gray-50/50 dark:hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-6">
+<div class="flex items-center gap-4">
+<div class="h-20 w-20 bg-center bg-no-repeat bg-cover rounded-lg flex-shrink-0 border border-gray-100 shadow-sm" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAFNapOcz_wG-Oid3g27DHEH7DH7u-JIgyLoxIBeQu5vPunuy4vy7U2ltqI_l33XIPamsglUwuX4UXPVhK6DkLKocq9wTHGG8XJO5mzIquBctDZsKErcJzcmNzwdrIxgs8xobhE9yi3hRTnmOvia_0G6NrziBNbAHqmP2ToSEFIBVdOeO3nREB_HfAxwm9QU_UFOLk99DOQmjKyre6pnjMt9u9PVcCxurniormWTvWW7X1J6gbyiXq8BeDCEX1ukaqXcf3V7DzCcbfs");'></div>
+<div>
+<p class="font-bold text-[#1a1a1a] dark:text-white text-lg">Manioc Frais</p>
+<p class="text-xs text-secondary font-medium">Sac de 5kg - Qualité Premium</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6 hidden md:table-cell">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-[#1a1a1a] dark:text-white">Coopérative de Gagnoa</span>
+<span class="text-xs text-gray-500 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">location_on</span> Côte d'Ivoire
+                                                </span>
+</div>
+</td>
+<td class="px-6 py-6 text-sm font-medium">1 500 FCFA</td>
+<td class="px-6 py-6">
+<div class="flex items-center gap-2 border border-gray-200 dark:border-gray-700 w-fit rounded-lg px-2 py-1 bg-white dark:bg-transparent shadow-sm">
+<button class="text-gray-400 hover:text-primary flex items-center"><span class="material-symbols-outlined text-lg">remove</span></button>
+<span class="w-8 text-center font-bold">1</span>
+<button class="text-gray-400 hover:text-primary flex items-center"><span class="material-symbols-outlined text-lg">add</span></button>
+</div>
+</td>
+<td class="px-6 py-6 font-bold text-secondary">1 500 FCFA</td>
+<td class="px-6 py-6 text-right">
+<button class="text-red-400 hover:text-red-600 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50/50 dark:hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-6">
+<div class="flex items-center gap-4">
+<div class="h-20 w-20 bg-center bg-no-repeat bg-cover rounded-lg flex-shrink-0 border border-gray-100 shadow-sm" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBpfp75uOzQLIluJz1nkqYs9MEOD81rPLMRWdK4GE3twSNvQ50hH4N42mv6V87EIhuOAEq2LEvFgTHcJiB1EuqJFW6Nv_QY_G4344ylG_OZcP5U1fWntotmEbQs_0gB8D_0irtaobm_pSWgSA577KiR02fdacgKN0njoHOgG14MBoKXxsFXEHCJ1bEyuK8MWSFRz8rIbCb-W9oACg6USw9zx03Smr7gULxKu9exvli_6WKMDVbWmKQIsPy2TXEy8_jl1sYMyPxmrNyj");'></div>
+<div>
+<p class="font-bold text-[#1a1a1a] dark:text-white text-lg">Poulet de Chair</p>
+<p class="text-xs text-secondary font-medium">Prêt à cuire, ~1.8kg</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6 hidden md:table-cell">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-[#1a1a1a] dark:text-white">Ferme Avicole d'Abengourou</span>
+<span class="text-xs text-gray-500 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">location_on</span> Côte d'Ivoire
+                                                </span>
+</div>
+</td>
+<td class="px-6 py-6 text-sm font-medium">4 500 FCFA</td>
+<td class="px-6 py-6">
+<div class="flex items-center gap-2 border border-gray-200 dark:border-gray-700 w-fit rounded-lg px-2 py-1 bg-white dark:bg-transparent shadow-sm">
+<button class="text-gray-400 hover:text-primary flex items-center"><span class="material-symbols-outlined text-lg">remove</span></button>
+<span class="w-8 text-center font-bold">2</span>
+<button class="text-gray-400 hover:text-primary flex items-center"><span class="material-symbols-outlined text-lg">add</span></button>
+</div>
+</td>
+<td class="px-6 py-6 font-bold text-secondary">9 000 FCFA</td>
+<td class="px-6 py-6 text-right">
+<button class="text-red-400 hover:text-red-600 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50/50 dark:hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-6">
+<div class="flex items-center gap-4">
+<div class="h-20 w-20 bg-center bg-no-repeat bg-cover rounded-lg flex-shrink-0 border border-gray-100 shadow-sm" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA4wAfSGokAFwpmpKcFH4jATO4kwHuxo9xyJ2e-MLtT_Z99dfWBZwqKGvlydkIVweG06pGuUlx-nuXkTiJdn0Zzzgj5tYWqcc5gRZ1uvV_xYiLOEF0IcZGVYsUvDUkrv6MonovaMs3aaqwBiQ_R6_e_DUzq-uv5ej4ToB2qXK29CNcJAk5gua_OoOyA2qTVjkA0XagY4OSTdGNehCdTzk5sBHNahjp7cpk6xnsRv6vHgCS-0RnHAXthntJxaryh80HGIVEOVDW9SKcs");'></div>
+<div>
+<p class="font-bold text-[#1a1a1a] dark:text-white text-lg">Papaye Solo</p>
+<p class="text-xs text-secondary font-medium">Fruit mûr et juteux</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6 hidden md:table-cell">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-[#1a1a1a] dark:text-white">Vergers d'Azaguié</span>
+<span class="text-xs text-gray-500 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">location_on</span> Côte d'Ivoire
+                                                </span>
+</div>
+</td>
+<td class="px-6 py-6 text-sm font-medium">800 FCFA</td>
+<td class="px-6 py-6">
+<div class="flex items-center gap-2 border border-gray-200 dark:border-gray-700 w-fit rounded-lg px-2 py-1 bg-white dark:bg-transparent shadow-sm">
+<button class="text-gray-400 hover:text-primary flex items-center"><span class="material-symbols-outlined text-lg">remove</span></button>
+<span class="w-8 text-center font-bold">3</span>
+<button class="text-gray-400 hover:text-primary flex items-center"><span class="material-symbols-outlined text-lg">add</span></button>
+</div>
+</td>
+<td class="px-6 py-6 font-bold text-secondary">2 400 FCFA</td>
+<td class="px-6 py-6 text-right">
+<button class="text-red-400 hover:text-red-600 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="w-full lg:w-[400px]">
+<div class="sticky top-28 bg-white dark:bg-white/5 rounded-xl border border-gray-200 dark:border-gray-800 p-8 shadow-md">
+<h2 class="text-[#1a1a1a] dark:text-white text-2xl font-bold mb-8">Résumé de la commande</h2>
+<div class="flex flex-col gap-5 mb-8">
+<div class="flex justify-between items-center text-base">
+<span class="text-gray-500">Sous-total (3 articles)</span>
+<span class="font-semibold text-[#1a1a1a] dark:text-white">12 900 FCFA</span>
+</div>
+<div class="flex justify-between items-center text-base">
+<span class="text-gray-500">Frais de livraison</span>
+<span class="font-semibold text-[#1a1a1a] dark:text-white">1 500 FCFA</span>
+</div>
+<div class="flex justify-between items-center text-base">
+<span class="text-gray-500">Frais de service Agricole</span>
+<span class="font-bold text-secondary">OFFERT</span>
+</div>
+<div class="border-t border-dashed border-gray-200 dark:border-gray-700 pt-6 mt-2">
+<div class="flex justify-between items-center">
+<span class="text-xl font-bold text-[#1a1a1a] dark:text-white uppercase tracking-tight">Total</span>
+<span class="text-3xl font-black text-primary">14 400 FCFA</span>
+</div>
+<p class="text-[10px] text-gray-400 mt-2 text-right italic uppercase">TVA Incluse</p>
+</div>
+</div>
+<button class="w-full flex items-center justify-center gap-3 bg-primary text-white font-black text-lg py-5 rounded-xl hover:shadow-lg hover:bg-[#E67500] transition-all active:scale-[0.98]">
+<span>Commander Maintenant</span>
+<span class="material-symbols-outlined">send</span>
+</button>
+<div class="mt-8 flex flex-col gap-4">
+<div class="flex items-start gap-4 p-4 bg-secondary/5 border border-secondary/10 rounded-xl">
+<span class="material-symbols-outlined text-secondary text-2xl">local_shipping</span>
+<div>
+<p class="text-sm font-bold text-secondary">Livraison Fraîcheur</p>
+<p class="text-xs text-gray-500 mt-1">Livré chez vous en moins de 24h après récolte à Abidjan et banlieues.</p>
+</div>
+</div>
+<div class="flex items-center justify-center gap-2 text-xs text-gray-500 bg-gray-50 dark:bg-white/5 py-3 rounded-lg">
+<span class="material-symbols-outlined text-sm">verified</span>
+<span>Paiement 100% sécurisé via Mobile Money</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="py-16 mt-16 border-t border-gray-100 dark:border-gray-800">
+<h3 class="text-2xl font-bold mb-10 text-center">Pourquoi commander sur Mon Panier Nourrici ?</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+<div class="flex flex-col items-center text-center gap-4 group">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
+<span class="material-symbols-outlined text-4xl">qr_code_scanner</span>
+</div>
+<h4 class="font-bold text-lg">Traçabilité Ivoirienne</h4>
+<p class="text-sm text-gray-500 leading-relaxed">Scannez le QR code de vos produits pour découvrir la plantation d'origine et la date exacte de récolte.</p>
+</div>
+<div class="flex flex-col items-center text-center gap-4 group">
+<div class="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white transition-all duration-300">
+<span class="material-symbols-outlined text-4xl">volunteer_activism</span>
+</div>
+<h4 class="font-bold text-lg">Juste Rémunération</h4>
+<p class="text-sm text-gray-500 leading-relaxed">Sans intermédiaire inutile : plus de 80% du prix payé revient directement aux mains de nos braves paysans.</p>
+</div>
+<div class="flex flex-col items-center text-center gap-4 group">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
+<span class="material-symbols-outlined text-4xl">eco</span>
+</div>
+<h4 class="font-bold text-lg">100% Naturel &amp; Bio</h4>
+<p class="text-sm text-gray-500 leading-relaxed">Des produits cultivés avec amour, sans pesticides chimiques, respectant la terre de nos ancêtres.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-white dark:bg-background-dark border-t border-gray-100 dark:border-gray-800 py-12">
+<div class="max-w-[1200px] mx-auto px-6 md:px-10 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col items-center md:items-start gap-4">
+<div class="flex items-center gap-3 text-secondary">
+<span class="material-symbols-outlined text-2xl font-bold">agriculture</span>
+<span class="font-bold text-lg">Mon Panier Nourrici</span>
+</div>
+<p class="text-gray-400 text-sm max-w-xs text-center md:text-left">Du champ à votre table, le meilleur du terroir ivoirien livré chez vous.</p>
+</div>
+<div class="flex flex-col items-center md:items-end gap-4">
+<p class="text-gray-500 text-sm font-medium">© 2024 Mon Panier Nourrici. Tous droits réservés.</p>
+<div class="flex gap-6">
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">social_leaderboard</span></a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">language</span></a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">call</span></a>
+</div>
+</div>
+</div>
+<div class="mt-8 ivorian-gradient opacity-20"></div>
+</footer>
+</div>
+</div>
+
+</body></html>

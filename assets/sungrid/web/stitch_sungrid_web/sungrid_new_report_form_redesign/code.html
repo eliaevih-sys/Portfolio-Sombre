@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SunGrid - Nouveau Rapport</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#FBBF24", // Warm Yellow/Gold
+                        secondary: "#10B981", // Success Green
+                        "background-light": "#F9FAFB",
+                        "background-dark": "#111827",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.75rem",
+                    },
+                },
+            },
+        };
+        function toggleMenu() {
+            const menu = document.getElementById('side-menu');
+            const overlay = document.getElementById('overlay');
+            menu.classList.toggle('translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .form-card {
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-200">
+<header class="sticky top-0 z-40 w-full bg-white dark:bg-gray-900 border-b border-slate-200 dark:border-gray-800">
+<div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+<span class="material-icons-round text-slate-600 dark:text-slate-400">arrow_back</span>
+</button>
+<h1 class="text-xl font-bold tracking-tight">Nouveau rapport</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center text-secondary">
+<span class="material-icons-round">wifi</span>
+</div>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-full relative">
+<span class="material-icons-round text-slate-600 dark:text-slate-400">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-gray-900"></span>
+</button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-full" onclick="toggleMenu()">
+<span class="material-icons-round text-slate-600 dark:text-slate-400">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-3xl mx-auto px-4 py-8">
+<div class="mb-6 flex justify-center">
+<div class="inline-flex items-center gap-2 px-6 py-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-full font-medium text-sm border border-emerald-200 dark:border-emerald-800/50">
+<span class="material-icons-round text-sm">wifi</span>
+                Mode: En ligne
+            </div>
+</div>
+<div class="form-card bg-white dark:bg-gray-900 rounded-2xl p-6 md:p-10 border border-slate-200 dark:border-gray-800">
+<form class="space-y-8">
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Type de rapport</label>
+<div class="relative">
+<select class="w-full appearance-none bg-slate-50 dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-xl px-4 py-3 pr-10 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
+<option>Installation</option>
+<option>Maintenance</option>
+<option>Audit</option>
+<option>Urgence</option>
+</select>
+<span class="material-icons-round absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">expand_more</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Village</label>
+<div class="relative">
+<select class="w-full appearance-none bg-slate-50 dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-xl px-4 py-3 pr-10 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
+<option>Korhogo</option>
+<option>Bouaké</option>
+<option>Ferkessédougou</option>
+<option>Odienné</option>
+</select>
+<span class="material-icons-round absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">expand_more</span>
+</div>
+</div>
+<div class="space-y-3">
+<label class="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
+<span class="material-icons-round text-slate-400 text-lg">photo_camera</span>
+                        Photos
+                    </label>
+<div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
+<button class="aspect-square flex flex-col items-center justify-center border-2 border-dashed border-slate-200 dark:border-gray-700 rounded-xl hover:bg-slate-50 dark:hover:bg-gray-800 transition-colors group" type="button">
+<span class="material-icons-round text-slate-400 group-hover:text-primary mb-1">add_a_photo</span>
+<span class="text-[10px] font-medium text-slate-400">Ajouter</span>
+</button>
+<div class="aspect-square bg-slate-100 dark:bg-gray-800 rounded-xl flex items-center justify-center">
+<span class="material-icons-round text-slate-300 dark:text-slate-700 text-3xl">image</span>
+</div>
+</div>
+</div>
+<div class="space-y-3">
+<label class="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
+<span class="material-icons-round text-slate-400 text-lg">edit</span>
+                        Description
+                    </label>
+<textarea class="w-full bg-slate-50 dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all resize-none" placeholder="Décrivez la situation..." rows="4"></textarea>
+</div>
+<div class="space-y-3">
+<label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">État système</label>
+<div class="grid gap-3">
+<label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-gray-700 cursor-pointer hover:bg-slate-50 dark:hover:bg-gray-800 transition-colors has-[:checked]:border-primary has-[:checked]:bg-amber-50/50 dark:has-[:checked]:bg-amber-900/10">
+<input checked="" class="w-5 h-5 text-primary border-slate-300 focus:ring-primary" name="status" type="radio"/>
+<span class="text-sm font-medium">Fonctionnel</span>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-gray-700 cursor-pointer hover:bg-slate-50 dark:hover:bg-gray-800 transition-colors has-[:checked]:border-primary has-[:checked]:bg-amber-50/50 dark:has-[:checked]:bg-amber-900/10">
+<input class="w-5 h-5 text-primary border-slate-300 focus:ring-primary" name="status" type="radio"/>
+<span class="text-sm font-medium">En panne</span>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-gray-700 cursor-pointer hover:bg-slate-50 dark:hover:bg-gray-800 transition-colors has-[:checked]:border-primary has-[:checked]:bg-amber-50/50 dark:has-[:checked]:bg-amber-900/10">
+<input class="w-5 h-5 text-primary border-slate-300 focus:ring-primary" name="status" type="radio"/>
+<span class="text-sm font-medium">Maintenance requise</span>
+</label>
+</div>
+</div>
+<div class="pt-4 flex flex-col items-center gap-4">
+<button class="w-full bg-primary hover:bg-amber-500 text-slate-900 font-bold py-4 px-8 rounded-xl flex items-center justify-center gap-3 shadow-lg shadow-amber-400/20 active:scale-[0.98] transition-all" type="submit">
+<span class="material-icons-round">file_download</span>
+                        Enregistrer local
+                    </button>
+<div class="flex items-center gap-2 text-slate-400 text-xs">
+<span class="material-icons-round text-xs">sync</span>
+                        Sera synchronisé automatiquement
+                    </div>
+</div>
+</form>
+</div>
+</main>
+<div class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden" id="overlay" onclick="toggleMenu()"></div>
+<aside class="fixed top-0 right-0 h-full w-72 bg-white dark:bg-gray-900 z-[60] shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out" id="side-menu">
+<div class="p-6">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-xl font-bold">Menu</h2>
+<button class="p-1 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-lg" onclick="toggleMenu()">
+<span class="material-icons-round">close</span>
+</button>
+</div>
+<nav class="space-y-2">
+<a class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-gray-800 transition-colors text-slate-700 dark:text-slate-300 font-medium group" href="#">
+<span class="material-icons-round text-slate-400 group-hover:text-primary">dashboard</span>
+                    Tableau de bord
+                </a>
+<a class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-gray-800 transition-colors text-slate-700 dark:text-slate-300 font-medium group" href="#">
+<span class="material-icons-round text-slate-400 group-hover:text-primary">groups</span>
+                    Villages
+                </a>
+<a class="flex items-center gap-4 p-3 rounded-xl bg-amber-50 dark:bg-amber-900/10 text-primary font-semibold" href="#">
+<span class="material-icons-round">description</span>
+                    Nouveau Rapport
+                </a>
+<a class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-gray-800 transition-colors text-slate-700 dark:text-slate-300 font-medium group" href="#">
+<span class="material-icons-round text-slate-400 group-hover:text-primary">map</span>
+                    Carte
+                </a>
+<hr class="my-4 border-slate-100 dark:border-gray-800"/>
+<a class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-gray-800 transition-colors text-slate-700 dark:text-slate-300 font-medium group" href="#">
+<span class="material-icons-round text-slate-400 group-hover:text-primary">person</span>
+                    Profil
+                </a>
+</nav>
+</div>
+<div class="absolute bottom-6 left-6 right-6">
+<button class="w-full flex items-center justify-center gap-2 p-3 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-xl transition-colors font-semibold">
+<span class="material-icons-round">logout</span>
+                Déconnexion
+            </button>
+</div>
+</aside>
+<script>
+        // Check for system theme preference
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+
+</body></html>

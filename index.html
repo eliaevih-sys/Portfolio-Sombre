@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Développeuse Front-End & Designer UI/UX</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Space+Grotesk:wght@400;500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="grain-overlay"></div>
+    <div class="custom-cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Background animé -->
+    <div class="bg-animation">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+        <div class="circle circle-4"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <span class="logo-text">Portfolio</span>
+            <div class="logo-dot"></div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#accueil" class="nav-link" aria-label="Aller à la section Accueil"><span>Accueil</span></a>
+            </li>
+            <li><a href="#projets" class="nav-link" aria-label="Aller à la section Projets"><span>Projets</span></a>
+            </li>
+            <li><a href="#competences" class="nav-link"
+                    aria-label="Aller à la section Compétences"><span>Compétences</span></a></li>
+            <li><a href="#contact" class="nav-link"><span>Contact</span></a></li>
+        </ul>
+        <button class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Section Hero -->
+    <section id="accueil" class="hero">
+        <div class="hero-content">
+            <div class="text-content">
+                <div class="badge">
+                    <i class="fas fa-star"></i>
+                    <span>Disponible en freelance</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line">Je donne vie aux</span>
+                    <span class="title-line"><span class="highlight">interfaces</span> qui</span>
+                    <span class="title-line"><span class="typing" id="typed-word">captivent</span></span>
+                </h1>
+                <p class="subtitle">
+                    Développeuse Front-End & Designer UI/UX passionnée par la création
+                    d'expériences digitales chaleureuses et intuitives.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#projets" class="btn btn-primary">
+                        <span>Explorer mes projets</span>
+                        <i class="fas fa-sparkles"></i>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <span>Discuter d'un projet</span>
+                        <i class="fas fa-comment-dots"></i>
+                    </a>
+                </div>
+
+                <div class="stats">
+                    <div class="stat">
+                        <span class="stat-number" data-count="10" data-suffix="+">0+</span>
+                        <span class="stat-label">Projets réalisés</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" data-count="100" data-suffix="%">0%</span>
+                        <span class="stat-label">Satisfaction client</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">UI/UX</span>
+                        <span class="stat-label">Design & Code</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="photo-container">
+                <div class="photo-wrapper">
+                    <div class="photo-frame">
+                        <img src="assets/images/profile.jpg"
+                            alt="Photo de profil d'Elia Evih, Développeuse Front-End et Designer UI/UX"
+                            class="profile-photo">
+                    </div>
+
+                    <!-- Floating Icons -->
+                    <div class="floating-icons">
+                        <div class="floating-icon" data-tech="js" style="--top: 10%; --left: -15%;"><i
+                                class="fab fa-js"></i></div>
+                        <div class="floating-icon" data-tech="php" style="--top: 60%; --left: -25%;"><i
+                                class="fab fa-php"></i></div>
+                        <div class="floating-icon" data-tech="python" style="--top: 85%; --left: 10%;"><i
+                                class="fab fa-python"></i></div>
+                        <div class="floating-icon" data-tech="laravel" style="--top: 15%; --left: 95%;"><i
+                                class="fab fa-laravel"></i></div>
+                        <div class="floating-icon" data-tech="figma" style="--top: 50%; --left: 110%;"><i
+                                class="fab fa-figma"></i></div>
+                        <div class="floating-icon" data-tech="react" style="--top: 80%; --left: 90%;"><i
+                                class="fab fa-react"></i></div>
+                        <div class="floating-icon" data-tech="git" style="--top: -5%; --left: 40%;"><i
+                                class="fab fa-git-alt"></i></div>
+                        <div class="floating-icon" data-tech="mysql" style="--top: 95%; --left: 45%;"><i
+                                class="fab fa-database"></i></div>
+                        <div class="floating-icon" data-tech="html" style="--top: 25%; --left: -35%;"><i
+                                class="fab fa-html5"></i></div>
+                        <div class="floating-icon" data-tech="css" style="--top: 35%; --left: 130%;"><i
+                                class="fab fa-css3-alt"></i></div>
+                    </div>
+
+                    <div class="photo-decoration">
+                        <div class="decoration-dot dot-1"></div>
+                        <div class="decoration-dot dot-2"></div>
+                        <div class="decoration-dot dot-3"></div>
+                        <div class="decoration-shape shape-1"></div>
+                        <div class="decoration-shape shape-2"></div>
+                    </div>
+                </div>
+                <div class="photo-tag">
+                    <i class="fas fa-sun"></i>
+                    <span>Créative & Dynamique</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Projets -->
+    <section id="projets" class="projects">
+        <div class="section-header">
+            <div class="section-badge">Portfolio</div>
+            <h2>Créations <span class="highlight">récentes</span></h2>
+            <p class="section-subtitle">Des projets qui mélangent design innovant et développement robuste</p>
+        </div>
+
+        <div class="projects-grid">
+            <!-- Projet 1 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-number">01</div>
+                    <div class="project-links">
+                        <a href="#" class="project-link-icon"><i class="fab fa-figma"></i></a>
+                        <a href="#" class="project-link-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="project-thumbnail"
+                    style="background-image: url('assets/agrosmart/agrosmart/tableau_de_bord_agricole_-_modern_ui/screen.png');">
+                    <div class="thumb-overlay"><i class="fas fa-seedling"></i></div>
+                </div>
+                <div class="project-content">
+                    <h3>AgroSmart</h3>
+                    <p class="project-description">
+                        Solution complète pour l'agriculture intelligente avec interface utilisateur mobile
+                        et dashboard administrateur web.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag tag-design">UI/UX Design</span>
+                        <span class="tag tag-front">Front-End</span>
+                        <span class="tag tag-prototype">Prototype</span>
+                    </div>
+                </div>
+                <div class="project-footer">
+                    <a href="#" class="project-cta" data-project="agrosmart">
+                        Voir le cas d'étude
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Projet 2 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-number">02</div>
+                    <div class="project-links">
+                        <a href="#" class="project-link-icon"><i class="fab fa-figma"></i></a>
+                        <a href="#" class="project-link-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="project-thumbnail"
+                    style="background-image: url('assets/sungrid/web/stitch_sungrid_web/sungrid_agent_dashboard_redesign_1/screen.png');">
+                    <div class="thumb-overlay"><i class="fas fa-solar-panel"></i></div>
+                </div>
+                <div class="project-content">
+                    <h3>SunGrid</h3>
+                    <p class="project-description">
+                        Application mobile de gestion d'énergie solaire avec interface web
+                        d'administration et d'utilis en temps réel.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag tag-mobile">Mobile App</span>
+                        <span class="tag tag-design">UI Design</span>
+                        <span class="tag tag-dashboard">Dashboard</span>
+                    </div>
+                </div>
+                <div class="project-footer">
+                    <a href="#" class="project-cta" data-project="sungrid">
+                        Découvrir le projet
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Projet 3 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-number">03</div>
+                    <div class="project-links">
+                        <a href="#" class="project-link-icon"><i class="fab fa-figma"></i></a>
+                        <a href="#" class="project-link-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="project-thumbnail"
+                    style="background-image: url('assets/Nourrici/user_dashboard/screen.png');">
+                    <div class="thumb-overlay"><i class="fas fa-shopping-cart"></i></div>
+                </div>
+                <div class="project-content">
+                    <h3>Nourrici</h3>
+                    <p class="project-description">
+                        Plateforme e-commerce spécialisée dans les produits alimentaires locaux avec catalogue
+                        interactif et panier d'achat optimisé.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag tag-design">UI/UX Design</span>
+                        <span class="tag tag-front">E-commerce</span>
+                        <span class="tag tag-mobile">Mobile First</span>
+                    </div>
+                </div>
+                <div class="project-footer">
+                    <a href="#" class="project-cta" data-project="nourrici">
+                        Explorer le projet
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Compétences -->
+    <section id="competences" class="skills">
+        <div class="section-header">
+            <div class="section-badge">Expertise</div>
+            <h2>Mes <span class="highlight">super-pouvoirs</span></h2>
+            <p class="section-subtitle">Une combinaison unique de design créatif et de développement technique</p>
+        </div>
+
+        <div class="skills-container">
+            <div class="skill-category">
+                <div class="skill-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3>Design UI/UX</h3>
+                <p>Création d'interfaces intuitives et esthétiques</p>
+                <ul class="skill-list">
+                    <li>Figma & Prototypage</li>
+                    <li>Design System</li>
+                    <li>User Research</li>
+                    <li>Wireframing</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3>Développement</h3>
+                <p>Code propre, moderne et performant</p>
+                <ul class="skill-list">
+                    <li>HTML5 / CSS3 / JavaScript</li>
+                    <li>PHP / Laravel</li>
+                    <li>Responsive Design</li>
+                    <li>Git & Déploiement</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <h3>Créativité</h3>
+                <p>Approche innovante et solutions uniques</p>
+                <ul class="skill-list">
+                    <li>Animation Web</li>
+                    <li>Illustration vectorielle</li>
+                    <li>Branding digital</li>
+                    <li>Micro-interactions</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Outils -->
+        <div class="tools-section">
+            <h3>Outils maîtrisés</h3>
+            <div class="tools-grid">
+                <div class="tool">
+                    <i class="fab fa-figma"></i>
+                    <span>Figma</span>
+                </div>
+                <div class="tool">
+                    <i class="fab fa-git-alt"></i>
+                    <span>Git</span>
+                </div>
+                <div class="tool">
+                    <i class="fab fa-js"></i>
+                    <span>JavaScript</span>
+                </div>
+                <div class="tool">
+                    <i class="fab fa-laravel"></i>
+                    <span>Laravel</span>
+                </div>
+                <div class="tool">
+                    <i class="fas fa-database"></i>
+                    <span>MySQL</span>
+                </div>
+                <div class="tool">
+                    <i class="fab fa-python"></i>
+                    <span>Python</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section id="contact" class="contact">
+        <div class="contact-container">
+            <div class="contact-content">
+                <div class="section-header">
+                    <div class="section-badge">Contact</div>
+                    <h2>Lançons un <span class="highlight">projet</span> ensemble</h2>
+                    <p class="section-subtitle">Discutons de vos idées et créons quelque chose d'extraordinaire</p>
+                </div>
+
+                <div class="contact-info">
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>elia.evih@uvci.edu.ci</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Mon CV</h4>
+                            <a href="assets/CV/cv 2026.pdf" download class="cv-link" aria-label="Télécharger mon CV">
+                                Télécharger
+                                <i class="fas fa-download"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="social-section">
+                        <h4>Mes réseaux</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://www.behance.net/evihelia" class="social-link">
+                                <i class="fab fa-behance"></i>
+                            </a>
+                            <a href="https://dribbble.com/elia-eliena-berenice-evih" class="social-link">
+                                <i class="fab fa-dribbble"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form" id="contact-form" action="https://formsubmit.co/ajax/elia.evih@uvci.edu.ci"
+                method="POST">
+                <!-- Anti-spam -->
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="💼 Nouveau message depuis votre Portfolio !">
+                <input type="hidden" name="_template" value="table">
+                <input type="text" name="_honey" style="display:none">
+
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Votre nom" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Votre email" required>
+                </div>
+                <div class="form-group">
+                    <select name="project_type" required>
+                        <option value="" disabled selected>Type de projet</option>
+                        <option value="UI/UX Design">UI/UX Design</option>
+                        <option value="Développement Web">Développement Web</option>
+                        <option value="Design + Développement">Design + Développement</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" placeholder="Décrivez votre projet..." rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary submit-btn" id="submit-btn">
+                    <span>Envoyer le message</span>
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+
+            <!-- Success Message -->
+            <div class="form-success" id="form-success" style="display:none;">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Message envoyé !</h3>
+                <p>Merci pour votre message. Je vous répondrai dans les plus brefs délais. 🚀</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="logo">
+                    <span class="logo-text">Portfolio</span>
+                    <div class="logo-dot"></div>
+                </div>
+                <p>Créativité & Code en parfaite harmonie</p>
+            </div>
+
+            <div class="footer-links">
+                <a href="#accueil">Accueil</a>
+                <a href="#projets">Projets</a>
+                <a href="#competences">Compétences</a>
+                <a href="#contact">Contact</a>
+            </div>
+
+            <div class="footer-copyright">
+                <p>© 2026 Portfolio. Tous droits réservés.</p>
+                <p class="made-with">
+                    Fabriqué avec <i class="fas fa-heart"></i> et beaucoup de café
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Access Gate Modal -->
+    <div id="access-gate" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content gate-content">
+            <div class="gate-header">
+                <div class="gate-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h2>Accès Restreint</h2>
+                <p>Veuillez entrer votre email pour recevoir votre code d'accès aux projets.</p>
+            </div>
+
+            <form id="gate-form" class="contact-form">
+                <div class="form-group" id="email-step">
+                    <input type="email" id="gate-email" placeholder="votre@email.com" required>
+                    <button type="button" id="send-code-btn" class="btn btn-primary"
+                        style="width: 100%; margin-top: 1rem;">
+                        <span>Recevoir le code</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+
+                <div class="form-group" id="code-step" style="display: none;">
+                    <input type="text" id="gate-code" placeholder="Entrez le code (ex: 1234)" required>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                        <span>Débloquer l'accès</span>
+                        <i class="fas fa-unlock"></i>
+                    </button>
+                    <p class="resend-text">Pas reçu ? <a href="#" id="resend-btn">Renvoyer</a></p>
+                </div>
+            </form>
+
+            <p class="gate-footer">En accédant aux projets, vous acceptez nos conditions de confidentialité.</p>
+        </div>
+    </div>
+
+    <!-- Modal Projet -->
+    <div id="project-modal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-grid">
+                <div class="modal-image">
+                    <div class="project-thumbnail modal-thumb">
+                        <i class="fas fa-code"></i>
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <div class="modal-header">
+                        <div class="modal-badge">Cas d'étude</div>
+                        <h2 id="modal-title">Titre du Projet</h2>
+                        <p id="modal-subtitle" class="subtitle">Sous-titre du projet</p>
+                    </div>
+
+                    <div class="modal-body">
+                        <h3>À propos du projet</h3>
+                        <p id="modal-description">Description détaillée du projet...</p>
+
+                        <h3>Technologies utilisées</h3>
+                        <div id="modal-tags" class="project-tags">
+                            <!-- Tags dynamiques -->
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <a href="#" id="modal-link" class="btn btn-primary">
+                            <span>Voir le projet</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
