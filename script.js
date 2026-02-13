@@ -479,48 +479,106 @@
                 });
         });
     }
-    // --- LIKE SYSTEM LOGIC ---
-    const likeButtons = document.querySelectorAll('.like-button');
+    // --- GLOBAL LIKE SYSTEM (API + Sync) ---
+    // Namespace unique pour une remise à zéro totale
+    const LIKE_NAMESPACE = "eliaevih_portfolio_v8_final";
+    const LIKE_API_URL = `https://api.countapi.xyz/hit/${LIKE_NAMESPACE}/`;
+    const GET_API_URL = `https://api.countapi.xyz/get/${LIKE_NAMESPACE}/`;
+    const LOCAL_STORAGE_KEY_PREFIX = "liked_v8_";
 
-    // Initial load from storage
-    likeButtons.forEach(btn => {
-        const projectId = btn.dataset.project;
-        const liked = localStorage.getItem(`liked_${projectId}`) === 'true';
-        const count = parseInt(localStorage.getItem(`likes_${projectId}`)) || Math.floor(Math.random() * 50) + 10;
+    const baseLikes = {
+        'agrosmart': 0,
+        'sungrid': 0,
+        'nourrici': 0
+    };
 
-        if (liked) btn.classList.add('is-liked');
-        btn.querySelector('.like-count').textContent = count;
+    function syncGlobalLikes() {
+        document.querySelectorAll('.like-button').forEach(btn => {
+            const projectId = btn.getAttribute('data-project');
+            const countSpan = btn.querySelector('.like-count');
+            const isLikedLocally = localStorage.getItem(LOCAL_STORAGE_KEY_PREFIX + projectId) === 'true';
 
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isLiked = btn.classList.toggle('is-liked');
-            let currentCount = parseInt(btn.querySelector('.like-count').textContent);
+            fetch(`${GET_API_URL}${projectId}`)
+                .then(res => res.json())
+                .then(data => {
+                    let globalCount = data.value || 0;
 
-            if (isLiked) {
-                currentCount++;
-                localStorage.setItem(`liked_${projectId}`, 'true');
-                createParticles(e.clientX, e.clientY);
-            } else {
-                currentCount--;
-                localStorage.setItem(`liked_${projectId}`, 'false');
-            }
+                    // Sécurité : si l'utilisateur a liké localement, le compteur DOIT être au moins à 1
+                    // même si l'API n'a pas encore enregistré le hit ou renvoie 0 par erreur
+                    if (isLikedLocally && globalCount === 0) {
+                        globalCount = 1;
+                    }
 
-            btn.querySelector('.like-count').textContent = currentCount;
-            localStorage.setItem(`likes_${projectId}`, currentCount);
+                    const totalDisplay = baseLikes[projectId] + globalCount;
 
-            // Icon swap animation
-            const icon = btn.querySelector('i');
-            if (isLiked) {
-                icon.classList.replace('far', 'fas');
-            } else {
-                icon.classList.replace('fas', 'far');
-            }
+                    if (countSpan.textContent !== totalDisplay.toString()) {
+                        // Animation si le nombre augmente
+                        if (parseInt(countSpan.textContent) < totalDisplay && countSpan.textContent !== "0") {
+                            gsap.fromTo(countSpan, { scale: 1.4, color: "#ef4444" }, { scale: 1, color: "inherit", duration: 0.5 });
+                        }
+                        countSpan.textContent = totalDisplay;
+                    }
+                })
+                .catch(() => {
+                    // Si l'API échoue, on garde au moins 1 si l'utilisateur a liké
+                    if (isLikedLocally && countSpan.textContent === "0") {
+                        countSpan.textContent = "1";
+                    }
+                });
         });
+    }
 
-        // Set initial icon state
+    // Initialisation
+    document.querySelectorAll('.like-button').forEach(btn => {
+        const projectId = btn.getAttribute('data-project');
+        const countSpan = btn.querySelector('.like-count');
         const icon = btn.querySelector('i');
-        if (liked) icon.classList.replace('far', 'fas');
+
+        // Etat Visuel Initial
+        const isLiked = localStorage.getItem(LOCAL_STORAGE_KEY_PREFIX + projectId) === 'true';
+        if (isLiked) {
+            btn.classList.add('liked');
+            icon.classList.replace('far', 'fas');
+            // Affichage immédiat d'au moins 1 en attendant le sync
+            if (countSpan.textContent === "0") countSpan.textContent = "1";
+        } else {
+            btn.classList.remove('liked');
+            icon.classList.replace('fas', 'far');
+        }
+
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (localStorage.getItem(LOCAL_STORAGE_KEY_PREFIX + projectId) === 'true') {
+                gsap.to(btn, { x: 5, duration: 0.1, yoyo: true, repeat: 3 });
+                return;
+            }
+
+            // UI Feedback immédiat (Optimiste)
+            btn.classList.add('liked');
+            icon.classList.replace('far', 'fas');
+            localStorage.setItem(LOCAL_STORAGE_KEY_PREFIX + projectId, 'true');
+
+            let currentCount = parseInt(countSpan.textContent);
+            countSpan.textContent = currentCount + 1;
+
+            createParticles(e.clientX, e.clientY);
+
+            // API Update
+            fetch(`${LIKE_API_URL}${projectId}`)
+                .then(res => res.json())
+                .then(data => {
+                    const val = data.value || 0;
+                    countSpan.textContent = baseLikes[projectId] + val;
+                })
+                .catch(err => console.error("API Error:", err));
+        });
     });
+
+    // Sync toutes les 15 secondes pour le côté "Live"
+    syncGlobalLikes();
+    setInterval(syncGlobalLikes, 15000);
 
     function createParticles(x, y) {
         for (let i = 0; i < 8; i++) {
