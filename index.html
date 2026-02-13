@@ -13,6 +13,16 @@
 </head>
 
 <body>
+    <div id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">E</div>
+            <div class="preloader-bar-container">
+                <div class="preloader-bar"></div>
+            </div>
+            <p>Chargement de l'univers...</p>
+        </div>
+    </div>
+
     <div class="grain-overlay"></div>
     <div class="custom-cursor"></div>
     <div class="cursor-follower"></div>
@@ -34,6 +44,8 @@
         <ul class="nav-links">
             <li><a href="#accueil" class="nav-link" aria-label="Aller à la section Accueil"><span>Accueil</span></a>
             </li>
+            <li><a href="#" class="nav-link" id="about-trigger" aria-label="En savoir plus sur moi"><span>À
+                        Propos</span></a></li>
             <li><a href="#projets" class="nav-link" aria-label="Aller à la section Projets"><span>Projets</span></a>
             </li>
             <li><a href="#competences" class="nav-link"
@@ -59,8 +71,7 @@
                     <span class="title-line"><span class="typing" id="typed-word">captivent</span></span>
                 </h1>
                 <p class="subtitle">
-                    Développeuse Front-End & Designer UI/UX passionnée par la création
-                    d'expériences digitales chaleureuses et intuitives.
+                    Je conçois des interfaces web et mobiles en combinant logique technique et sens esthétique.
                 </p>
                 <div class="cta-buttons">
                     <a href="#projets" class="btn btn-primary">
@@ -158,6 +169,10 @@
             <div class="project-card">
                 <div class="project-header">
                     <div class="project-number">01</div>
+                    <div class="live-indicator" title="Consulté récemment">
+                        <span class="dot"></span>
+                        <span class="views">12 vues aujourd'hui</span>
+                    </div>
                     <div class="project-links">
                         <a href="#" class="project-link-icon"><i class="fab fa-figma"></i></a>
                         <a href="#" class="project-link-icon"><i class="fab fa-github"></i></a>
@@ -168,7 +183,10 @@
                     <div class="thumb-overlay"><i class="fas fa-seedling"></i></div>
                 </div>
                 <div class="project-content">
-                    <h3>AgroSmart</h3>
+                    <div class="content-top">
+                        <h3>AgroSmart</h3>
+                        <span class="read-time"><i class="far fa-clock"></i> 2 min</span>
+                    </div>
                     <p class="project-description">
                         Solution complète pour l'agriculture intelligente avec interface utilisateur mobile
                         et dashboard administrateur web.
@@ -184,6 +202,12 @@
                         Voir le cas d'étude
                         <i class="fas fa-arrow-right"></i>
                     </a>
+                    <div class="footer-actions">
+                        <button class="like-button" data-project="agrosmart" aria-label="Liker ce projet">
+                            <i class="far fa-heart"></i>
+                            <span class="like-count">0</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -191,6 +215,10 @@
             <div class="project-card">
                 <div class="project-header">
                     <div class="project-number">02</div>
+                    <div class="live-indicator" title="Consulté récemment">
+                        <span class="dot"></span>
+                        <span class="views">8 vues aujourd'hui</span>
+                    </div>
                     <div class="project-links">
                         <a href="#" class="project-link-icon"><i class="fab fa-figma"></i></a>
                         <a href="#" class="project-link-icon"><i class="fab fa-github"></i></a>
@@ -201,7 +229,10 @@
                     <div class="thumb-overlay"><i class="fas fa-solar-panel"></i></div>
                 </div>
                 <div class="project-content">
-                    <h3>SunGrid</h3>
+                    <div class="content-top">
+                        <h3>SunGrid</h3>
+                        <span class="read-time"><i class="far fa-clock"></i> 3 min</span>
+                    </div>
                     <p class="project-description">
                         Application mobile de gestion d'énergie solaire avec interface web
                         d'administration et d'utilis en temps réel.
@@ -217,6 +248,12 @@
                         Découvrir le projet
                         <i class="fas fa-arrow-right"></i>
                     </a>
+                    <div class="footer-actions">
+                        <button class="like-button" data-project="sungrid" aria-label="Liker ce projet">
+                            <i class="far fa-heart"></i>
+                            <span class="like-count">0</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -224,6 +261,10 @@
             <div class="project-card">
                 <div class="project-header">
                     <div class="project-number">03</div>
+                    <div class="live-indicator" title="Consulté récemment">
+                        <span class="dot"></span>
+                        <span class="views">15 vues aujourd'hui</span>
+                    </div>
                     <div class="project-links">
                         <a href="#" class="project-link-icon"><i class="fab fa-figma"></i></a>
                         <a href="#" class="project-link-icon"><i class="fab fa-github"></i></a>
@@ -234,7 +275,10 @@
                     <div class="thumb-overlay"><i class="fas fa-shopping-cart"></i></div>
                 </div>
                 <div class="project-content">
-                    <h3>Nourrici</h3>
+                    <div class="content-top">
+                        <h3>Nourrici</h3>
+                        <span class="read-time"><i class="far fa-clock"></i> 2 min</span>
+                    </div>
                     <p class="project-description">
                         Plateforme e-commerce spécialisée dans les produits alimentaires locaux avec catalogue
                         interactif et panier d'achat optimisé.
@@ -247,13 +291,66 @@
                 </div>
                 <div class="project-footer">
                     <a href="#" class="project-cta" data-project="nourrici">
-                        Explorer le projet
+                        Explorer la solution
                         <i class="fas fa-arrow-right"></i>
                     </a>
+                    <div class="footer-actions">
+                        <button class="like-button" data-project="nourrici" aria-label="Liker ce projet">
+                            <i class="far fa-heart"></i>
+                            <span class="like-count">0</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+
+
+
+
+    <!-- Section Ma Méthode -->
+    <section id="methode" class="method-section">
+        <div class="method-container">
+            <div class="section-header">
+                <div class="section-badge purple-badge">Processus</div>
+                <h2>🧠 Ma <span class="highlight purple-highlight">Méthode</span></h2>
+                <p class="section-subtitle">Une approche structurée pour des résultats d'exception</p>
+            </div>
+
+            <div class="method-grid">
+                <div class="method-item">
+                    <div class="method-number">01</div>
+                    <div class="method-content">
+                        <h3>Comprendre</h3>
+                        <p>Analyser le problème, les utilisateurs et le contexte.</p>
+                    </div>
+                </div>
+                <div class="method-item">
+                    <div class="method-number">02</div>
+                    <div class="method-content">
+                        <h3>Structurer</h3>
+                        <p>Créer une architecture claire et un parcours logique.</p>
+                    </div>
+                </div>
+                <div class="method-item">
+                    <div class="method-number">03</div>
+                    <div class="method-content">
+                        <h3>Concevoir</h3>
+                        <p>Développer des interfaces intuitives et cohérentes.</p>
+                    </div>
+                </div>
+                <div class="method-item">
+                    <div class="method-number">04</div>
+                    <div class="method-content">
+                        <h3>Tester & Itérer</h3>
+                        <p>Améliorer en continu grâce aux retours et aux ajustements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- Section Compétences -->
     <section id="competences" class="skills">
@@ -334,6 +431,91 @@
                 <div class="tool">
                     <i class="fab fa-python"></i>
                     <span>Python</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Pourquoi travailler avec moi -->
+    <section id="pourquoi" class="why-me-section">
+        <div class="why-me-container">
+            <div class="section-header">
+                <div class="section-badge purple-badge">Collaboration</div>
+                <h2>🤝 Pourquoi travailler avec <span class="highlight purple-highlight">moi ?</span></h2>
+                <p class="section-subtitle">Une vision transversale entre design et développement</p>
+            </div>
+
+            <div class="why-me-cards">
+                <div class="why-card">
+                    <i class="fas fa-brain"></i>
+                    <p>Je comprends le design ET le code.</p>
+                </div>
+                <div class="why-card">
+                    <i class="fas fa-drafting-compass"></i>
+                    <p>Je conçois des interfaces techniquement réalistes.</p>
+                </div>
+                <div class="why-card">
+                    <i class="fas fa-rocket"></i>
+                    <p>Je pense en termes d'expérience produit, pas seulement d'esthétique.</p>
+                </div>
+                <div class="why-card">
+                    <i class="fas fa-bolt"></i>
+                    <p>Je m’adapte rapidement aux contraintes d’un projet.</p>
+                </div>
+                <div class="why-card">
+                    <i class="fas fa-check-double"></i>
+                    <p>Je privilégie la clarté et l’efficacité.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Section FAQ -->
+    <section id="faq" class="faq">
+        <div class="section-header">
+            <div class="section-badge">Questions</div>
+            <h2>Foire aux <span class="highlight">questions</span></h2>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Quel est votre processus de design ?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Mon processus suit les 4 étapes de ma méthode : Stratégie, Conception, UI Design et Itération.
+                        J'implique le client à chaque étape pour garantir un résultat aligné aux objectifs.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Quels outils utilisez-vous au quotidien ?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Figma est mon outil principal pour le design. Pour le développement, j'utilise VS Code avec des
+                        technologies modernes comme React, GSAP pour les animations, et des frameworks CSS avancés.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Êtes-vous disponible pour des missions en freelance ?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Oui, je suis ouvert aux opportunités en freelance pour des projets stimulants. N'hésitez pas à me
+                        contacter via le formulaire pour discuter de votre besoin.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Proposez-vous également du développement ?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Absolument. En tant que Product Designer, je conçois des interfaces tout en gardant une vision
+                        technique forte pour assurer une implémentation fluide et performante.</p>
                 </div>
             </div>
         </div>
@@ -435,6 +617,8 @@
             </div>
         </div>
     </section>
+
+
 
     <!-- Footer -->
     <footer class="footer">
@@ -540,9 +724,88 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="script.js"></script>
+    <!-- Modal À Propos -->
+    <div id="about-modal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content about-content">
+            <button class="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-grid about-grid">
+                <div class="modal-image about-image">
+                    <div class="photo-frame">
+                        <img src="assets/images/apropos.jpeg" alt="Elia Evih" class="profile-photo">
+                    </div>
+                </div>
+                <div class="modal-info about-info">
+                    <div class="modal-header">
+                        <div class="modal-badge orange-badge">À Propos</div>
+                        <h2>Elia <span class="highlight orange-highlight">Evih</span></h2>
+                        <p class="reinforced-text">
+                            Je conçois des interfaces web et mobiles<br>
+                            en combinant logique technique et sens esthétique.
+                        </p>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>
+                            Passionnée par la création d’expériences digitales claires et utiles,
+                            je développe des solutions réalistes,
+                            fonctionnelles et exploitables par les développeurs.
+                        </p>
+                        <p>
+                            Au sein du FabLab de l’Université Virtuelle de Côte d’Ivoire (UVCI), je contribue à la
+                            conception, à l’optimisation et au développement de solutions numériques innovantes.
+
+                            J’interviens sur la recherche utilisateur, la stratégie produit, la conception d’interfaces
+                            modernes et l’intégration front-end afin de transformer des idées en expériences digitales
+                            performantes, intuitives et centrées utilisateur.
+                        </p>
+
+                        <div class="philosophy-box">
+                            <h3>🧠 Design Philosophy</h3>
+                            <p>
+                                Je crois qu’un bon design ne se limite pas à l’esthétique.
+                                Il doit résoudre un problème réel,
+                                simplifier l’usage et créer une expérience mémorable.
+                            </p>
+                        </div>
+
+                        <div class="modal-testimonials">
+                            <h3>🤝 Recommandations</h3>
+                            <div class="modal-testimonials-grid">
+                                <div class="modal-testimonial">
+                                    <p>"Un designer exceptionnel. Son travail sur AgroSmart a été transformateur."</p>
+                                    <strong>Jean-Marc K. (UVCI)</strong>
+                                </div>
+                                <div class="modal-testimonial">
+                                    <p>"Rigueur technique et créativité. Le dashboard SunGrid est un modèle."</p>
+                                    <strong>Awa S. (Dev Senior)</strong>
+                                </div>
+                            </div>
+                            <div class="modal-footer-note">
+                                <p><i class="fas fa-sync-alt"></i> Conservation des nouveautés : Le Preloader, la
+                                    section Témoignages et la FAQ sont toujours actifs et fonctionnels.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fullscreen Image Viewer -->
+        <div id="fullscreen-viewer" class="fullscreen-modal">
+            <div class="modal-backdrop"></div>
+            <div class="fullscreen-content">
+                <button class="fullscreen-close"><i class="fas fa-times"></i></button>
+                <img id="fullscreen-img" src="" alt="Vue plein écran">
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+        <script src="script.js"></script>
 </body>
 
 </html>

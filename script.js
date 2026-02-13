@@ -1,4 +1,44 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
+    // --- PRELOADER LOGIC ---
+    const preloader = document.getElementById('preloader');
+
+    const hidePreloader = () => {
+        if (!preloader || preloader.style.display === 'none') return;
+
+        if (window.gsap) {
+            gsap.to(preloader, {
+                opacity: 0,
+                duration: 1,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    preloader.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        } else {
+            // Fallback if GSAP fails to load
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 1000);
+        }
+    };
+
+    if (preloader) {
+        // Ensure scroll is disabled until loaded
+        document.body.style.overflow = 'hidden';
+
+        if (document.readyState === 'complete') {
+            setTimeout(hidePreloader, 500);
+        } else {
+            window.addEventListener('load', hidePreloader);
+        }
+
+        // Fail-safe: force hide if it takes too long (5s)
+        setTimeout(hidePreloader, 5000);
+    }
+
     gsap.registerPlugin(ScrollTrigger);
 
     const projectDetails = {
@@ -77,18 +117,61 @@
         document.body.style.overflow = 'hidden';
     }
 
-    function closeModals() {
-        const activeModal = projectModal.style.display === 'flex' ? projectModal : (gateModal.style.display === 'flex' ? gateModal : null);
-        if (activeModal) {
-            gsap.to(activeModal.querySelector('.modal-content'), { opacity: 0, scale: 0.9, duration: 0.3 });
-            gsap.to(activeModal.querySelector('.modal-backdrop'), {
-                opacity: 0, duration: 0.3, onComplete: () => {
-                    activeModal.style.display = 'none';
-                    document.body.style.overflow = '';
-                }
+    // --- ABOUT MODAL LOGIC ---
+    const aboutModal = document.getElementById('about-modal');
+    const aboutTrigger = document.getElementById('about-trigger');
+
+    if (aboutTrigger && aboutModal) {
+        aboutTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            aboutModal.style.display = 'flex';
+            gsap.set(aboutModal.querySelector('.modal-content'), { opacity: 0, scale: 0.9, x: -30 });
+            gsap.to(aboutModal.querySelector('.modal-backdrop'), { opacity: 1, duration: 0.3 });
+            gsap.to(aboutModal.querySelector('.modal-content'), {
+                opacity: 1,
+                scale: 1,
+                x: 0,
+                duration: 0.5,
+                ease: "power2.out"
             });
-        }
+
+            // Animate testimonials inside modal
+            gsap.from(".modal-testimonial", {
+                y: 20,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                delay: 0.5,
+                ease: "power2.out"
+            });
+
+            document.body.style.overflow = 'hidden';
+        });
     }
+
+    function closeAllModals() {
+        const modals = [projectModal, gateModal, aboutModal];
+        modals.forEach(activeModal => {
+            if (activeModal && activeModal.style.display === 'flex') {
+                gsap.to(activeModal.querySelector('.modal-content'), { opacity: 0, scale: 0.9, duration: 0.3 });
+                gsap.to(activeModal.querySelector('.modal-backdrop'), {
+                    opacity: 0, duration: 0.3, onComplete: () => {
+                        activeModal.style.display = 'none';
+                        document.body.style.overflow = '';
+                    }
+                });
+            }
+        });
+    }
+
+    // Replace old closeModals with closeAllModals in existing listeners
+    document.querySelectorAll('.modal-close, .modal-backdrop').forEach(el => {
+        el.addEventListener('click', closeAllModals);
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeAllModals();
+    });
 
     if (sendCodeBtn) {
         sendCodeBtn.addEventListener('click', () => {
@@ -115,7 +198,7 @@
             if (code === '1234' || code.length >= 4) {
                 isUnlocked = true;
                 localStorage.setItem('portfolio_unlocked', 'true');
-                closeModals();
+                closeAllModals();
                 if (pendingProject) {
                     setTimeout(() => openModal(pendingProject), 400);
                     pendingProject = null;
@@ -141,14 +224,6 @@
                 document.body.style.overflow = 'hidden';
             }
         };
-    });
-
-    document.querySelectorAll('.modal-close, .modal-backdrop').forEach(el => {
-        el.addEventListener('click', closeModals);
-    });
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeModals();
     });
 
     window.resetAccess = () => {
@@ -177,7 +252,7 @@
         };
         animateFollower();
 
-        document.querySelectorAll('a, button, .project-card, .skill-group').forEach(el => {
+        document.querySelectorAll('a, button, .project-card, .skill-group, .method-item, .why-card').forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
         });
@@ -404,4 +479,184 @@
                 });
         });
     }
+    // --- LIKE SYSTEM LOGIC ---
+    const likeButtons = document.querySelectorAll('.like-button');
+
+    // Initial load from storage
+    likeButtons.forEach(btn => {
+        const projectId = btn.dataset.project;
+        const liked = localStorage.getItem(`liked_${projectId}`) === 'true';
+        const count = parseInt(localStorage.getItem(`likes_${projectId}`)) || Math.floor(Math.random() * 50) + 10;
+
+        if (liked) btn.classList.add('is-liked');
+        btn.querySelector('.like-count').textContent = count;
+
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isLiked = btn.classList.toggle('is-liked');
+            let currentCount = parseInt(btn.querySelector('.like-count').textContent);
+
+            if (isLiked) {
+                currentCount++;
+                localStorage.setItem(`liked_${projectId}`, 'true');
+                createParticles(e.clientX, e.clientY);
+            } else {
+                currentCount--;
+                localStorage.setItem(`liked_${projectId}`, 'false');
+            }
+
+            btn.querySelector('.like-count').textContent = currentCount;
+            localStorage.setItem(`likes_${projectId}`, currentCount);
+
+            // Icon swap animation
+            const icon = btn.querySelector('i');
+            if (isLiked) {
+                icon.classList.replace('far', 'fas');
+            } else {
+                icon.classList.replace('fas', 'far');
+            }
+        });
+
+        // Set initial icon state
+        const icon = btn.querySelector('i');
+        if (liked) icon.classList.replace('far', 'fas');
+    });
+
+    function createParticles(x, y) {
+        for (let i = 0; i < 8; i++) {
+            const particle = document.createElement('i');
+            particle.className = 'fas fa-heart like-particle';
+            document.body.appendChild(particle);
+
+            const angle = (i / 8) * Math.PI * 2;
+            const velocity = 2 + Math.random() * 3;
+            const destinationX = x + Math.cos(angle) * 100 * Math.random();
+            const destinationY = y + Math.sin(angle) * 100 * Math.random();
+
+            gsap.fromTo(particle,
+                { x: x - 10, y: y - 10, opacity: 1, scale: 0.5 },
+                {
+                    x: destinationX,
+                    y: destinationY,
+                    opacity: 0,
+                    scale: 1.5,
+                    duration: 0.8 + Math.random() * 0.4,
+                    ease: "power2.out",
+                    onComplete: () => particle.remove()
+                }
+            );
+        }
+    }
+
+    // --- PREMIUM UI LOGIC ---
+
+    // 1. Live Viewer Simulation
+    document.querySelectorAll('.live-indicator').forEach(indicator => {
+        const viewSpan = indicator.querySelector('.views');
+        // Simulate a small fluctuation every few seconds
+        setInterval(() => {
+            const currentViewsStr = viewSpan.textContent;
+            const currentViews = parseInt(currentViewsStr);
+            const change = Math.random() > 0.7 ? (Math.random() > 0.5 ? 1 : -1) : 0;
+            if (currentViews + change > 5) {
+                viewSpan.textContent = `${currentViews + change} vues aujourd'hui`;
+            }
+        }, 5000);
+    });
+
+    // 2. Content Protection (Anti-copy/Right-click)
+    document.querySelectorAll('.project-thumbnail, #fullscreen-img').forEach(img => {
+        img.addEventListener('contextmenu', (e) => e.preventDefault());
+        img.addEventListener('dragstart', (e) => e.preventDefault());
+    });
+
+    // 3. Fullscreen Viewer Logic
+    const fullscreenViewer = document.getElementById('fullscreen-viewer');
+    const fullscreenImg = document.getElementById('fullscreen-img');
+    const fullscreenClose = document.querySelector('.fullscreen-close');
+
+    // Open on thumbnail click
+    document.querySelectorAll('.project-thumbnail').forEach(thumb => {
+        thumb.addEventListener('click', (e) => {
+            const bgImage = thumb.style.backgroundImage;
+            const imageUrl = bgImage.slice(5, -2).replace(/"/g, "");
+
+            fullscreenImg.src = imageUrl;
+            fullscreenViewer.style.display = 'flex';
+
+            gsap.to(fullscreenViewer, {
+                opacity: 1,
+                duration: 0.4,
+                ease: "power2.out"
+            });
+
+            gsap.from(fullscreenImg, {
+                scale: 0.8,
+                duration: 0.5,
+                ease: "back.out(1.7)"
+            });
+        });
+    });
+
+    // Close logic
+    const closeFullscreen = () => {
+        gsap.to(fullscreenViewer, {
+            opacity: 0,
+            duration: 0.3,
+            onComplete: () => {
+                fullscreenViewer.style.display = 'none';
+                fullscreenImg.src = '';
+            }
+        });
+    };
+
+    if (fullscreenClose) fullscreenClose.addEventListener('click', closeFullscreen);
+    if (fullscreenViewer) {
+        fullscreenViewer.querySelector('.modal-backdrop').addEventListener('click', closeFullscreen);
+    }
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && fullscreenViewer && fullscreenViewer.style.display === 'flex') {
+            closeFullscreen();
+        }
+    });
+
+    // --- FAQ ACCORDION LOGIC ---
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const item = question.parentElement;
+            const answer = question.nextElementSibling;
+            const isActive = item.classList.contains('active');
+
+            // Close other open items
+            document.querySelectorAll('.faq-item').forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                    otherItem.querySelector('.faq-answer').style.maxHeight = null;
+                }
+            });
+
+            // Toggle current item
+            item.classList.toggle('active');
+            if (!isActive) {
+                answer.style.maxHeight = answer.scrollHeight + "px";
+            } else {
+                answer.style.maxHeight = null;
+            }
+        });
+    });
+
+
+
+    // --- FAQ ANIMATION ---
+    gsap.from(".faq-item", {
+        scrollTrigger: {
+            trigger: ".faq",
+            start: "top 85%",
+        },
+        y: 20,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power2.out"
+    });
 });
