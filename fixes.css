@@ -11,7 +11,8 @@
     align-items: center;
     gap: 0.4rem;
     transition: all 0.3s ease;
-    z-index: 9999 !important;
+    z-index: 10 !important;
+    /* Lowered from 9999 to respect modal */
     position: relative;
     pointer-events: auto !important;
 }
@@ -24,7 +25,6 @@
 
 .like-button:hover {
     background: rgba(255, 255, 255, 0.1) !important;
-    transform: scale(1.05);
 }
 
 /* State for LIKED */
@@ -36,7 +36,6 @@
 
 .like-button.liked i {
     color: #ef4444 !important;
-    animation: heartBeat 0.4s ease-in-out;
 }
 
 .like-button.liked .like-count {

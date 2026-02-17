@@ -1,720 +1,246 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
-    // --- PRELOADER LOGIC ---
-    const preloader = document.getElementById('preloader');
+﻿/* script.js - v15 INVINCIBLE (Anti-Crash + Local Storage Guard) */
 
-    const hidePreloader = () => {
-        if (!preloader || preloader.style.display === 'none') return;
-
-        if (window.gsap) {
-            gsap.to(preloader, {
-                opacity: 0,
-                duration: 1,
-                ease: "power2.inOut",
-                onComplete: () => {
-                    preloader.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }
+// 0. SYSTÈME DE LOGS IMMÉDIAT (Évite les plantages si appelé trop tôt)
+window.debugLog = function (msg, type = "info") {
+    console.log(`[PORTFOLIO] ${msg}`);
+    try {
+        let box = document.getElementById('debug-stats-box');
+        if (!box && document.body) {
+            box = document.createElement('div');
+            box.id = 'debug-stats-box';
+            Object.assign(box.style, {
+                position: 'fixed', bottom: '20px', right: '20px', width: '280px', height: '160px',
+                background: 'rgba(5, 8, 22, 0.95)', border: '2px solid #6366f1', borderRadius: '12px',
+                zIndex: '999999', overflowY: 'auto', padding: '12px', fontFamily: 'monospace',
+                fontSize: '11px', color: '#fff', boxShadow: '0 10px 40px rgba(0,0,0,0.8)',
+                backdropFilter: 'blur(10px)', pointerEvents: 'auto'
             });
-        } else {
-            // Fallback if GSAP fails to load
-            preloader.style.opacity = '0';
-            setTimeout(() => {
-                preloader.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }, 1000);
+            box.innerHTML = '<div style="border-bottom:1px solid #6366f1;padding-bottom:8px;margin-bottom:8px;font-weight:bold;display:flex;justify-content:space-between;color:#6366f1"><span>💻 DIAGNOSTIC v15</span><span style="cursor:pointer;padding:0 5px;" onclick="this.parentElement.parentElement.style.display=\'none\'">×</span></div>';
+            document.body.appendChild(box);
         }
+        if (box) {
+            const line = document.createElement('div');
+            line.style.color = type === 'error' ? '#ff4d4d' : (type === 'success' ? '#4dff4d' : '#fff');
+            line.style.marginBottom = '4px';
+            line.style.borderLeft = `2px solid ${type === 'error' ? '#ff4d4d' : (type === 'success' ? '#4dff4d' : '#6366f1')}`;
+            line.style.paddingLeft = '8px';
+            line.innerHTML = `<span style="opacity:0.4;font-size:9px">${new Date().toLocaleTimeString()}</span> ${msg}`;
+            box.appendChild(line);
+            box.scrollTop = box.scrollHeight;
+        }
+    } catch (err) { console.error("Critical log error:", err); }
+};
+
+// Capturer les erreurs IMMÉDIATEMENT
+window.onerror = function (m, u, l) {
+    console.error("FATAL:", m, "at", l);
+    window.debugLog(`FATAL: ${m} (ligne ${l})`, "error");
+};
+
+window.debugLog("Chargement du script v15...");
+
+// 1. CONFIGURATION
+const SUPABASE_URL = "https://cajpruwybnjntvsoenyr.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNhanByd3libmpudHZic29lbnlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNDgxMjQsImV4cCI6MjA4NjkyNDEyNH0.M-GtLUVINglfF6NakNJyXVca7z5aLpzYnO4s1TGZcAE";
+const ACCESS_CODE = "ELIA-ACCES";
+
+let supabase = null;
+
+// GESTION STORAGE (Sécurisée pour exécution locale/file://)
+function safeStorage(key, value = undefined) {
+    try {
+        if (value === undefined) return localStorage.getItem(key);
+        localStorage.setItem(key, value);
+        return true;
+    } catch (e) {
+        window.debugLog("Storage bloqué (Mode local ?)", "warn");
+        return null;
+    }
+}
+
+function getUserId() {
+    let id = safeStorage('portfolio_user_id');
+    if (!id) {
+        id = 'user_' + Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
+        safeStorage('portfolio_user_id', id);
+    }
+    return id || 'temp_user' + Date.now();
+}
+const USER_ID = getUserId();
+
+// 3. INITIALISATION SUPABASE
+function initSupabase() {
+    if (supabase) return true;
+    try {
+        if (typeof window.supabase !== 'undefined') {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            window.debugLog("Supabase Connecté ✓", "success");
+            return true;
+        } else {
+            window.debugLog("SDK Supabase manquant dans le HTML !", "error");
+        }
+    } catch (e) {
+        window.debugLog("Crash Supabase: " + e.message, "error");
+    }
+    return false;
+}
+
+// 4. DONNÉES DES PROJETS
+const projectDetails = {
+    agrosmart: {
+        title: "AgroSmart",
+        description: "Solution IoT complète pour l'optimisation des cultures en temps réel.",
+        link: "project-viewer.html?project=agrosmart",
+        image: "assets/agrosmart/agrosmart/tableau_de_bord_agricole_-_modern_ui/screen.png"
+    },
+    sungrid: {
+        title: "SunGrid",
+        description: "Système de monitoring énergétique intelligent pour installations solaires.",
+        link: "project-viewer.html?project=sungrid",
+        image: "assets/sungrid/web/stitch_sungrid_web/sungrid_agent_dashboard_redesign_1/screen.png"
+    },
+    nourrici: {
+        title: "Nourrici",
+        description: "Plateforme de distribution de produits bio et locaux.",
+        link: "project-viewer.html?project=nourrici",
+        image: "assets/Nourrici/user_dashboard/screen.png"
+    }
+};
+
+// 5. FONCTIONS STATS
+async function fetchStats() {
+    if (!initSupabase()) return;
+    try {
+        const { data, error } = await supabase.from('project_stats').select('*');
+        if (error) throw error;
+        data.forEach(item => {
+            ['like', 'view'].forEach(type => {
+                const el = document.getElementById(`${type}-count-${item.id}`);
+                if (el) el.textContent = item[type + 's'] || 0;
+            });
+        });
+        window.debugLog(`Stats à jour`);
+    } catch (e) { window.debugLog("Erreur Sync: " + e.message, "error"); }
+}
+
+async function handleAction(projectId, actionType) {
+    if (!initSupabase()) return;
+    const rpcName = actionType === 'like' ? 'like_project' : 'view_project';
+    try {
+        const { error } = await supabase.rpc(rpcName, { p_project_id: projectId, p_user_id: USER_ID });
+        if (error) throw error;
+        window.debugLog(`${actionType} OK`, "success");
+        fetchStats();
+    } catch (e) {
+        window.debugLog(`${rpcName} échec: ${e.message}`, "error");
+        if (e.message.includes('42501')) window.debugLog("SQL/RLS non configuré ?", "error");
+    }
+}
+
+// 6. INITIALISATION DOM
+function bootstrap() {
+    window.debugLog("Initialisation...");
+    initSupabase();
+    fetchStats();
+
+    const modals = {
+        project: document.getElementById('project-modal'),
+        gate: document.getElementById('mockup-gate-modal')
+    };
+    let currentPendingProject = null;
+
+    const closeAll = () => {
+        Object.values(modals).forEach(m => { if (m) m.style.display = 'none'; });
+        document.body.style.overflow = '';
     };
 
-    if (preloader) {
-        // Ensure scroll is disabled until loaded
-        document.body.style.overflow = 'hidden';
+    // Délégation d'événements (Le plus robuste)
+    document.addEventListener('click', async (e) => {
+        const t = e.target;
 
-        if (document.readyState === 'complete') {
-            setTimeout(hidePreloader, 500);
-        } else {
-            window.addEventListener('load', hidePreloader);
-        }
+        // Fermer modals
+        if (t.closest('.modal-close') || t.classList.contains('modal-backdrop')) closeAll();
 
-        // Fail-safe: force hide if it takes too long (5s)
-        setTimeout(hidePreloader, 5000);
-    }
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    const projectDetails = {
-        agrosmart: {
-            title: "AgroSmart",
-            subtitle: "L'agriculture de demain, aujourd'hui",
-            description: "AgroSmart est une solution de gestion agricole intelligente conçue pour optimiser le rendement des cultures. Elle intègre des capteurs IoT pour le suivi en temps réel de l'humidité des sols et des conditions climatiques.",
-            tags: ["UI/UX Design", "Développement Front-End", "React Native"],
-            link: "#",
-            icon: "fa-seedling",
-            image: "assets/agrosmart/agrosmart/tableau_de_bord_agricole_-_modern_ui/screen.png"
-        },
-        sungrid: {
-            title: "SunGrid",
-            subtitle: "Optimisation de l'énergie solaire",
-            description: "SunGrid permet aux propriétaires de panneaux solaires de surveiller leur production et consommation d'énergie en temps réel. L'application propose des analyses prédictives pour maximiser l'autoconsommation.",
-            tags: ["Mobile App", "UI Design", "Dashboard"],
-            link: "#",
-            icon: "fa-solar-panel",
-            image: "assets/sungrid/web/stitch_sungrid_web/sungrid_agent_dashboard_redesign_1/screen.png"
-        },
-        nourrici: {
-            title: "Nourrici",
-            subtitle: "E-commerce alimentaire local",
-            description: "Plateforme e-commerce dédiée aux produits alimentaires locaux et biologiques. Interface utilisateur optimisée pour faciliter la découverte de produits, avec un système de panier et de catalogue intelligent.",
-            tags: ["UI/UX Design", "E-commerce", "Mobile First"],
-            link: "#",
-            icon: "fa-shopping-cart",
-            image: "assets/Nourrici/user_dashboard/screen.png"
-        }
-    };
-
-    let isUnlocked = localStorage.getItem('portfolio_unlocked') === 'true';
-    let pendingProject = null;
-
-    const projectModal = document.getElementById('project-modal');
-    const gateModal = document.getElementById('access-gate');
-    const gateForm = document.getElementById('gate-form');
-    const sendCodeBtn = document.getElementById('send-code-btn');
-    const emailStep = document.getElementById('email-step');
-    const codeStep = document.getElementById('code-step');
-
-    function openModal(key) {
-        const data = projectDetails[key];
-        if (!data) return;
-
-        // Update link
-        const modalLink = document.getElementById('modal-link');
-        modalLink.href = `project-viewer.html?id=${key}`;
-
-        // Content
-        document.getElementById('modal-title').innerText = data.title;
-        document.getElementById('modal-subtitle').innerText = data.subtitle;
-        document.getElementById('modal-description').innerText = data.description;
-
-        const thumb = projectModal.querySelector('.modal-thumb');
-        if (data.image) {
-            thumb.innerHTML = `<img src="${data.image}" alt="${data.title}" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">`;
-        } else {
-            thumb.innerHTML = `<i class="fas ${data.icon}"></i>`;
-        }
-
-        const tagsContainer = document.getElementById('modal-tags');
-        tagsContainer.innerHTML = '';
-        data.tags.forEach(tag => {
-            const span = document.createElement('span');
-            span.className = 'tag tag-design';
-            span.innerText = tag;
-            tagsContainer.appendChild(span);
-        });
-
-        projectModal.style.display = 'flex';
-        gsap.set(projectModal.querySelector('.modal-content'), { opacity: 0, scale: 0.9 });
-        gsap.to(projectModal.querySelector('.modal-backdrop'), { opacity: 1, duration: 0.3 });
-        gsap.to(projectModal.querySelector('.modal-content'), { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.7)" });
-        document.body.style.overflow = 'hidden';
-    }
-
-    // --- ABOUT MODAL LOGIC ---
-    const aboutModal = document.getElementById('about-modal');
-    const aboutTrigger = document.getElementById('about-trigger');
-
-    if (aboutTrigger && aboutModal) {
-        aboutTrigger.addEventListener('click', (e) => {
+        // Ouvrir projet (CTA "Voir le cas d'étude")
+        const cta = t.closest('.project-cta') || t.closest('[data-project]');
+        if (cta && !t.closest('.like-button')) {
             e.preventDefault();
-            aboutModal.style.display = 'flex';
-            gsap.set(aboutModal.querySelector('.modal-content'), { opacity: 0, scale: 0.9, x: -30 });
-            gsap.to(aboutModal.querySelector('.modal-backdrop'), { opacity: 1, duration: 0.3 });
-            gsap.to(aboutModal.querySelector('.modal-content'), {
-                opacity: 1,
-                scale: 1,
-                x: 0,
-                duration: 0.5,
-                ease: "power2.out"
-            });
-
-            // Animate testimonials inside modal
-            gsap.from(".modal-testimonial", {
-                y: 20,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.2,
-                delay: 0.5,
-                ease: "power2.out"
-            });
-
-            document.body.style.overflow = 'hidden';
-        });
-    }
-
-    function closeAllModals() {
-        const modals = [projectModal, gateModal, aboutModal];
-        modals.forEach(activeModal => {
-            if (activeModal && activeModal.style.display === 'flex') {
-                gsap.to(activeModal.querySelector('.modal-content'), { opacity: 0, scale: 0.9, duration: 0.3 });
-                gsap.to(activeModal.querySelector('.modal-backdrop'), {
-                    opacity: 0, duration: 0.3, onComplete: () => {
-                        activeModal.style.display = 'none';
-                        document.body.style.overflow = '';
-                    }
-                });
-            }
-        });
-    }
-
-    // Replace old closeModals with closeAllModals in existing listeners
-    document.querySelectorAll('.modal-close, .modal-backdrop').forEach(el => {
-        el.addEventListener('click', closeAllModals);
-    });
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeAllModals();
-    });
-
-    if (sendCodeBtn) {
-        sendCodeBtn.addEventListener('click', () => {
-            const email = document.getElementById('gate-email').value;
-            if (email.includes('@')) {
-                sendCodeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-                setTimeout(() => {
-                    gsap.to(emailStep, {
-                        opacity: 0, y: -10, duration: 0.3, onComplete: () => {
-                            emailStep.style.display = 'none';
-                            codeStep.style.display = 'block';
-                            gsap.fromTo(codeStep, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3 });
-                        }
-                    });
-                }, 800);
-            }
-        });
-    }
-
-    if (gateForm) {
-        gateForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const code = document.getElementById('gate-code').value;
-            if (code === '1234' || code.length >= 4) {
-                isUnlocked = true;
-                localStorage.setItem('portfolio_unlocked', 'true');
-                closeAllModals();
-                if (pendingProject) {
-                    setTimeout(() => openModal(pendingProject), 400);
-                    pendingProject = null;
-                }
-            } else {
-                gsap.to(gateForm, { x: -10, duration: 0.1, repeat: 3, yoyo: true });
-            }
-        });
-    }
-
-    document.querySelectorAll('.project-cta').forEach(btn => {
-        btn.onclick = (e) => {
-            e.preventDefault();
-            const key = btn.getAttribute('data-project');
-            if (isUnlocked) {
-                openModal(key);
-            } else {
-                pendingProject = key;
-                gateModal.style.display = 'flex';
-                gsap.set(gateModal.querySelector('.modal-content'), { opacity: 0, scale: 0.9 });
-                gsap.to(gateModal.querySelector('.modal-backdrop'), { opacity: 1, duration: 0.3 });
-                gsap.to(gateModal.querySelector('.modal-content'), { opacity: 1, scale: 1, duration: 0.4 });
+            const key = cta.getAttribute('data-project');
+            window.debugLog("Ouverture: " + key);
+            const data = projectDetails[key];
+            if (data && modals.project) {
+                handleAction(key, 'view');
+                document.getElementById('modal-project-image').src = data.image;
+                document.getElementById('modal-title').innerText = data.title;
+                document.getElementById('modal-description').innerText = data.description;
+                document.getElementById('modal-link').setAttribute('data-target', key);
+                modals.project.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
             }
-        };
-    });
-
-    window.resetAccess = () => {
-        localStorage.removeItem('portfolio_unlocked');
-        location.reload();
-    };
-
-    // --- CUSTOM CURSOR LOGIC ---
-    const cursor = document.querySelector('.custom-cursor');
-    const follower = document.querySelector('.cursor-follower');
-    let mouseX = 0, mouseY = 0;
-    let followerX = 0, followerY = 0;
-
-    if (cursor && follower) {
-        window.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            gsap.to(cursor, { x: mouseX - 5, y: mouseY - 5, duration: 0.1 });
-        });
-
-        const animateFollower = () => {
-            followerX += (mouseX - followerX) * 0.15;
-            followerY += (mouseY - followerY) * 0.15;
-            gsap.set(follower, { x: followerX - 20, y: followerY - 20 });
-            requestAnimationFrame(animateFollower);
-        };
-        animateFollower();
-
-        document.querySelectorAll('a, button, .project-card, .skill-group, .method-item, .why-card').forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
-        });
-    }
-
-    // --- GLOBAL REVEAL ANIMATIONS ---
-    gsap.utils.toArray('section > *').forEach(el => {
-        gsap.from(el, {
-            opacity: 0,
-            y: 30,
-            duration: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-                trigger: el,
-                start: "top 90%",
-                toggleActions: "play none none none"
-            }
-        });
-    });
-
-    const grain = document.querySelector('.grain-overlay');
-    if (grain) {
-        gsap.to(grain, {
-            x: '+=5', y: '+=5', duration: 0.1, repeat: -1, yoyo: true, ease: "none"
-        });
-    }
-
-    // --- HERO ICONS REPULSION ---
-    const floatingIcons = document.querySelectorAll('.floating-icon');
-    if (floatingIcons.length > 0) {
-        window.addEventListener('mousemove', (e) => {
-            const mX = e.clientX;
-            const mY = e.clientY;
-
-            floatingIcons.forEach(icon => {
-                const rect = icon.getBoundingClientRect();
-                const iconX = rect.left + rect.width / 2;
-                const iconY = rect.top + rect.height / 2;
-
-                const distX = mX - iconX;
-                const distY = mY - iconY;
-                const distance = Math.sqrt(distX * distX + distY * distY);
-
-                if (distance < 150) {
-                    // Calculate repulsion vector
-                    const angle = Math.atan2(distY, distX);
-                    const force = (150 - distance) / 2;
-                    const repX = -Math.cos(angle) * force;
-                    const repY = -Math.sin(angle) * force;
-
-                    gsap.to(icon, {
-                        x: repX,
-                        y: repY,
-                        duration: 0.6,
-                        ease: "power2.out"
-                    });
-                } else {
-                    // Return to equilibrium
-                    gsap.to(icon, {
-                        x: 0,
-                        y: 0,
-                        duration: 1,
-                        ease: "elastic.out(1, 0.3)"
-                    });
-                }
-            });
-        });
-    }
-
-    // --- TYPING EFFECT ---
-    const typedWord = document.getElementById('typed-word');
-    if (typedWord) {
-        const words = ['captivent', 'inspirent', 'impressionnent', 'marquent', 'transforment'];
-        let wordIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-
-        function typeEffect() {
-            const currentWord = words[wordIndex];
-
-            if (isDeleting) {
-                typedWord.textContent = currentWord.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typedWord.textContent = currentWord.substring(0, charIndex + 1);
-                charIndex++;
-            }
-
-            let speed = isDeleting ? 50 : 100;
-
-            if (!isDeleting && charIndex === currentWord.length) {
-                speed = 2000; // Pause at full word
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                wordIndex = (wordIndex + 1) % words.length;
-                speed = 300;
-            }
-
-            setTimeout(typeEffect, speed);
         }
-        setTimeout(typeEffect, 2000); // Start after entrance animation
-    }
 
-    // --- SCROLL SPY ---
-    const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('section[id]');
-
-    if (navLinks.length > 0 && sections.length > 0) {
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 150;
-                if (window.scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    }
-
-    // --- HERO PARALLAX ---
-    const heroSection = document.querySelector('.hero');
-    const photoWrapper = document.querySelector('.photo-wrapper');
-    const textContent = document.querySelector('.text-content');
-
-    if (heroSection && photoWrapper && textContent) {
-        heroSection.addEventListener('mousemove', (e) => {
-            const rect = heroSection.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width - 0.5;
-            const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-            gsap.to(photoWrapper, {
-                x: x * 30,
-                y: y * 20,
-                duration: 0.8,
-                ease: "power2.out"
-            });
-
-            gsap.to(textContent, {
-                x: x * -15,
-                y: y * -10,
-                duration: 0.8,
-                ease: "power2.out"
-            });
-        });
-
-        heroSection.addEventListener('mouseleave', () => {
-            gsap.to([photoWrapper, textContent], {
-                x: 0, y: 0, duration: 1, ease: "elastic.out(1, 0.5)"
-            });
-        });
-    }
-
-    // --- ANIMATED COUNTERS ---
-    const statNumbers = document.querySelectorAll('.stat-number[data-count]');
-    statNumbers.forEach(stat => {
-        const target = parseInt(stat.dataset.count);
-        const suffix = stat.dataset.suffix || '';
-
-        ScrollTrigger.create({
-            trigger: stat,
-            start: "top 85%",
-            onEnter: () => {
-                gsap.to({ val: 0 }, {
-                    val: target,
-                    duration: 2,
-                    ease: "power1.out",
-                    onUpdate: function () {
-                        stat.textContent = Math.ceil(this.targets()[0].val) + suffix;
-                    }
-                });
-            },
-            once: true
-        });
-    });
-
-    // --- CONTACT FORM SUBMISSION ---
-    const contactForm = document.getElementById('contact-form');
-    const submitBtn = document.getElementById('submit-btn');
-    const formSuccess = document.getElementById('form-success');
-
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        // bouton "Découvrir la solution" dans la modal
+        const vBtn = t.closest('#modal-link');
+        if (vBtn) {
             e.preventDefault();
-
-            // Loading state
-            submitBtn.classList.add('loading');
-            submitBtn.querySelector('i').style.display = 'none';
-
-            const formData = new FormData(contactForm);
-
-            fetch(contactForm.action, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Hide form, show success
-                        gsap.to(contactForm, {
-                            opacity: 0, y: -20, duration: 0.4,
-                            onComplete: () => {
-                                contactForm.style.display = 'none';
-                                formSuccess.style.display = 'block';
-                            }
-                        });
-                    } else {
-                        throw new Error('Submission failed');
-                    }
-                })
-                .catch(error => {
-                    submitBtn.classList.remove('loading');
-                    submitBtn.querySelector('i').style.display = '';
-                    alert('Oups ! Une erreur est survenue. Veuillez réessayer ou m\'envoyer un email directement.');
-                    console.error('Form error:', error);
-                });
-        });
-    }
-    // --- GLOBAL LIKE SYSTEM (API + Sync) ---
-    // Namespace unique pour une remise à zéro totale
-    const LIKE_NAMESPACE = "eliaevih_portfolio_v8_final";
-    const LIKE_API_URL = `https://api.countapi.xyz/hit/${LIKE_NAMESPACE}/`;
-    const GET_API_URL = `https://api.countapi.xyz/get/${LIKE_NAMESPACE}/`;
-    const LOCAL_STORAGE_KEY_PREFIX = "liked_v8_";
-
-    const baseLikes = {
-        'agrosmart': 0,
-        'sungrid': 0,
-        'nourrici': 0
-    };
-
-    function syncGlobalLikes() {
-        document.querySelectorAll('.like-button').forEach(btn => {
-            const projectId = btn.getAttribute('data-project');
-            const countSpan = btn.querySelector('.like-count');
-            const isLikedLocally = localStorage.getItem(LOCAL_STORAGE_KEY_PREFIX + projectId) === 'true';
-
-            fetch(`${GET_API_URL}${projectId}`)
-                .then(res => res.json())
-                .then(data => {
-                    let globalCount = data.value || 0;
-
-                    // Sécurité : si l'utilisateur a liké localement, le compteur DOIT être au moins à 1
-                    // même si l'API n'a pas encore enregistré le hit ou renvoie 0 par erreur
-                    if (isLikedLocally && globalCount === 0) {
-                        globalCount = 1;
-                    }
-
-                    const totalDisplay = baseLikes[projectId] + globalCount;
-
-                    if (countSpan.textContent !== totalDisplay.toString()) {
-                        // Animation si le nombre augmente
-                        if (parseInt(countSpan.textContent) < totalDisplay && countSpan.textContent !== "0") {
-                            gsap.fromTo(countSpan, { scale: 1.4, color: "#ef4444" }, { scale: 1, color: "inherit", duration: 0.5 });
-                        }
-                        countSpan.textContent = totalDisplay;
-                    }
-                })
-                .catch(() => {
-                    // Si l'API échoue, on garde au moins 1 si l'utilisateur a liké
-                    if (isLikedLocally && countSpan.textContent === "0") {
-                        countSpan.textContent = "1";
-                    }
-                });
-        });
-    }
-
-    // Initialisation
-    document.querySelectorAll('.like-button').forEach(btn => {
-        const projectId = btn.getAttribute('data-project');
-        const countSpan = btn.querySelector('.like-count');
-        const icon = btn.querySelector('i');
-
-        // Etat Visuel Initial
-        const isLiked = localStorage.getItem(LOCAL_STORAGE_KEY_PREFIX + projectId) === 'true';
-        if (isLiked) {
-            btn.classList.add('liked');
-            icon.classList.replace('far', 'fas');
-            // Affichage immédiat d'au moins 1 en attendant le sync
-            if (countSpan.textContent === "0") countSpan.textContent = "1";
-        } else {
-            btn.classList.remove('liked');
-            icon.classList.replace('fas', 'far');
-        }
-
-        btn.addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            if (localStorage.getItem(LOCAL_STORAGE_KEY_PREFIX + projectId) === 'true') {
-                gsap.to(btn, { x: 5, duration: 0.1, yoyo: true, repeat: 3 });
-                return;
-            }
-
-            // UI Feedback immédiat (Optimiste)
-            btn.classList.add('liked');
-            icon.classList.replace('far', 'fas');
-            localStorage.setItem(LOCAL_STORAGE_KEY_PREFIX + projectId, 'true');
-
-            let currentCount = parseInt(countSpan.textContent);
-            countSpan.textContent = currentCount + 1;
-
-            createParticles(e.clientX, e.clientY);
-
-            // API Update
-            fetch(`${LIKE_API_URL}${projectId}`)
-                .then(res => res.json())
-                .then(data => {
-                    const val = data.value || 0;
-                    countSpan.textContent = baseLikes[projectId] + val;
-                })
-                .catch(err => console.error("API Error:", err));
-        });
-    });
-
-    // Sync toutes les 15 secondes pour le côté "Live"
-    syncGlobalLikes();
-    setInterval(syncGlobalLikes, 15000);
-
-    function createParticles(x, y) {
-        for (let i = 0; i < 8; i++) {
-            const particle = document.createElement('i');
-            particle.className = 'fas fa-heart like-particle';
-            document.body.appendChild(particle);
-
-            const angle = (i / 8) * Math.PI * 2;
-            const velocity = 2 + Math.random() * 3;
-            const destinationX = x + Math.cos(angle) * 100 * Math.random();
-            const destinationY = y + Math.sin(angle) * 100 * Math.random();
-
-            gsap.fromTo(particle,
-                { x: x - 10, y: y - 10, opacity: 1, scale: 0.5 },
-                {
-                    x: destinationX,
-                    y: destinationY,
-                    opacity: 0,
-                    scale: 1.5,
-                    duration: 0.8 + Math.random() * 0.4,
-                    ease: "power2.out",
-                    onComplete: () => particle.remove()
-                }
-            );
-        }
-    }
-
-    // --- PREMIUM UI LOGIC ---
-
-    // 1. Live Viewer Simulation
-    document.querySelectorAll('.live-indicator').forEach(indicator => {
-        const viewSpan = indicator.querySelector('.views');
-        // Simulate a small fluctuation every few seconds
-        setInterval(() => {
-            const currentViewsStr = viewSpan.textContent;
-            const currentViews = parseInt(currentViewsStr);
-            const change = Math.random() > 0.7 ? (Math.random() > 0.5 ? 1 : -1) : 0;
-            if (currentViews + change > 5) {
-                viewSpan.textContent = `${currentViews + change} vues aujourd'hui`;
-            }
-        }, 5000);
-    });
-
-    // 2. Content Protection (Anti-copy/Right-click)
-    document.querySelectorAll('.project-thumbnail, #fullscreen-img').forEach(img => {
-        img.addEventListener('contextmenu', (e) => e.preventDefault());
-        img.addEventListener('dragstart', (e) => e.preventDefault());
-    });
-
-    // 3. Fullscreen Viewer Logic
-    const fullscreenViewer = document.getElementById('fullscreen-viewer');
-    const fullscreenImg = document.getElementById('fullscreen-img');
-    const fullscreenClose = document.querySelector('.fullscreen-close');
-
-    // Open on thumbnail click
-    document.querySelectorAll('.project-thumbnail').forEach(thumb => {
-        thumb.addEventListener('click', (e) => {
-            const bgImage = thumb.style.backgroundImage;
-            const imageUrl = bgImage.slice(5, -2).replace(/"/g, "");
-
-            fullscreenImg.src = imageUrl;
-            fullscreenViewer.style.display = 'flex';
-
-            gsap.to(fullscreenViewer, {
-                opacity: 1,
-                duration: 0.4,
-                ease: "power2.out"
-            });
-
-            gsap.from(fullscreenImg, {
-                scale: 0.8,
-                duration: 0.5,
-                ease: "back.out(1.7)"
-            });
-        });
-    });
-
-    // Close logic
-    const closeFullscreen = () => {
-        gsap.to(fullscreenViewer, {
-            opacity: 0,
-            duration: 0.3,
-            onComplete: () => {
-                fullscreenViewer.style.display = 'none';
-                fullscreenImg.src = '';
-            }
-        });
-    };
-
-    if (fullscreenClose) fullscreenClose.addEventListener('click', closeFullscreen);
-    if (fullscreenViewer) {
-        fullscreenViewer.querySelector('.modal-backdrop').addEventListener('click', closeFullscreen);
-    }
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && fullscreenViewer && fullscreenViewer.style.display === 'flex') {
-            closeFullscreen();
-        }
-    });
-
-    // --- FAQ ACCORDION LOGIC ---
-    document.querySelectorAll('.faq-question').forEach(question => {
-        question.addEventListener('click', () => {
-            const item = question.parentElement;
-            const answer = question.nextElementSibling;
-            const isActive = item.classList.contains('active');
-
-            // Close other open items
-            document.querySelectorAll('.faq-item').forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.classList.remove('active');
-                    otherItem.querySelector('.faq-answer').style.maxHeight = null;
-                }
-            });
-
-            // Toggle current item
-            item.classList.toggle('active');
-            if (!isActive) {
-                answer.style.maxHeight = answer.scrollHeight + "px";
+            const key = vBtn.getAttribute('data-target');
+            if (safeStorage('portfolio_unlocked') !== 'true') {
+                currentPendingProject = key;
+                if (modals.gate) modals.gate.style.display = 'flex';
             } else {
-                answer.style.maxHeight = null;
+                window.location.href = projectDetails[key].link;
             }
+        }
+
+        // Like buttons
+        const lBtn = t.closest('.like-button');
+        if (lBtn) {
+            const key = lBtn.getAttribute('data-project');
+            const icon = lBtn.querySelector('i');
+            if (icon) {
+                icon.className = 'fas fa-heart';
+                if (window.gsap) gsap.to(icon, { scale: 1.5, duration: 0.2, yoyo: true, repeat: 1 });
+            }
+            handleAction(key, 'like');
+        }
+    });
+
+    // Formulaire Gate
+    const gateForm = document.getElementById('mockup-capture-form');
+    if (gateForm) {
+        gateForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const res = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(Object.fromEntries(new FormData(gateForm)))
+                });
+                if (res.ok) {
+                    document.getElementById('gate-step-1').style.display = 'none';
+                    document.getElementById('gate-step-2').style.display = 'block';
+                }
+            } catch (err) { window.debugLog("Erreur Mail", "error"); }
         });
-    });
+    }
 
+    const verifyBtn = document.getElementById('btn-verify-code');
+    if (verifyBtn) {
+        verifyBtn.addEventListener('click', () => {
+            if (document.getElementById('access-code-input').value.trim().toUpperCase() === ACCESS_CODE) {
+                safeStorage('portfolio_unlocked', 'true');
+                if (currentPendingProject) window.location.href = projectDetails[currentPendingProject].link;
+                else closeAll();
+            } else alert("Code incorrect !");
+        });
+    }
 
+    window.debugLog("Init Terminée ✓", "success");
+}
 
-    // --- FAQ ANIMATION ---
-    gsap.from(".faq-item", {
-        scrollTrigger: {
-            trigger: ".faq",
-            start: "top 85%",
-        },
-        y: 20,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power2.out"
-    });
-});
+// Lancement sécurisé
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootstrap);
+} else {
+    bootstrap();
+}

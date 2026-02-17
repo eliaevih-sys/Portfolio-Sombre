@@ -1,0 +1,126 @@
+/* About Modal - Full Page Layout Transformation */
+
+/* Make modal full screen */
+#about-modal .modal-content {
+    max-width: 100%;
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    padding: 0;
+    border-radius: 0;
+}
+
+/* Hide the old grid layout */
+#about-modal .modal-grid {
+    display: block !important;
+    max-width: none;
+}
+
+/* Transform modal-image into centered header */
+#about-modal .modal-image {
+    position: static;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 3rem;
+    padding-top: 8rem;
+}
+
+#about-modal .photo-frame {
+    box-shadow: 0 30px 60px rgba(139, 92, 246, 0.3);
+}
+
+/* Transform modal-info into centered content */
+#about-modal .modal-info {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 5% 5rem;
+    overflow-y: visible;
+    max-height: none;
+}
+
+/* Style the header section */
+#about-modal .modal-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+#about-modal .modal-badge {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 50px;
+    color: #8b5cf6;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#about-modal h2 {
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-family: 'Space Grotesk', sans-serif;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+#about-modal .orange-highlight {
+    background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#about-modal .reinforced-text {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.8;
+}
+
+/* Style the body content */
+#about-modal .modal-body {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#about-modal .modal-body p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1.5rem;
+}
+
+/* Philosophy box styling */
+#about-modal .philosophy-box {
+    background: rgba(139, 92, 246, 0.05);
+    border-left: 4px solid #8b5cf6;
+    padding: 3rem;
+    border-radius: 12px;
+    margin-top: 3rem;
+}
+
+#about-modal .philosophy-box h3 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #8b5cf6;
+}
+
+#about-modal .philosophy-box p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #about-modal .modal-image {
+        padding-top: 6rem;
+    }
+
+    #about-modal h2 {
+        font-size: 2.5rem;
+    }
+}

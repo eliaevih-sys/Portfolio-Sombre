@@ -10,6 +10,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --bg-viewer: #050816;
@@ -127,7 +128,7 @@
         }
 
         .mobile-item:hover {
-            transform: translateY(-15px);
+            /* No transform */
         }
 
         .mobile-item img {
@@ -239,6 +240,22 @@
     <header class="showcase-header">
         <p class="highlight" style="letter-spacing: 4px; font-weight: 600; text-transform: uppercase;">Case Study</p>
         <h1 id="project-title">...</h1>
+
+        <!-- Stats Bandeau -->
+        <div class="project-stats-bandeau"
+            style="display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0; opacity: 0.8;">
+            <div class="stat-item"
+                style="display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1);">
+                <i class="fas fa-eye" style="color: #6366f1;"></i>
+                <span id="view-count">0</span> views
+            </div>
+            <div class="stat-item"
+                style="display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1);">
+                <i class="fas fa-heart" id="header-like-icon" style="color: #ef4444;"></i>
+                <span id="like-count">0</span> likes
+            </div>
+        </div>
+
         <p id="project-desc" style="font-size: 1.2rem; color: rgba(255,255,255,0.6); line-height: 1.8;"></p>
     </header>
 
@@ -264,19 +281,151 @@
         </div>
     </section>
 
+    <!-- MOCKUP CTA -->
+    <section class="mockup-cta-section"
+        style="padding: 10rem 5%; text-align: center; background: rgba(139, 92, 246, 0.05); border-top: 1px solid rgba(139, 92, 246, 0.1);">
+        <h2 style="font-family: 'Space Grotesk'; font-size: 2.5rem; margin-bottom: 1.5rem;">Envie d'explorer la maquette
+            ?</h2>
+        <p
+            style="color: rgba(255,255,255,0.6); margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Accédez à la maquette interactive complète sur Figma pour découvrir chaque détail de l'interface et de
+            l'expérience utilisateur.
+        </p>
+        <a href="#" id="final-mockup-link" class="btn btn-primary"
+            style="padding: 1.2rem 3rem; font-size: 1.2rem; border-radius: 50px; background: #6366f1; color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 1rem; font-weight: 600; border: none; cursor: pointer;">
+            background: #6366f1;
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;">
+            <span>Accéder à la Maquette Complète</span>
+            <i class="fas fa-external-link-alt"></i>
+        </a>
+    </section>
+
     <footer class="showcase-footer">
         <h2 style="font-family: 'Space Grotesk'; font-size: 2.5rem; margin-bottom: 2rem;">Prêt pour la suite ?</h2>
         <a href="index.html" class="cta-button primary">Retour à l'accueil</a>
     </footer>
 
+    <!-- Diagnostic Console (Auto-générée par le script) -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            gsap.registerPlugin(ScrollTrigger);
+        // Log function for viewer
+        function debugLog(msg, type = "info") {
+            const debugBox = document.getElementById('debug-stats-box');
+            if (debugBox) {
+                const line = document.createElement('div');
+                line.style.color = type === 'error' ? '#ff4d4d' : '#4dff4d';
+                line.textContent = `> ${msg}`;
+                debugBox.appendChild(line);
+                debugBox.scrollTop = debugBox.scrollHeight;
+            }
+        }
 
+        document.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
-            const projectId = params.get('id') || 'sungrid';
+            const projectId = params.get('project') || params.get('id') || 'sungrid';
+            debugLog("Projet identifié : " + projectId);
+
+            // --- SUPABASE INIT ---
+            const SUPABASE_URL = "https://cajpruwybnjntvsoenyr.supabase.co";
+            const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNhanByd3libmpudHZic29lbnlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNDgxMjQsImV4cCI6MjA4NjkyNDEyNH0.M-GtLUVINglfF6NakNJyXVca7z5aLpzYnO4s1TGZcAE";
+
+            let supabase;
+            try {
+                if (typeof window.supabase !== 'undefined') {
+                    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                    debugLog("Supabase Connecté");
+                }
+            } catch (e) { debugLog("Supabase Fail", "error"); }
+
+            // GESTION STORAGE SÉCURISÉE
+            function safeStorage(key, value = undefined) {
+                try {
+                    if (value === undefined) return localStorage.getItem(key);
+                    localStorage.setItem(key, value);
+                    return true;
+                } catch (e) { return null; }
+            }
+
+            function getUserId() {
+                let id = safeStorage('portfolio_user_id');
+                if (!id) {
+                    id = 'user_' + Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
+                    safeStorage('portfolio_user_id', id);
+                }
+                return id || 'temp_user' + Date.now();
+            }
+            const USER_ID = getUserId();
+
+            async function handleStats() {
+                if (!supabase) return;
+                debugLog("Chargement des statistiques...");
+
+                try {
+                    // 1. Fetch current stats
+                    const { data: stats, error: fetchError } = await supabase
+                        .from('project_stats')
+                        .select('*')
+                        .eq('id', projectId)
+                        .maybeSingle();
+
+                    if (fetchError) throw fetchError;
+
+                    if (stats) {
+                        document.getElementById('view-count').textContent = stats.views || 0;
+                        document.getElementById('like-count').textContent = stats.likes || 0;
+                        debugLog(`Stats: ${stats.views}v / ${stats.likes}l`, "success");
+                    }
+
+                    // 2. Increment view via RPC (Unique)
+                    const { error: rpcError } = await supabase.rpc('view_project', {
+                        p_project_id: projectId,
+                        p_user_id: USER_ID
+                    });
+
+                    if (!rpcError) {
+                        debugLog("Vue enregistrée", "success");
+                        // Rafraîchir l'affichage
+                        const { data: n } = await supabase.from('project_stats').select('views').eq('id', projectId).maybeSingle();
+                        if (n) document.getElementById('view-count').textContent = n.views;
+                    }
+
+                } catch (e) {
+                    debugLog("Erreur: " + e.message, "error");
+                }
+            }
+
+            handleStats();
+
+            // Links to actual mockups
+            const projectLinks = {
+                agrosmart: "https://www.figma.com/design/agrosmart-mockup",
+                sungrid: "https://www.figma.com/design/sungrid-mockup",
+                nourrici: "https://www.figma.com/design/nourrici-mockup"
+            };
+
+            const mockupBtn = document.getElementById('final-mockup-link');
+            if (mockupBtn) {
+                mockupBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (safeStorage('portfolio_unlocked') === 'true') {
+                        const link = projectLinks[projectId];
+                        if (link) window.open(link, "_blank");
+                        else alert("Lien de la maquette bientôt disponible !");
+                    } else {
+                        alert("Veuillez d'abord débloquer l'accès depuis la page d'accueil.");
+                        window.location.href = 'index.html#work';
+                    }
+                });
+            }
 
             const projectData = {
                 agrosmart: {
@@ -320,7 +469,11 @@
             };
 
             const data = projectData[projectId];
-            if (!data) { window.location.href = 'index.html'; return; }
+            if (!data) {
+                debugLog("Data non trouvé pour : " + projectId, "error");
+                setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+                return;
+            }
 
             document.getElementById('project-title').innerText = data.title;
             document.getElementById('project-desc').innerText = data.description;
@@ -335,7 +488,8 @@
                     mobileGrid.appendChild(item);
                 });
             } else {
-                document.getElementById('mobile-section').style.display = 'none';
+                const section = document.getElementById('mobile-section');
+                if (section) section.style.display = 'none';
             }
 
             // RENDER WEB
@@ -351,93 +505,18 @@
                     webList.appendChild(wrap);
                 });
             } else {
-                document.getElementById('web-section').style.display = 'none';
+                const section = document.getElementById('web-section');
+                if (section) section.style.display = 'none';
             }
 
-            // --- SCROLL PROGRESS ---
+            // Scroll progress
+            const progress = document.getElementById('scroll-progress');
             window.addEventListener('scroll', () => {
                 const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
                 const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
                 const scrolled = (winScroll / height) * 100;
-                gsap.to("#scroll-progress", { width: scrolled + "%", duration: 0.1 });
+                if (progress) progress.style.width = scrolled + "%";
             });
-
-            // --- CUSTOM CURSOR ---
-            const cursor = document.querySelector('.custom-cursor');
-            const follower = document.querySelector('.cursor-follower');
-            let mouseX = 0, mouseY = 0;
-            let followerX = 0, followerY = 0;
-
-            if (cursor && follower) {
-                window.addEventListener('mousemove', (e) => {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                    gsap.to(cursor, { x: mouseX - 5, y: mouseY - 5, duration: 0.1 });
-                });
-
-                const animateFollower = () => {
-                    followerX += (mouseX - followerX) * 0.15;
-                    followerY += (mouseY - followerY) * 0.15;
-                    gsap.set(follower, { x: followerX - 20, y: followerY - 20 });
-                    requestAnimationFrame(animateFollower);
-                };
-                animateFollower();
-
-                document.querySelectorAll('a, button').forEach(el => {
-                    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
-                    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
-                });
-            }
-
-            // --- 3D TILT EFFECT ---
-            gsap.utils.toArray('.mobile-item, .web-item').forEach(el => {
-                el.addEventListener('mousemove', (e) => {
-                    const rect = el.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    const rotateX = (y - centerY) / 20;
-                    const rotateY = (centerX - x) / 20;
-
-                    gsap.to(el, {
-                        rotateX: rotateX,
-                        rotateY: rotateY,
-                        scale: 1.05,
-                        duration: 0.5,
-                        ease: "power2.out"
-                    });
-                });
-
-                el.addEventListener('mouseleave', () => {
-                    gsap.to(el, {
-                        rotateX: 0,
-                        rotateY: 0,
-                        scale: 1,
-                        duration: 0.5,
-                        ease: "power2.out"
-                    });
-                });
-
-                // Reveal animation
-                gsap.from(el, {
-                    opacity: 0,
-                    y: 50,
-                    duration: 1,
-                    scrollTrigger: {
-                        trigger: el,
-                        start: "top 85%",
-                        toggleActions: "play none none none"
-                    }
-                });
-            });
-
-            const grain = document.querySelector('.grain-overlay');
-            if (grain) {
-                gsap.to(grain, {
-                    x: '+=5', y: '+=5', duration: 0.1, repeat: -1, yoyo: true, ease: "none"
-                });
-            }
         });
     </script>
 </body>

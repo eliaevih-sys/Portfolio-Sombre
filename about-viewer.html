@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À Propos - Elia Evih</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-viewer: #050816;
+            --accent-glow: rgba(139, 92, 246, 0.4);
+        }
+
+        body {
+            background-color: var(--bg-viewer);
+            color: var(--white);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* --- STICKY NAV --- */
+        .showcase-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            background: rgba(5, 8, 22, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            z-index: 2000;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        .shortcut-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 50px;
+            color: #8b5cf6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .shortcut-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        /* --- HEADER --- */
+        .showcase-header {
+            padding: 12rem 5% 5rem;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .showcase-header .badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 50px;
+            color: #8b5cf6;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .showcase-header h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 30%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .showcase-header p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* --- SECTIONS --- */
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-family: 'Space Grotesk';
+            font-size: 2.5rem;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* --- PROFILE SECTION --- */
+        .profile-section {
+            padding: 5rem 5%;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .profile-photo {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(139, 92, 246, 0.3);
+        }
+
+        .profile-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #8b5cf6;
+        }
+
+        .profile-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- STORY SECTION --- */
+        .story-section {
+            padding: 8rem 5%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent);
+        }
+
+        .story-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .story-content p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+        }
+
+        .story-intro {
+            font-size: 2rem !important;
+            font-family: 'Space Grotesk', sans-serif;
+            color: white !important;
+            font-weight: 600;
+            line-height: 1.4 !important;
+        }
+
+        .story-highlight {
+            font-weight: 600;
+            color: #8b5cf6 !important;
+            font-size: 1.3rem !important;
+        }
+
+        .story-quote {
+            margin: 4rem 0;
+            padding: 3rem;
+            background: rgba(139, 92, 246, 0.05);
+            border-radius: 20px;
+            border-left: 5px solid #8b5cf6;
+            position: relative;
+        }
+
+        .story-quote p {
+            font-size: 1.5rem !important;
+            color: white !important;
+            margin-bottom: 0;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .story-quote strong {
+            color: #8b5cf6;
+        }
+
+        .story-values {
+            font-size: 1.4rem !important;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 3rem 0 !important;
+            text-transform: uppercase;
+        }
+
+        .story-conclusion {
+            margin-top: 4rem;
+            padding: 2.5rem;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            text-align: center;
+        }
+
+        .story-conclusion p {
+            margin-bottom: 0;
+            font-size: 1.3rem !important;
+            color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        /* --- PHILOSOPHY BOX --- */
+        .philosophy-section {
+            padding: 8rem 5%;
+        }
+
+        .philosophy-box {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(139, 92, 246, 0.05);
+            border-left: 4px solid #8b5cf6;
+            padding: 3rem;
+            border-radius: 12px;
+        }
+
+        .philosophy-box h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #8b5cf6;
+        }
+
+        .philosophy-box p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* --- FOOTER --- */
+        .showcase-footer {
+            padding: 10rem 5%;
+            text-align: center;
+            background: linear-gradient(to top, rgba(139, 92, 246, 0.05), transparent);
+        }
+
+        .showcase-footer h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .showcase-footer a {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .showcase-footer a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1024px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .profile-photo {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="showcase-nav">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Retour
+        </a>
+        <a href="index.html" class="shortcut-btn">Design Portfolio</a>
+    </nav>
+
+    <!-- Header -->
+    <header class="showcase-header">
+        <div class="badge">À PROPOS</div>
+        <h1>Elia Evih</h1>
+        <p>
+            Je conçois des expériences digitales claires, utiles et stratégiques.
+        </p>
+    </header>
+
+    <!-- Profile Section -->
+    <section class="profile-section">
+        <div class="section-title">
+            <h2>Mon Parcours</h2>
+        </div>
+        <div class="profile-container">
+            <div class="profile-image">
+                <img src="assets/images/apropos1.jpeg" alt="Elia Evih" class="profile-photo">
+            </div>
+            <div class="profile-content">
+                <h3>Développeuse d'applications & Designer UI/UX</h3>
+                <p>
+                    Je transforme des idées en produits numériques fonctionnels, cohérents et techniquement réalisables.
+                    Mon objectif n'est pas seulement de créer de belles interfaces, mais de concevoir des solutions qui
+                    résolvent de vrais problèmes.
+                </p>
+                <p>
+                    Au FabLab de l'Université Virtuelle de Côte d'Ivoire (UVCI), je contribue à la conception et au
+                    développement de solutions innovantes en intervenant sur l'ensemble du cycle produit : recherche
+                    utilisateur, structuration des parcours, design d'interfaces modernes et intégration front-end.
+                </p>
+                <p>
+                    Je travaille à l'intersection du design et du développement, avec une approche centrée utilisateur,
+                    orientée performance et impact.
+                </p>
+                <p style="font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-top: 2rem;">
+                    Créer. Structurer. Optimiser.<br>
+                    Chaque projet est une opportunité de transformer une vision en expérience digitale concrète.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section">
+        <div class="section-title">
+            <h2>Mon Histoire</h2>
+        </div>
+        <div class="story-content">
+            <p class="story-intro">
+                Avant le digital, je voulais devenir architecte.
+            </p>
+            <p>
+                J’ai toujours été attirée par ce qui est beau, structuré et bien conçu. Imaginer des espaces
+                fonctionnels, penser l’esthétique et l’utilité en même temps… cette vision m’a toujours animée. Je ne
+                savais pas encore que cette sensibilité trouverait sa place dans le numérique.
+            </p>
+            <p>
+                Quand j’ai commencé l’informatique, j’étais d’abord fascinée par le code. La logique, la structure, la
+                construction technique me passionnaient. Je voyais le développement comme une manière de bâtir des
+                systèmes solides.
+            </p>
+            <p class="story-highlight">
+                C’est en travaillant sur une interface réelle, pendant un stage, que tout a pris sens.
+            </p>
+            <p>
+                On m’a confié la conception d’un écran sur un projet concret. Je ne maîtrisais pas encore pleinement les
+                notions de maquettes ou d’expérience utilisateur. J’ai appris en situation réelle : comprendre les
+                besoins, structurer les parcours, organiser les informations, tester, ajuster… jusqu’à voir le résultat
+                final être félicité.
+            </p>
+            <div class="story-quote">
+                <p>
+                    À ce moment-là, j’ai compris que je ne voulais pas seulement coder des structures, mais les
+                    concevoir.
+                </p>
+            </div>
+            <p>
+                Le design digital est devenu pour moi une forme d’architecture moderne : penser l’expérience, structurer
+                les interactions, puis leur donner vie en front-end.
+            </p>
+            <p>
+                Des projets comme <strong>AgroSmart</strong> ont renforcé ma capacité à structurer des solutions
+                utiles, tandis qu’<strong>Akwaba Institut</strong> m’a permis d’affirmer ma maturité créative et
+                technique. Voir une interface que j’ai pensée prendre vie à travers le code est aujourd’hui ce qui me
+                passionne le plus.
+            </p>
+            <p class="story-values">
+                Créer. Résoudre. Structurer. Construire.
+            </p>
+            <p>
+                Je me définis comme une <strong>designer stratégique avec une forte compétence front-end</strong>. Je
+                conçois des expériences qui ne sont pas seulement esthétiques, mais cohérentes, performantes et
+                réellement exploitables.
+            </p>
+            <div class="story-conclusion">
+                <p>
+                    Je construis des produits digitaux comme on construit une architecture :<br>
+                    <strong>avec intention, logique et impact.</strong>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="philosophy-section">
+        <div class="section-title">
+            <h2>Ma Philosophie</h2>
+        </div>
+        <div class="philosophy-box">
+            <h3>🧠 Design Philosophy</h3>
+            <p>
+                Je crois qu'un bon design ne se limite pas à l'esthétique.
+                Il doit résoudre un problème réel, simplifier l'usage et créer une expérience mémorable.
+                Chaque projet est une opportunité de créer quelque chose d'utile, de beau et d'accessible.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="showcase-footer">
+        <h2>Travaillons ensemble</h2>
+        <a href="index.html#contact">Discuter d'un projet</a>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Header animation
+        gsap.from(".showcase-header > *", {
+            duration: 1,
+            y: 30,
+            opacity: 0,
+            stagger: 0.2,
+            ease: "power3.out"
+        });
+
+        // Section titles & content animations
+        const sections = document.querySelectorAll("section");
+        sections.forEach(section => {
+            gsap.from(section.querySelector(".section-title"), {
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 80%"
+                },
+                duration: 0.8,
+                y: 20,
+                opacity: 0,
+                ease: "power2.out"
+            });
+
+            const children = section.querySelectorAll(".profile-container > *, .story-content > *, .philosophy-box");
+            gsap.from(children, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 70%"
+                },
+                duration: 1,
+                y: 30,
+                opacity: 0,
+                stagger: 0.2,
+                ease: "power3.out"
+            });
+        });
+    </script>
+</body>
+
+</html>
