@@ -1508,7 +1508,6 @@ section {
     }
 }
 
-/* Modal Projet */
 .modal {
     position: fixed;
     top: 0;
@@ -1520,6 +1519,10 @@ section {
     align-items: center;
     justify-content: center;
     padding: 2rem;
+}
+
+#mockup-gate-modal {
+    z-index: 10010 !important;
 }
 
 .modal-backdrop {
@@ -2404,6 +2407,10 @@ section {
     background: rgba(99, 102, 241, 0.05);
 }
 
+.faq-item.active .faq-answer {
+    max-height: 500px;
+}
+
 /* --- MODAL TESTIMONIALS --- */
 .modal-testimonials {
     margin-top: 2.5rem;
@@ -2506,3 +2513,46 @@ section {
 }
 
 @media (max-width: 1024px) {}
+
+/* --- LIKE BUTTON --- */
+.like-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.like-button:hover {
+    color: #f43f5e;
+    background: rgba(244, 63, 94, 0.1);
+}
+
+.like-button.liked {
+    color: #f43f5e;
+}
+
+.like-button.liked i {
+    color: #f43f5e;
+    animation: heartPop 0.4s ease;
+}
+
+@keyframes heartPop {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.4);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}

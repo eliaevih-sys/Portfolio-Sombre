@@ -12,53 +12,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Space+Grotesk:wght@400;500;700&display=swap"
         rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
-    <!-- Mockup Gate Modal -->
-    <div id="mockup-gate-modal" class="modal">
-        <div class="modal-backdrop" id="gate-backdrop"></div>
-        <div class="modal-content gate-content">
-            <button class="modal-close" id="gate-close"><i class="fas fa-times"></i></button>
-
-            <div class="gate-header">
-                <div class="gate-icon"><i class="fas fa-lock"></i></div>
-                <h2>Accès Restreint</h2>
-                <p id="gate-step-text">Cette maquette est protégée. Entrez votre email pour recevoir le code d'accès
-                    instantanément.</p>
-            </div>
-
-            <!-- Step 1: Email Capture -->
-            <div id="gate-step-1" class="gate-step">
-                <form id="mockup-capture-form">
-                    <input type="hidden" name="access_key" value="dcae5c7c-8127-4d59-9013-c93015fece9d">
-                    <div class="form-group">
-                        <input type="email" name="email" id="visitor-email" placeholder="votre@email.com" required>
-                    </div>
-                    <button type="submit" class="gate-btn" id="btn-send-code">
-                        <span>Envoyer le code</span>
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
-
-            <!-- Step 2: Code Verification -->
-            <div id="gate-step-2" class="gate-step" style="display: none;">
-                <div class="form-group">
-                    <input type="text" id="access-code-input" placeholder="Entrez le code reçu" maxlength="10">
-                </div>
-                <button class="gate-btn primary" id="btn-verify-code">
-                    <span>Accéder à la maquette</span>
-                    <i class="fas fa-unlock"></i>
-                </button>
-            </div>
-
-            <div class="gate-footer">
-                <p><i class="fas fa-shield-alt"></i> Vos données sont protégées et ne seront jamais partagées.</p>
-            </div>
-        </div>
-    </div>
 
     <div class="grain-overlay"></div>
     <div class="custom-cursor"></div>
@@ -208,7 +164,7 @@
                     <div class="project-number">01</div>
                     <div class="live-indicator" title="Consulté récemment">
                         <span class="dot"></span>
-                        <span class="views"><span id="view-count-agrosmart">0</span> vues</span>
+                        <span class="views views-count" data-project="agrosmart">0 vues aujourd'hui</span>
                     </div>
                     <div class="project-links">
                         <a href="#" class="project-link-icon"><i class="fab fa-figma"></i></a>
@@ -235,14 +191,14 @@
                     </div>
                 </div>
                 <div class="project-footer">
-                    <a href="javascript:void(0)" class="project-cta" data-project="agrosmart">
+                    <a href="#" class="project-cta" data-project="agrosmart">
                         Voir le cas d'étude
                         <i class="fas fa-arrow-right"></i>
                     </a>
                     <div class="footer-actions">
                         <button class="like-button" data-project="agrosmart" aria-label="Liker ce projet">
                             <i class="far fa-heart"></i>
-                            <span class="like-count" id="like-count-agrosmart">0</span>
+                            <span class="like-count">0</span>
                         </button>
                     </div>
                 </div>
@@ -254,7 +210,7 @@
                     <div class="project-number">02</div>
                     <div class="live-indicator" title="Consulté récemment">
                         <span class="dot"></span>
-                        <span class="views"><span id="view-count-sungrid">0</span> vues</span>
+                        <span class="views views-count" data-project="sungrid">0 vues aujourd'hui</span>
                     </div>
                     <div class="project-links">
                         <a href="#" class="project-link-icon"><i class="fab fa-figma"></i></a>
@@ -281,14 +237,14 @@
                     </div>
                 </div>
                 <div class="project-footer">
-                    <a href="javascript:void(0)" class="project-cta" data-project="sungrid">
+                    <a href="#" class="project-cta" data-project="sungrid">
                         Découvrir le projet
                         <i class="fas fa-arrow-right"></i>
                     </a>
                     <div class="footer-actions">
                         <button class="like-button" data-project="sungrid" aria-label="Liker ce projet">
                             <i class="far fa-heart"></i>
-                            <span class="like-count" id="like-count-sungrid">0</span>
+                            <span class="like-count">0</span>
                         </button>
                     </div>
                 </div>
@@ -300,7 +256,7 @@
                     <div class="project-number">03</div>
                     <div class="live-indicator" title="Consulté récemment">
                         <span class="dot"></span>
-                        <span class="views"><span id="view-count-nourrici">0</span> vues</span>
+                        <span class="views views-count" data-project="nourrici">0 vues aujourd'hui</span>
                     </div>
                     <div class="project-links">
                         <a href="#" class="project-link-icon"><i class="fab fa-figma"></i></a>
@@ -327,14 +283,14 @@
                     </div>
                 </div>
                 <div class="project-footer">
-                    <a href="javascript:void(0)" class="project-cta" data-project="nourrici">
+                    <a href="#" class="project-cta" data-project="nourrici">
                         Explorer la solution
                         <i class="fas fa-arrow-right"></i>
                     </a>
                     <div class="footer-actions">
                         <button class="like-button" data-project="nourrici" aria-label="Liker ce projet">
                             <i class="far fa-heart"></i>
-                            <span class="like-count" id="like-count-nourrici">0</span>
+                            <span class="like-count">0</span>
                         </button>
                     </div>
                 </div>
@@ -786,10 +742,152 @@
             </div>
         </div>
     </div>
+    <!-- Mockup Gate Modal (Strategic Placement) -->
+    <div id="mockup-gate-modal" class="modal">
+        <div class="modal-backdrop" id="gate-backdrop"></div>
+        <div class="modal-content gate-content">
+            <button class="modal-close" id="gate-close"><i class="fas fa-times"></i></button>
+
+            <div class="gate-header">
+                <div class="gate-icon"><i class="fas fa-lock"></i></div>
+                <h2>Accès Restreint</h2>
+                <p id="gate-step-text">Cette maquette est protégée. Entrez votre email pour recevoir le code d'accès
+                    instantanément.</p>
+            </div>
+
+            <!-- Step 1: Email Capture -->
+            <div id="gate-step-1" class="gate-step">
+                <form id="mockup-capture-form">
+                    <input type="hidden" name="access_key" value="dcae5c7c-8127-4d59-9013-c93015fece9d">
+                    <div class="form-group">
+                        <input type="email" name="email" id="visitor-email" placeholder="votre@email.com" required>
+                    </div>
+                    <button type="submit" class="gate-btn" id="btn-send-code">
+                        <span>Envoyer le code</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Step 2: Code Verification -->
+            <div id="gate-step-2" class="gate-step" style="display: none;">
+                <div class="form-group">
+                    <input type="text" id="access-code-input" placeholder="Entrez le code reçu" maxlength="10">
+                </div>
+                <button class="gate-btn primary" id="btn-verify-code">
+                    <span>Accéder à la maquette</span>
+                    <i class="fas fa-unlock"></i>
+                </button>
+            </div>
+
+            <div class="gate-footer">
+                <p><i class="fas fa-shield-alt"></i> Vos données sont protégées et ne seront jamais partagées.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getDatabase, ref, runTransaction, onValue, increment } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBNAh_DkRBXNgeqRFG0YoDb0VZ6SeePP3s",
+            authDomain: "portfolio-elia.firebaseapp.com",
+            projectId: "portfolio-elia",
+            storageBucket: "portfolio-elia.firebasestorage.app",
+            messagingSenderId: "739749569493",
+            appId: "1:739749569493:web:02a3a63ebfd0b1e556935c",
+            databaseURL: "https://portfolio-elia-default-rtdb.europe-west1.firebasedatabase.app"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        const PROJECTS = ['agrosmart', 'sungrid', 'nourrici'];
+
+        // --- LIKES ---
+        function getLikedProjects() {
+            try { return JSON.parse(localStorage.getItem('liked_projects') || '{}'); } catch { return {}; }
+        }
+        function setLiked(key) {
+            const liked = getLikedProjects();
+            liked[key] = true;
+            localStorage.setItem('liked_projects', JSON.stringify(liked));
+        }
+        function hasLiked(key) {
+            return !!getLikedProjects()[key];
+        }
+
+        // Listen to all projects and update UI in real-time
+        PROJECTS.forEach(key => {
+            const projectRef = ref(db, `projects/${key}`);
+            onValue(projectRef, (snapshot) => {
+                const data = snapshot.val() || { likes: 0, views: 0 };
+
+                // Update like count on all matching buttons
+                document.querySelectorAll(`.like-button[data-project="${key}"]`).forEach(btn => {
+                    const countEl = btn.querySelector('.like-count');
+                    if (countEl) countEl.textContent = data.likes || 0;
+
+                    // Visual state if already liked
+                    if (hasLiked(key)) {
+                        btn.classList.add('liked');
+                        const icon = btn.querySelector('i');
+                        if (icon) icon.className = 'fas fa-heart';
+                    }
+                });
+
+                // Update view count on all matching view indicators
+                document.querySelectorAll(`.views-count[data-project="${key}"]`).forEach(el => {
+                    el.textContent = `${data.views || 0} vues aujourd'hui`;
+                });
+            });
+        });
+
+        // Handle like button clicks
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('.like-button');
+            if (!btn) return;
+
+            const key = btn.getAttribute('data-project');
+            if (!key) return;
+
+            if (hasLiked(key)) {
+                console.log(`[Firebase] Already liked: ${key}`);
+                return;
+            }
+
+            console.log(`[Firebase] Liking project: ${key}`);
+
+            // Use set with increment for atomic update
+            import('https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js').then(({ ref: r, update }) => {
+                const projectRef = r(db, `projects/${key}`);
+                update(projectRef, { likes: increment(1) })
+                    .then(() => {
+                        console.log(`[Firebase] Like saved for ${key}`);
+                        setLiked(key);
+                        btn.classList.add('liked');
+                        const icon = btn.querySelector('i');
+                        if (icon) icon.className = 'fas fa-heart';
+                        const countEl = btn.querySelector('.like-count');
+                        if (countEl) countEl.textContent = parseInt(countEl.textContent || '0') + 1;
+                    })
+                    .catch(err => {
+                        console.error('[Firebase] Like error:', err);
+                    });
+            });
+        });
+
+        window._firebaseDB = db;
+        window._firebaseRef = ref;
+        window._firebaseIncrement = increment;
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="script.js?v=15.0"></script>
-
+    <script src="script.js"></script>
 </body>
+
+</html>
 
 </html>

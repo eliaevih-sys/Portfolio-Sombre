@@ -10,7 +10,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --bg-viewer: #050816;
@@ -240,23 +239,11 @@
     <header class="showcase-header">
         <p class="highlight" style="letter-spacing: 4px; font-weight: 600; text-transform: uppercase;">Case Study</p>
         <h1 id="project-title">...</h1>
-
-        <!-- Stats Bandeau -->
-        <div class="project-stats-bandeau"
-            style="display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0; opacity: 0.8;">
-            <div class="stat-item"
-                style="display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1);">
-                <i class="fas fa-eye" style="color: #6366f1;"></i>
-                <span id="view-count">0</span> views
-            </div>
-            <div class="stat-item"
-                style="display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1);">
-                <i class="fas fa-heart" id="header-like-icon" style="color: #ef4444;"></i>
-                <span id="like-count">0</span> likes
-            </div>
-        </div>
-
         <p id="project-desc" style="font-size: 1.2rem; color: rgba(255,255,255,0.6); line-height: 1.8;"></p>
+        <p style="margin-top: 1rem; color: rgba(255,255,255,0.35); font-size: 0.9rem;">
+            <i class="fas fa-eye" style="margin-right: 0.4rem; color: #6366f1;"></i>
+            <span id="project-views-count">0 consultation</span>
+        </p>
     </header>
 
     <!-- MOBILE SECTION -->
@@ -293,15 +280,6 @@
         </p>
         <a href="#" id="final-mockup-link" class="btn btn-primary"
             style="padding: 1.2rem 3rem; font-size: 1.2rem; border-radius: 50px; background: #6366f1; color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 1rem; font-weight: 600; border: none; cursor: pointer;">
-            background: #6366f1;
-            color: white;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;">
             <span>Accéder à la Maquette Complète</span>
             <i class="fas fa-external-link-alt"></i>
         </a>
@@ -312,98 +290,48 @@
         <a href="index.html" class="cta-button primary">Retour à l'accueil</a>
     </footer>
 
-    <!-- Diagnostic Console (Auto-générée par le script) -->
+    <!-- Firebase SDK - Views -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getDatabase, ref, runTransaction, onValue } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js';
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script>
-        // Log function for viewer
-        function debugLog(msg, type = "info") {
-            const debugBox = document.getElementById('debug-stats-box');
-            if (debugBox) {
-                const line = document.createElement('div');
-                line.style.color = type === 'error' ? '#ff4d4d' : '#4dff4d';
-                line.textContent = `> ${msg}`;
-                debugBox.appendChild(line);
-                debugBox.scrollTop = debugBox.scrollHeight;
-            }
+        const firebaseConfig = {
+            apiKey: "AIzaSyBNAh_DkRBXNgeqRFG0YoDb0VZ6SeePP3s",
+            authDomain: "portfolio-elia.firebaseapp.com",
+            projectId: "portfolio-elia",
+            storageBucket: "portfolio-elia.firebasestorage.app",
+            messagingSenderId: "739749569493",
+            appId: "1:739749569493:web:02a3a63ebfd0b1e556935c",
+            databaseURL: "https://portfolio-elia-default-rtdb.europe-west1.firebasedatabase.app"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        const params = new URLSearchParams(window.location.search);
+        const projectId = params.get('project') || 'sungrid';
+
+        // Increment views once per session
+        const sessionKey = `viewed_${projectId}`;
+        if (!sessionStorage.getItem(sessionKey)) {
+            const viewsRef = ref(db, `projects/${projectId}/views`);
+            runTransaction(viewsRef, (current) => (current || 0) + 1).then(() => {
+                sessionStorage.setItem(sessionKey, 'true');
+            }).catch(err => console.error('View error:', err));
         }
 
+        // Show total views in the page title area
+        const viewsRef = ref(db, `projects/${projectId}/views`);
+        onValue(viewsRef, (snapshot) => {
+            const views = snapshot.val() || 0;
+            const el = document.getElementById('project-views-count');
+            if (el) el.textContent = `${views} consultation${views > 1 ? 's' : ''}`;
+        });
+    </script>
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
-            const projectId = params.get('project') || params.get('id') || 'sungrid';
-            debugLog("Projet identifié : " + projectId);
-
-            // --- SUPABASE INIT ---
-            const SUPABASE_URL = "https://cajpruwybnjntvsoenyr.supabase.co";
-            const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNhanByd3libmpudHZic29lbnlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNDgxMjQsImV4cCI6MjA4NjkyNDEyNH0.M-GtLUVINglfF6NakNJyXVca7z5aLpzYnO4s1TGZcAE";
-
-            let supabase;
-            try {
-                if (typeof window.supabase !== 'undefined') {
-                    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                    debugLog("Supabase Connecté");
-                }
-            } catch (e) { debugLog("Supabase Fail", "error"); }
-
-            // GESTION STORAGE SÉCURISÉE
-            function safeStorage(key, value = undefined) {
-                try {
-                    if (value === undefined) return localStorage.getItem(key);
-                    localStorage.setItem(key, value);
-                    return true;
-                } catch (e) { return null; }
-            }
-
-            function getUserId() {
-                let id = safeStorage('portfolio_user_id');
-                if (!id) {
-                    id = 'user_' + Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
-                    safeStorage('portfolio_user_id', id);
-                }
-                return id || 'temp_user' + Date.now();
-            }
-            const USER_ID = getUserId();
-
-            async function handleStats() {
-                if (!supabase) return;
-                debugLog("Chargement des statistiques...");
-
-                try {
-                    // 1. Fetch current stats
-                    const { data: stats, error: fetchError } = await supabase
-                        .from('project_stats')
-                        .select('*')
-                        .eq('id', projectId)
-                        .maybeSingle();
-
-                    if (fetchError) throw fetchError;
-
-                    if (stats) {
-                        document.getElementById('view-count').textContent = stats.views || 0;
-                        document.getElementById('like-count').textContent = stats.likes || 0;
-                        debugLog(`Stats: ${stats.views}v / ${stats.likes}l`, "success");
-                    }
-
-                    // 2. Increment view via RPC (Unique)
-                    const { error: rpcError } = await supabase.rpc('view_project', {
-                        p_project_id: projectId,
-                        p_user_id: USER_ID
-                    });
-
-                    if (!rpcError) {
-                        debugLog("Vue enregistrée", "success");
-                        // Rafraîchir l'affichage
-                        const { data: n } = await supabase.from('project_stats').select('views').eq('id', projectId).maybeSingle();
-                        if (n) document.getElementById('view-count').textContent = n.views;
-                    }
-
-                } catch (e) {
-                    debugLog("Erreur: " + e.message, "error");
-                }
-            }
-
-            handleStats();
+            const projectId = params.get('project') || 'sungrid';
 
             // Links to actual mockups
             const projectLinks = {
@@ -416,12 +344,12 @@
             if (mockupBtn) {
                 mockupBtn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    if (safeStorage('portfolio_unlocked') === 'true') {
+                    if (localStorage.getItem('portfolio_unlocked') === 'true') {
                         const link = projectLinks[projectId];
                         if (link) window.open(link, "_blank");
                         else alert("Lien de la maquette bientôt disponible !");
                     } else {
-                        alert("Veuillez d'abord débloquer l'accès depuis la page d'accueil.");
+                        alert("Veuillez d'abord débloquer l'accès depuis la page d'accueil (cliquez sur 'Voir le projet').");
                         window.location.href = 'index.html#work';
                     }
                 });
@@ -469,11 +397,7 @@
             };
 
             const data = projectData[projectId];
-            if (!data) {
-                debugLog("Data non trouvé pour : " + projectId, "error");
-                setTimeout(() => { window.location.href = 'index.html'; }, 2000);
-                return;
-            }
+            if (!data) { window.location.href = 'index.html'; return; }
 
             document.getElementById('project-title').innerText = data.title;
             document.getElementById('project-desc').innerText = data.description;
@@ -509,7 +433,7 @@
                 if (section) section.style.display = 'none';
             }
 
-            // Scroll progress
+            // --- ANIMATIONS REMOVED ---
             const progress = document.getElementById('scroll-progress');
             window.addEventListener('scroll', () => {
                 const winScroll = document.body.scrollTop || document.documentElement.scrollTop;

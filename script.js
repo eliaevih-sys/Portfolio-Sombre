@@ -1,246 +1,225 @@
-﻿/* script.js - v15 INVINCIBLE (Anti-Crash + Local Storage Guard) */
+/* script.js - v12 PRODUCTION READY */
+document.addEventListener('DOMContentLoaded', () => {
+    // Check elements
+    const gateModal = document.getElementById('mockup-gate-modal');
+    const projectModal = document.getElementById('project-modal');
 
-// 0. SYSTÈME DE LOGS IMMÉDIAT (Évite les plantages si appelé trop tôt)
-window.debugLog = function (msg, type = "info") {
-    console.log(`[PORTFOLIO] ${msg}`);
-    try {
-        let box = document.getElementById('debug-stats-box');
-        if (!box && document.body) {
-            box = document.createElement('div');
-            box.id = 'debug-stats-box';
-            Object.assign(box.style, {
-                position: 'fixed', bottom: '20px', right: '20px', width: '280px', height: '160px',
-                background: 'rgba(5, 8, 22, 0.95)', border: '2px solid #6366f1', borderRadius: '12px',
-                zIndex: '999999', overflowY: 'auto', padding: '12px', fontFamily: 'monospace',
-                fontSize: '11px', color: '#fff', boxShadow: '0 10px 40px rgba(0,0,0,0.8)',
-                backdropFilter: 'blur(10px)', pointerEvents: 'auto'
-            });
-            box.innerHTML = '<div style="border-bottom:1px solid #6366f1;padding-bottom:8px;margin-bottom:8px;font-weight:bold;display:flex;justify-content:space-between;color:#6366f1"><span>💻 DIAGNOSTIC v15</span><span style="cursor:pointer;padding:0 5px;" onclick="this.parentElement.parentElement.style.display=\'none\'">×</span></div>';
-            document.body.appendChild(box);
+    // GSAP initialization
+    if (typeof gsap !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+    }
+
+    const projectDetails = {
+        agrosmart: {
+            title: "AgroSmart",
+            subtitle: "L'agriculture de demain, aujourd'hui",
+            description: "AgroSmart est une solution de gestion agricole intelligente conçue pour optimiser le rendement des cultures. Elle intègre des capteurs IoT pour le suivi en temps réel de l'humidité des sols et des conditions climatiques.",
+            tags: ["UI/UX Design", "Développement Front-End", "React Native"],
+            link: "project-viewer.html?project=agrosmart",
+            icon: "fa-seedling",
+            image: "assets/agrosmart/agrosmart/tableau_de_bord_agricole_-_modern_ui/screen.png"
+        },
+        sungrid: {
+            title: "SunGrid",
+            subtitle: "Optimisation de l'énergie solaire",
+            description: "SunGrid permet aux propriétaires de panneaux solaires de surveiller leur production et consommation d'énergie en temps réel. L'application propose des analyses prédictives pour maximiser l'autoconsommation.",
+            tags: ["Mobile App", "UI Design", "Dashboard"],
+            link: "project-viewer.html?project=sungrid",
+            icon: "fa-solar-panel",
+            image: "assets/sungrid/web/stitch_sungrid_web/sungrid_agent_dashboard_redesign_1/screen.png"
+        },
+        nourrici: {
+            title: "Nourrici",
+            subtitle: "E-commerce alimentaire local",
+            description: "Plateforme e-commerce dédiée aux produits alimentaires locaux et biologiques. Interface utilisateur optimisée pour faciliter la découverte de produits, avec un système de panier et de catalogue intelligent.",
+            tags: ["UI/UX Design", "E-commerce", "Mobile First"],
+            link: "project-viewer.html?project=nourrici",
+            icon: "fa-shopping-cart",
+            image: "assets/Nourrici/user_dashboard/screen.png"
         }
-        if (box) {
-            const line = document.createElement('div');
-            line.style.color = type === 'error' ? '#ff4d4d' : (type === 'success' ? '#4dff4d' : '#fff');
-            line.style.marginBottom = '4px';
-            line.style.borderLeft = `2px solid ${type === 'error' ? '#ff4d4d' : (type === 'success' ? '#4dff4d' : '#6366f1')}`;
-            line.style.paddingLeft = '8px';
-            line.innerHTML = `<span style="opacity:0.4;font-size:9px">${new Date().toLocaleTimeString()}</span> ${msg}`;
-            box.appendChild(line);
-            box.scrollTop = box.scrollHeight;
+    };
+
+    let isUnlocked = localStorage.getItem('portfolio_unlocked') === 'true';
+    let pendingProject = null;
+    const ACCESS_CODE = "ELIA-ACCES";
+
+    // --- MODAL FUNCTIONS ---
+
+    function openProjectModal(key) {
+        const data = projectDetails[key];
+        if (!data || !projectModal) return;
+
+        // Met à jour l'image du projet
+        const modalImg = document.getElementById('modal-project-image');
+        if (modalImg) modalImg.src = data.image;
+
+        document.getElementById('modal-title').innerText = data.title;
+        document.getElementById('modal-subtitle').innerText = data.subtitle;
+        document.getElementById('modal-description').innerText = data.description;
+
+        // Stocke la clé et le lien sur le bouton final
+        const modalLink = document.getElementById('modal-link');
+        if (modalLink) {
+            modalLink.setAttribute('data-target-project', key);
+            modalLink.href = data.link || '#';
         }
-    } catch (err) { console.error("Critical log error:", err); }
-};
 
-// Capturer les erreurs IMMÉDIATEMENT
-window.onerror = function (m, u, l) {
-    console.error("FATAL:", m, "at", l);
-    window.debugLog(`FATAL: ${m} (ligne ${l})`, "error");
-};
-
-window.debugLog("Chargement du script v15...");
-
-// 1. CONFIGURATION
-const SUPABASE_URL = "https://cajpruwybnjntvsoenyr.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNhanByd3libmpudHZic29lbnlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNDgxMjQsImV4cCI6MjA4NjkyNDEyNH0.M-GtLUVINglfF6NakNJyXVca7z5aLpzYnO4s1TGZcAE";
-const ACCESS_CODE = "ELIA-ACCES";
-
-let supabase = null;
-
-// GESTION STORAGE (Sécurisée pour exécution locale/file://)
-function safeStorage(key, value = undefined) {
-    try {
-        if (value === undefined) return localStorage.getItem(key);
-        localStorage.setItem(key, value);
-        return true;
-    } catch (e) {
-        window.debugLog("Storage bloqué (Mode local ?)", "warn");
-        return null;
-    }
-}
-
-function getUserId() {
-    let id = safeStorage('portfolio_user_id');
-    if (!id) {
-        id = 'user_' + Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
-        safeStorage('portfolio_user_id', id);
-    }
-    return id || 'temp_user' + Date.now();
-}
-const USER_ID = getUserId();
-
-// 3. INITIALISATION SUPABASE
-function initSupabase() {
-    if (supabase) return true;
-    try {
-        if (typeof window.supabase !== 'undefined') {
-            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            window.debugLog("Supabase Connecté ✓", "success");
-            return true;
-        } else {
-            window.debugLog("SDK Supabase manquant dans le HTML !", "error");
-        }
-    } catch (e) {
-        window.debugLog("Crash Supabase: " + e.message, "error");
-    }
-    return false;
-}
-
-// 4. DONNÉES DES PROJETS
-const projectDetails = {
-    agrosmart: {
-        title: "AgroSmart",
-        description: "Solution IoT complète pour l'optimisation des cultures en temps réel.",
-        link: "project-viewer.html?project=agrosmart",
-        image: "assets/agrosmart/agrosmart/tableau_de_bord_agricole_-_modern_ui/screen.png"
-    },
-    sungrid: {
-        title: "SunGrid",
-        description: "Système de monitoring énergétique intelligent pour installations solaires.",
-        link: "project-viewer.html?project=sungrid",
-        image: "assets/sungrid/web/stitch_sungrid_web/sungrid_agent_dashboard_redesign_1/screen.png"
-    },
-    nourrici: {
-        title: "Nourrici",
-        description: "Plateforme de distribution de produits bio et locaux.",
-        link: "project-viewer.html?project=nourrici",
-        image: "assets/Nourrici/user_dashboard/screen.png"
-    }
-};
-
-// 5. FONCTIONS STATS
-async function fetchStats() {
-    if (!initSupabase()) return;
-    try {
-        const { data, error } = await supabase.from('project_stats').select('*');
-        if (error) throw error;
-        data.forEach(item => {
-            ['like', 'view'].forEach(type => {
-                const el = document.getElementById(`${type}-count-${item.id}`);
-                if (el) el.textContent = item[type + 's'] || 0;
-            });
+        const tags = document.getElementById('modal-tags');
+        tags.innerHTML = '';
+        data.tags.forEach(t => {
+            const s = document.createElement('span');
+            s.className = 'tag tag-design';
+            s.innerText = t;
+            tags.appendChild(s);
         });
-        window.debugLog(`Stats à jour`);
-    } catch (e) { window.debugLog("Erreur Sync: " + e.message, "error"); }
-}
 
-async function handleAction(projectId, actionType) {
-    if (!initSupabase()) return;
-    const rpcName = actionType === 'like' ? 'like_project' : 'view_project';
-    try {
-        const { error } = await supabase.rpc(rpcName, { p_project_id: projectId, p_user_id: USER_ID });
-        if (error) throw error;
-        window.debugLog(`${actionType} OK`, "success");
-        fetchStats();
-    } catch (e) {
-        window.debugLog(`${rpcName} échec: ${e.message}`, "error");
-        if (e.message.includes('42501')) window.debugLog("SQL/RLS non configuré ?", "error");
+        projectModal.style.display = 'flex';
+        gsap.to(projectModal.querySelector('.modal-backdrop'), { opacity: 1, duration: 0.3 });
+        gsap.to(projectModal.querySelector('.modal-content'), { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" });
+        document.body.style.overflow = 'hidden';
     }
-}
 
-// 6. INITIALISATION DOM
-function bootstrap() {
-    window.debugLog("Initialisation...");
-    initSupabase();
-    fetchStats();
+    function openGateModal(sourceKey = null) {
+        if (!gateModal) return;
+        pendingProject = sourceKey;
 
-    const modals = {
-        project: document.getElementById('project-modal'),
-        gate: document.getElementById('mockup-gate-modal')
-    };
-    let currentPendingProject = null;
+        gateModal.style.display = 'flex';
+        const backdrop = gateModal.querySelector('.modal-backdrop');
+        const content = gateModal.querySelector('.modal-content');
 
-    const closeAll = () => {
-        Object.values(modals).forEach(m => { if (m) m.style.display = 'none'; });
+        gsap.to(backdrop, { opacity: 1, duration: 0.3 });
+        gsap.to(content, { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" });
+
+        document.getElementById('gate-step-1').style.display = 'block';
+        document.getElementById('gate-step-2').style.display = 'none';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeAllModals() {
+        [projectModal, gateModal].forEach(m => {
+            if (m && m.style.display === 'flex') {
+                const b = m.querySelector('.modal-backdrop');
+                const c = m.querySelector('.modal-content');
+                gsap.to(b, { opacity: 0, duration: 0.3 });
+                gsap.to(c, {
+                    opacity: 0, scale: 0.9, duration: 0.3, onComplete: () => {
+                        m.style.display = 'none';
+                    }
+                });
+            }
+        });
         document.body.style.overflow = '';
-    };
+    }
 
-    // Délégation d'événements (Le plus robuste)
-    document.addEventListener('click', async (e) => {
-        const t = e.target;
+    // --- EVENT LISTENERS ---
 
-        // Fermer modals
-        if (t.closest('.modal-close') || t.classList.contains('modal-backdrop')) closeAll();
-
-        // Ouvrir projet (CTA "Voir le cas d'étude")
-        const cta = t.closest('.project-cta') || t.closest('[data-project]');
-        if (cta && !t.closest('.like-button')) {
-            e.preventDefault();
-            const key = cta.getAttribute('data-project');
-            window.debugLog("Ouverture: " + key);
-            const data = projectDetails[key];
-            if (data && modals.project) {
-                handleAction(key, 'view');
-                document.getElementById('modal-project-image').src = data.image;
-                document.getElementById('modal-title').innerText = data.title;
-                document.getElementById('modal-description').innerText = data.description;
-                document.getElementById('modal-link').setAttribute('data-target', key);
-                modals.project.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        // bouton "Découvrir la solution" dans la modal
-        const vBtn = t.closest('#modal-link');
-        if (vBtn) {
-            e.preventDefault();
-            const key = vBtn.getAttribute('data-target');
-            if (safeStorage('portfolio_unlocked') !== 'true') {
-                currentPendingProject = key;
-                if (modals.gate) modals.gate.style.display = 'flex';
-            } else {
-                window.location.href = projectDetails[key].link;
-            }
-        }
-
-        // Like buttons
-        const lBtn = t.closest('.like-button');
-        if (lBtn) {
-            const key = lBtn.getAttribute('data-project');
-            const icon = lBtn.querySelector('i');
-            if (icon) {
-                icon.className = 'fas fa-heart';
-                if (window.gsap) gsap.to(icon, { scale: 1.5, duration: 0.2, yoyo: true, repeat: 1 });
-            }
-            handleAction(key, 'like');
-        }
+    document.querySelectorAll('.modal-close, .modal-backdrop, #gate-close').forEach(el => {
+        el.addEventListener('click', closeAllModals);
     });
 
-    // Formulaire Gate
-    const gateForm = document.getElementById('mockup-capture-form');
-    if (gateForm) {
-        gateForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            try {
-                const res = await fetch("https://api.web3forms.com/submit", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(Object.fromEntries(new FormData(gateForm)))
-                });
-                if (res.ok) {
-                    document.getElementById('gate-step-1').style.display = 'none';
-                    document.getElementById('gate-step-2').style.display = 'block';
-                }
-            } catch (err) { window.debugLog("Erreur Mail", "error"); }
+    // 1. CARTE PROJET -> Ouvre les détails IMMÉDIATEMENT
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.project-cta');
+        if (!btn) return;
+
+        e.preventDefault();
+        const key = btn.getAttribute('data-project');
+        openProjectModal(key);
+    });
+
+    // 2. BOUTON "VOIR LE PROJET" (Dans la modal) -> Verrouillé
+    const modalLink = document.getElementById('modal-link');
+    if (modalLink) {
+        modalLink.addEventListener('click', (e) => {
+            if (!isUnlocked) {
+                e.preventDefault();
+                const key = modalLink.getAttribute('data-target-project');
+                openGateModal(key);
+            }
         });
     }
 
+    // Form submission
+    const captureForm = document.getElementById('mockup-capture-form');
+    if (captureForm) {
+        captureForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-send-code');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                    body: JSON.stringify(Object.fromEntries(new FormData(captureForm)))
+                });
+
+                if (response.ok) {
+                    document.getElementById('gate-step-1').style.display = 'none';
+                    document.getElementById('gate-step-2').style.display = 'block';
+                    document.getElementById('gate-step-text').innerHTML = `Super ! Le code d'accès est : <strong style="color:#8b5cf6; font-size:1.2em;">${ACCESS_CODE}</strong><br><small>(Notez-le bien)</small>`;
+                }
+            } catch (error) {
+                console.error("Erreur:", error);
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        });
+    }
+
+    // Code verification
     const verifyBtn = document.getElementById('btn-verify-code');
     if (verifyBtn) {
         verifyBtn.addEventListener('click', () => {
-            if (document.getElementById('access-code-input').value.trim().toUpperCase() === ACCESS_CODE) {
-                safeStorage('portfolio_unlocked', 'true');
-                if (currentPendingProject) window.location.href = projectDetails[currentPendingProject].link;
-                else closeAll();
-            } else alert("Code incorrect !");
+            const input = document.getElementById('access-code-input').value.trim().toUpperCase();
+            if (input === ACCESS_CODE) {
+                isUnlocked = true;
+                localStorage.setItem('portfolio_unlocked', 'true');
+                closeAllModals();
+
+                // Si on a un projet en attente, on redirige
+                if (pendingProject) {
+                    const data = projectDetails[pendingProject];
+                    if (data && data.link && data.link !== '#') {
+                        // Redirige dans le même onglet pour une expérience fluide
+                        window.location.href = data.link;
+                    }
+                }
+            } else {
+                alert("Code incorrect. Veuillez réessayer.");
+            }
         });
     }
 
-    window.debugLog("Init Terminée ✓", "success");
-}
+    // --- FAQ TOGGLE ---
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', () => {
+            const isOpen = item.classList.contains('active');
 
-// Lancement sécurisé
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bootstrap);
-} else {
-    bootstrap();
-}
+            // Close other items
+            faqItems.forEach(i => {
+                i.classList.remove('active');
+                const icon = i.querySelector('i');
+                if (icon) icon.className = 'fas fa-plus';
+            });
+
+            if (!isOpen) {
+                item.classList.add('active');
+                const icon = item.querySelector('i');
+                if (icon) icon.className = 'fas fa-minus';
+            }
+        });
+    });
+
+    // Global Force (for manual testing if needed, but cleaner)
+    window.forceShowGate = () => openGateModal();
+    window.resetAccess = () => {
+        localStorage.removeItem('portfolio_unlocked');
+        location.reload();
+    };
+});
